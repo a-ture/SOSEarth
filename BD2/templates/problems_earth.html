@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+
+{% block title %}Problems Earth - SOS Earth{% endblock %}
+
+{% block content %}
+<!-- Background image -->
+<div
+  class="p-5 text-center bg-image"
+  style="
+    background-image: url('{{ url_for('static', filename='img/background-earth.png') }}');
+    height: 400px;
+    position: relative;
+  "
+>
+  <div class="mask" style="background-color: rgba(9,130,192,0.6); height: 100%;">
+    <div class="d-flex justify-content-center align-items-center h-100">
+      <div class="text-white">
+        <h1 class="mb-3">Heading</h1>
+        <h4 class="mb-3">Subheading</h4>
+        <a data-mdb-ripple-init class="btn btn-outline-light btn-lg" href="#!" role="button">Call to action</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Image icons positioned in a semicircle -->
+  <img src="{{ url_for('static', filename='img/biosphere-icon.png') }}" alt="Biosphere" class="icon icon-1">
+  <img src="{{ url_for('static', filename='img/atmosphere-icon.png') }}" alt="Atmosphere" class="icon icon-2">
+  <img src="{{ url_for('static', filename='img/cryosphere-icon.png') }}" alt="Cryosphere" class="icon icon-3">
+  <img src="{{ url_for('static', filename='img/human-dimensions-icon.png') }}" alt="Human Dimensions" class="icon icon-4">
+  <img src="{{ url_for('static', filename='img/land-surface-icon.png') }}" alt="Land Surface" class="icon icon-5">
+  <img src="{{ url_for('static', filename='img/solid-earth-icon.png') }}" alt="Solid Earth" class="icon icon-6">
+  <img src="{{ url_for('static', filename='img/sun-earth-interactions-icon.png') }}" alt="Sun-Earth Interactions" class="icon icon-7">
+  <img src="{{ url_for('static', filename='img/terrestrial-hydrosphere-icon.png') }}" alt="Terrestrial Hydrosphere" class="icon icon-8">
+</div>
+
+<style>
+  .icon {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+  }
+  .icon-1 {
+    top: 50%;
+    left: 25%;
+    transform: translate(-50%, -50%);
+  }
+  .icon-2 {
+    top: 35%;
+    left: 35%;
+    transform: translate(-50%, -50%);
+  }
+  .icon-3 {
+    top: 25%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  .icon-4 {
+    top: 35%;
+    left: 65%;
+    transform: translate(-50%, -50%);
+  }
+  .icon-5 {
+    top: 50%;
+    left: 75%;
+    transform: translate(-50%, -50%);
+  }
+  .icon-6 {
+    top: 65%;
+    left: 65%;
+    transform: translate(-50%, -50%);
+  }
+  .icon-7 {
+    top: 75%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  .icon-8 {
+    top: 65%;
+    left: 35%;
+    transform: translate(-50%, -50%);
+  }
+</style>
+{% endblock %}
