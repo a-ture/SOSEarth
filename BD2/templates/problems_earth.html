@@ -3,81 +3,159 @@
 {% block title %}Problems Earth - SOS Earth{% endblock %}
 
 {% block content %}
-<!-- Background image -->
-<div
-  class="p-5 text-center bg-image"
-  style="
-    background-image: url('{{ url_for('static', filename='img/background-earth.png') }}');
-    height: 400px;
-    position: relative;
-  "
->
-  <div class="mask" style="background-color: rgba(9,130,192,0.6); height: 100%;">
-    <div class="d-flex justify-content-center align-items-center h-100">
-      <div class="text-white">
-        <h1 class="mb-3">Heading</h1>
-        <h4 class="mb-3">Subheading</h4>
-        <a data-mdb-ripple-init class="btn btn-outline-light btn-lg" href="#!" role="button">Call to action</a>
-      </div>
+    <!-- Background image -->
+    <div
+            class="p-5 text-center bg-image"
+            style="
+                    background-image: url('{{ url_for('static', filename='img/background-earth.png') }}');
+                    height: 350px;
+                    position: relative;
+                    "
+    >
+        <div class="mask" style="background-color: rgba(9,130,192,0.6); height: 100%;">
+            <div class="d-flex justify-content-center align-items-center h-100 mt-5">
+                <div class="text-white">
+                    <h6 class="mx-5">The Earth Science Data Systems (ESDS) Program provides full and open access to <br>
+                        NASA'S collection of Earth science data for understanding and protecting our home planet. </h6>
+                    <a data-mdb-ripple-init class="btn btn-outline-light btn-lg mt-5" href="#!" role="button">Call to
+                        action</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Image icons positioned in a semicircle -->
+        <img src="{{ url_for('static', filename='img/biosphere-icon.png') }}" alt="Biosphere" class="icon icon-1">
+        <img src="{{ url_for('static', filename='img/oceans-icon.png') }}" alt="Oceans" class="icon icon-2">
+        <img src="{{ url_for('static', filename='img/atmosphere-icon.png') }}" alt="Atmosphere" class="icon icon-3">
+        <img src="{{ url_for('static', filename='img/cryosphere-icon.png') }}" alt="Cryosphere" class="icon icon-4">
+        <img src="{{ url_for('static', filename='img/human-dimensions-icon.png') }}" alt="Human Dimensions"
+             class="icon icon-5">
+        <img src="{{ url_for('static', filename='img/land-surface-icon.png') }}" alt="Land Surface" class="icon icon-6">
+        <img src="{{ url_for('static', filename='img/sun-earth-interactions-icon.png') }}" alt="Solid Earth"
+             class="icon icon-7">
+        <img src="{{ url_for('static', filename='img/solid-earth-icon.png') }}" alt="Sun-Earth Interactions"
+             class="icon icon-8">
+        <img src="{{ url_for('static', filename='img/terrestrial-hydrosphere-icon.png') }}"
+             alt="Terrestrial Hydrosphere" class="icon icon-9">
     </div>
-  </div>
 
-  <!-- Image icons positioned in a semicircle -->
-  <img src="{{ url_for('static', filename='img/biosphere-icon.png') }}" alt="Biosphere" class="icon icon-1">
-  <img src="{{ url_for('static', filename='img/atmosphere-icon.png') }}" alt="Atmosphere" class="icon icon-2">
-  <img src="{{ url_for('static', filename='img/cryosphere-icon.png') }}" alt="Cryosphere" class="icon icon-3">
-  <img src="{{ url_for('static', filename='img/human-dimensions-icon.png') }}" alt="Human Dimensions" class="icon icon-4">
-  <img src="{{ url_for('static', filename='img/land-surface-icon.png') }}" alt="Land Surface" class="icon icon-5">
-  <img src="{{ url_for('static', filename='img/solid-earth-icon.png') }}" alt="Solid Earth" class="icon icon-6">
-  <img src="{{ url_for('static', filename='img/sun-earth-interactions-icon.png') }}" alt="Sun-Earth Interactions" class="icon icon-7">
-  <img src="{{ url_for('static', filename='img/terrestrial-hydrosphere-icon.png') }}" alt="Terrestrial Hydrosphere" class="icon icon-8">
-</div>
+    <!-- Inserisci qui il tuo codice HTML della card -->
+    <div class="card text-center">
+        <div class="card-header">
+            <ul id="navTabs" class="nav nav-tabs card-header-tabs">
+                <li class="nav-item">
+                    <a id="tab1" class="nav-link active" aria-current="true" href="#!">Evidence</a>
+                </li>
+                <li class="nav-item">
+                    <a id="tab2" class="nav-link" href="#!">Causes</a>
+                </li>
+                <li class="nav-item">
+                    <a id="tab3" class="nav-link">Effects</a>
+                </li>
+            </ul>
+        </div>
+        <div class="card-body">
+            <div id="tabContent">
+                <div id="content1" class="tab-content">
+                    Contenuto del Tab
+                </div>
+                <div id="content2" class="tab-content" style="display:none;">
+                    Contenuto del Tab 2
+                </div>
+                <div id="content3" class="tab-content" style="display:none;">
+                    Contenuto del Tab 3
+                </div>
+            </div>
+        </div>
+    </div>
 
-<style>
-  .icon {
-    position: absolute;
-    width: 50px;
-    height: 50px;
-  }
-  .icon-1 {
-    top: 50%;
-    left: 25%;
-    transform: translate(-50%, -50%);
-  }
-  .icon-2 {
-    top: 35%;
-    left: 35%;
-    transform: translate(-50%, -50%);
-  }
-  .icon-3 {
-    top: 25%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
-  .icon-4 {
-    top: 35%;
-    left: 65%;
-    transform: translate(-50%, -50%);
-  }
-  .icon-5 {
-    top: 50%;
-    left: 75%;
-    transform: translate(-50%, -50%);
-  }
-  .icon-6 {
-    top: 65%;
-    left: 65%;
-    transform: translate(-50%, -50%);
-  }
-  .icon-7 {
-    top: 75%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
-  .icon-8 {
-    top: 65%;
-    left: 35%;
-    transform: translate(-50%, -50%);
-  }
-</style>
+
+    <script>
+        // Aggiungi un gestore di eventi clic ai link delle schede
+        document.querySelectorAll('.card .nav-link').forEach(link => {
+            link.addEventListener('click', function (event) {
+                event.preventDefault(); // Previene il comportamento predefinito del link
+
+                // Rimuovi la classe 'active' da tutti i link delle schede
+                document.querySelectorAll('.card .nav-link').forEach(link => {
+                    link.classList.remove('active');
+                });
+
+                // Aggiungi la classe 'active' al link cliccato
+                this.classList.add('active');
+
+                // Nascondi tutti i contenuti delle schede
+                document.querySelectorAll('.tab-content').forEach(content => {
+                    content.style.display = 'none';
+                });
+
+                // Mostra il contenuto relativo al link cliccato
+                const tabId = this.getAttribute('id').replace('tab', 'content');
+                document.getElementById(tabId).style.display = 'block';
+            });
+        });
+    </script>
+
+    <style>
+        .icon {
+            position: absolute;
+            width: 70px;
+            height: 70px;
+        }
+
+        /* Positions for a higher semicircle */
+        .icon-1 {
+            top: 60%;
+            left: 13%;
+            transform: translate(-50%, -50%);
+        }
+
+        .icon-2 {
+            top: 40%;
+            left: 20%;
+            transform: translate(-50%, -50%);
+        }
+
+        .icon-3 {
+            top: 30%;
+            left: 30%;
+            transform: translate(-50%, -50%);
+        }
+
+        .icon-4 {
+            top: 20%;
+            left: 40%;
+            transform: translate(-50%, -50%);
+        }
+
+        .icon-5 {
+            top: 15%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .icon-6 {
+            top: 20%;
+            left: 60%;
+            transform: translate(-50%, -50%);
+        }
+
+        .icon-7 {
+            top: 30%;
+            left: 70%;
+            transform: translate(-50%, -50%);
+        }
+
+        .icon-8 {
+            top: 40%;
+            left: 80%;
+            transform: translate(-50%, -50%);
+        }
+
+        .icon-9 {
+            top: 60%;
+            left: 87%;
+            transform: translate(-50%, -50%);
+        }
+    </style>
 {% endblock %}

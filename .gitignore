@@ -162,3 +162,5 @@ Inspo/.DS_Store
 Dati/.DS_Store
 Dati/ClimateAdapt/.DS_Store
 .DS_Store
+/BD2/node_modules
+/BD2/static/mdb5-free-standard
