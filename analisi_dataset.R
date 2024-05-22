@@ -204,3 +204,150 @@ paesi_comuni <-
 
 # Visualizza i paesi comuni
 print(paesi_comuni)
+
+
+
+# Carica le librerie necessarie
+library(dplyr)
+library(readr)
+library(tidyr)
+
+# Funzione per rinominare le colonne chiave
+rinomina_colonne <- function(df, country_col, year_col) {
+  df %>%
+    rename(Country = !!sym(country_col),
+           Year = !!sym(year_col))
+}
+
+# Funzione per filtrare i dati per i paesi comuni
+filtra_paesi_comuni <- function(df, paesi_comuni) {
+  df %>%
+    filter(Country %in% paesi_comuni)
+}
+
+# Rinomina le colonne chiave nei vari dataset
+dataset <- rinomina_colonne(dataset, "Area", "Year")
+dataset1 <- rinomina_colonne(dataset1, "Area", "Year")
+dataset2 <- rinomina_colonne(dataset2, "Country Name", "Year")
+dataset3 <- rinomina_colonne(dataset3, "Country Name", "Year")
+dataset4 <- rinomina_colonne(dataset4, "Country Name", "Year")
+dataset5 <- rinomina_colonne(dataset5, "Country Name", "Year")
+dataset6 <- rinomina_colonne(dataset6, "Country Name", "Year")
+dataset7 <- rinomina_colonne(dataset7, "Country Name", "Year")
+dataset8 <- rinomina_colonne(dataset8, "Country Name", "Year")
+dataset9 <- rinomina_colonne(dataset9, "Country Name", "Year")
+dataset10 <- rinomina_colonne(dataset10, "Country Name", "Year")
+dataset11 <- rinomina_colonne(dataset11, "Country Name", "Year")
+dataset12 <- rinomina_colonne(dataset12, "Country Name", "Year")
+dataset13 <- rinomina_colonne(dataset13, "Country Name", "Year")
+dataset14 <- rinomina_colonne(dataset14, "Country Name", "Year")
+dataset15 <- rinomina_colonne(dataset15, "Country Name", "Year")
+dataset16 <- rinomina_colonne(dataset16, "Country Name", "Year")
+dataset17 <- rinomina_colonne(dataset17, "Country Name", "Year")
+dataset18 <- rinomina_colonne(dataset18, "Country Name", "Year")
+dataset19 <- rinomina_colonne(dataset19, "Country Name", "Year")
+dataset20 <- rinomina_colonne(dataset20, "Country Name", "Year")
+dataset21 <- rinomina_colonne(dataset21, "Country Name", "Year")
+dataset22 <- rinomina_colonne(dataset22, "Country Name", "Year")
+dataset23 <- rinomina_colonne(dataset23, "Country Name", "Year")
+dataset24 <- rinomina_colonne(dataset24, "Country Name", "Year")
+dataset25 <- rinomina_colonne(dataset25, "Country Name", "Year")
+dataset26 <- rinomina_colonne(dataset26, "Country Name", "Year")
+dataset27 <- rinomina_colonne(dataset27, "Country Name", "Year")
+
+# Trova i paesi comuni a tutti i dataset
+paesi_comuni <- Reduce(intersect, list(
+  unique(dataset$Country),
+  unique(dataset1$Country),
+  unique(dataset2$Country),
+  unique(dataset3$Country),
+  unique(dataset4$Country),
+  unique(dataset5$Country),
+  unique(dataset6$Country),
+  unique(dataset7$Country),
+  unique(dataset8$Country),
+  unique(dataset9$Country),
+  unique(dataset10$Country),
+  unique(dataset11$Country),
+  unique(dataset12$Country),
+  unique(dataset13$Country),
+  unique(dataset14$Country),
+  unique(dataset15$Country),
+  unique(dataset16$Country),
+  unique(dataset17$Country),
+  unique(dataset18$Country),
+  unique(dataset19$Country),
+  unique(dataset20$Country),
+  unique(dataset21$Country),
+  unique(dataset22$Country),
+  unique(dataset23$Country),
+  unique(dataset24$Country),
+  unique(dataset25$Country),
+  unique(dataset26$Country),
+  unique(dataset27$Country)
+))
+
+# Filtra i dati per i paesi comuni
+dataset <- filtra_paesi_comuni(dataset, paesi_comuni)
+dataset1 <- filtra_paesi_comuni(dataset1, paesi_comuni)
+dataset2 <- filtra_paesi_comuni(dataset2, paesi_comuni)
+dataset3 <- filtra_paesi_comuni(dataset3, paesi_comuni)
+dataset4 <- filtra_paesi_comuni(dataset4, paesi_comuni)
+dataset5 <- filtra_paesi_comuni(dataset5, paesi_comuni)
+dataset6 <- filtra_paesi_comuni(dataset6, paesi_comuni)
+dataset7 <- filtra_paesi_comuni(dataset7, paesi_comuni)
+dataset8 <- filtra_paesi_comuni(dataset8, paesi_comuni)
+dataset9 <- filtra_paesi_comuni(dataset9, paesi_comuni)
+dataset10 <- filtra_paesi_comuni(dataset10, paesi_comuni)
+dataset11 <- filtra_paesi_comuni(dataset11, paesi_comuni)
+dataset12 <- filtra_paesi_comuni(dataset12, paesi_comuni)
+dataset13 <- filtra_paesi_comuni(dataset13, paesi_comuni)
+dataset14 <- filtra_paesi_comuni(dataset14, paesi_comuni)
+dataset15 <- filtra_paesi_comuni(dataset15, paesi_comuni)
+dataset16 <- filtra_paesi_comuni(dataset16, paesi_comuni)
+dataset17 <- filtra_paesi_comuni(dataset17, paesi_comuni)
+dataset18 <- filtra_paesi_comuni(dataset18, paesi_comuni)
+dataset19 <- filtra_paesi_comuni(dataset19, paesi_comuni)
+dataset20 <- filtra_paesi_comuni(dataset20, paesi_comuni)
+dataset21 <- filtra_paesi_comuni(dataset21, paesi_comuni)
+dataset22 <- filtra_paesi_comuni(dataset22, paesi_comuni)
+dataset23 <- filtra_paesi_comuni(dataset23, paesi_comuni)
+dataset24 <- filtra_paesi_comuni(dataset24, paesi_comuni)
+dataset25 <- filtra_paesi_comuni(dataset25, paesi_comuni)
+dataset26 <- filtra_paesi_comuni(dataset26, paesi_comuni)
+dataset27 <- filtra_paesi_comuni(dataset27, paesi_comuni)
+
+# Unisci i dataset usando le colonne chiave "Country" e "Year"
+dataset_unito <- dataset %>%
+  full_join(dataset1, by = c("Country", "Year")) %>%
+  full_join(dataset2, by = c("Country", "Year")) %>%
+  full_join(dataset3, by = c("Country", "Year")) %>%
+  full_join(dataset4, by = c("Country", "Year")) %>%
+  full_join(dataset5, by = c("Country", "Year")) %>%
+  full_join(dataset6, by = c("Country", "Year")) %>%
+  full_join(dataset7, by = c("Country", "Year")) %>%
+  full_join(dataset8, by = c("Country", "Year")) %>%
+  full_join(dataset9, by = c("Country", "Year")) %>%
+  full_join(dataset10, by = c("Country", "Year")) %>%
+  full_join(dataset11, by = c("Country", "Year")) %>%
+  full_join(dataset12, by = c("Country", "Year")) %>%
+  full_join(dataset13, by = c("Country", "Year")) %>%
+  full_join(dataset14, by = c("Country", "Year")) %>%
+  full_join(dataset15, by = c("Country", "Year")) %>%
+  full_join(dataset16, by = c("Country", "Year")) %>%
+  full_join(dataset17, by = c("Country", "Year")) %>%
+  full_join(dataset18, by = c("Country", "Year")) %>%
+  full_join(dataset19, by = c("Country", "Year")) %>%
+  full_join(dataset20, by = c("Country", "Year")) %>%
+  full_join(dataset21, by = c("Country", "Year")) %>%
+  full_join(dataset22, by = c("Country", "Year")) %>%
+  full_join(dataset23, by = c("Country", "Year")) %>%
+  full_join(dataset24, by = c("Country", "Year")) %>%
+  full_join(dataset25, by = c("Country", "Year")) %>%
+  full_join(dataset26, by = c("Country", "Year")) %>%
+  full_join(dataset27, by = c("Country", "Year"))
+
+# Esporta il dataset unito in un file CSV
+write_csv(dataset_unito, "Dati/unione_dataset.csv")
+
+print("Dataset unito e salvato con successo.")
