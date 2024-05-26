@@ -1,7 +1,7 @@
 from flask_bootstrap import Bootstrap
 from flask import Flask, render_template
 
-app = Flask("SOS Planet")
+app = Flask("SOS Earth")
 bootstrap = Bootstrap(app)
 
 

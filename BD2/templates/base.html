@@ -17,7 +17,14 @@
             href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.2.0/mdb.min.css"
             rel="stylesheet"
     />
-    <!-- Include il tuo script di inizializzazione -->
+
+    <!-- www.amcharts.com/ -->
+    <script src="https://cdn.amcharts.com/lib/5/index.js"></script>
+    <script src="https://cdn.amcharts.com/lib/5/map.js"></script>
+    <script src="https://cdn.amcharts.com/lib/5/geodata/worldLow.js"></script>
+    <script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
+
+
 </head>
 <body>
 {% include 'components/header.html' %}
@@ -39,5 +46,7 @@
 <script type="text/javascript" src="{{ url_for('static', filename='mdb5-free-standard/js/mdb.umd.min.js' ) }}"></script>
 <!-- Font Awesome -->
 <script src="https://kit.fontawesome.com/fefa7ea803.js" crossorigin="anonymous"></script>
+
+<script src="{{ url_for('static', filename='js/chart.js') }}"></script>
 </body>
 </html>
