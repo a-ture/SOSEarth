@@ -1,0 +1,16 @@
+ .footer {
+      background-color: #1c1c1e;
+      color: #8e8e93;
+      padding: 40px 0;
+    }
+    .footer a {
+      color: #8e8e93;
+      text-decoration: none;
+    }
+    .footer a:hover {
+      color: #ffffff;
+    }
+    .footer h5 {
+      color: #8e8e93;
+      font-weight: bold;
+    }

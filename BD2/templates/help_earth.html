@@ -76,6 +76,7 @@
 
     </style>
 
+    <!-- Problemi e Soluzioni  -->
     <div class="row row-cols-1 row-cols-md-4 g-4">
         <div class="col">
             <div class="flip-card">
@@ -109,6 +110,67 @@
                 </div>
             </div>
         </div>
+    </div>
+
+    <!--Calcolatore impronta di carbonio  -->
+        <div class="container mt-5">
+        <h1 class="text-center mb-4">Carbon Footprint Calculator</h1>
+        <form id="carbonForm">
+            <div class="form-group row">
+                <label for="carKm" class="col-sm-2 col-form-label">Car (km per week):</label>
+                <div class="col-sm-10">
+                    <input type="number" class="form-control" id="carKm" name="carKm">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="busKm" class="col-sm-2 col-form-label">Bus (km per week):</label>
+                <div class="col-sm-10">
+                    <input type="number" class="form-control" id="busKm" name="busKm">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="flightHours" class="col-sm-2 col-form-label">Flights (hours per year):</label>
+                <div class="col-sm-10">
+                    <input type="number" class="form-control" id="flightHours" name="flightHours">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="electricity" class="col-sm-2 col-form-label">Electricity (kWh per month):</label>
+                <div class="col-sm-10">
+                    <input type="number" class="form-control" id="electricity" name="electricity">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="gas" class="col-sm-2 col-form-label">Gas (m³ per month):</label>
+                <div class="col-sm-10">
+                    <input type="number" class="form-control" id="gas" name="gas">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="meat" class="col-sm-2 col-form-label">Meat (kg per week):</label>
+                <div class="col-sm-10">
+                    <input type="number" class="form-control" id="meat" name="meat">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="dairy" class="col-sm-2 col-form-label">Dairy (kg per week):</label>
+                <div class="col-sm-10">
+                    <input type="number" class="form-control" id="dairy" name="dairy">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="veg" class="col-sm-2 col-form-label">Vegetables (kg per week):</label>
+                <div class="col-sm-10">
+                    <input type="number" class="form-control" id="veg" name="veg">
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-10 offset-sm-2">
+                    <button type="submit" class="btn btn-primary">Calculate</button>
+                </div>
+            </div>
+        </form>
+        <div id="results" class="mt-4"></div>
     </div>
 {% endblock %}
 
