@@ -23,7 +23,7 @@ def problems():
 
 
 @app.route('/help')
-def help():
+def help_earth():
     return render_template('help_earth.html')
 
 
@@ -35,6 +35,11 @@ def project():
 @app.route('/calculator')
 def calculator():
     return render_template('carbon.html')
+
+
+@app.route('/faq')
+def faq():
+    return render_template('faq.html')
 
 
 if __name__ == '__main__':

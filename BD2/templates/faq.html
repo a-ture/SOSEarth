@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+
+{% block title %}FAQ - SOS Earth{% endblock %}
+
+{% block content %}
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">Frequently Asked Questions about Climate Change</h1>
+        <div class="accordion" id="faqAccordion">
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingOne">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        What is climate change?
+                    </button>
+                </h2>
+                <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
+                     data-bs-parent="#faqAccordion">
+                    <div class="accordion-body">
+                        Climate change refers to long-term changes in temperature, precipitation, and other atmospheric
+                        conditions on Earth. It can result from natural factors, such as volcanic eruptions and
+                        variations in solar radiation, as well as human activities, particularly the burning of fossil
+                        fuels and deforestation.
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingTwo">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                        What causes climate change?
+                    </button>
+                </h2>
+                <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
+                     data-bs-parent="#faqAccordion">
+                    <div class="accordion-body">
+                        The primary cause of recent climate change is the increase in greenhouse gases in the atmosphere
+                        due to human activities such as burning fossil fuels (coal, oil, and natural gas),
+                        deforestation, and industrial processes. Greenhouse gases trap heat in the Earth's atmosphere,
+                        leading to global warming.
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingThree">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                        What are the effects of climate change?
+                    </button>
+                </h2>
+                <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree"
+                     data-bs-parent="#faqAccordion">
+                    <div class="accordion-body">
+                        Climate change leads to a variety of environmental impacts including more frequent and severe
+                        heatwaves, storms, droughts, and flooding. It can also cause rising sea levels, loss of sea ice,
+                        and changes in ecosystems and wildlife populations. Human health, agriculture, and water
+                        resources can also be adversely affected.
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingFour">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                        How can we mitigate climate change?
+                    </button>
+                </h2>
+                <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour"
+                     data-bs-parent="#faqAccordion">
+                    <div class="accordion-body">
+                        Mitigating climate change involves reducing greenhouse gas emissions and enhancing carbon sinks.
+                        This can be achieved through renewable energy sources, energy efficiency, reforestation, and
+                        sustainable agriculture. Policies and international agreements, such as the Paris Agreement,
+                        also play a crucial role in addressing climate change.
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingFive">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                        What can individuals do to help combat climate change?
+                    </button>
+                </h2>
+                <div id="collapseFive" class="accordion-collapse collapse" aria-labelledby="headingFive"
+                     data-bs-parent="#faqAccordion">
+                    <div class="accordion-body">
+                        Individuals can reduce their carbon footprint by using energy-efficient appliances, reducing car
+                        travel, using public transportation, recycling, and supporting sustainable practices.
+                        Additionally, advocating for climate-friendly policies and educating others about climate change
+                        are important steps.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+{% endblock %}
