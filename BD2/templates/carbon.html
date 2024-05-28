@@ -1,0 +1,376 @@
+{% extends 'base.html' %}
+
+{% block title %}Food Print Calculator - SOS Earth{% endblock %}
+<style>
+    .container {
+        background-color: #fff;
+        border-radius: 15px;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        margin-top: 30px;
+    }
+
+    h1 {
+        color: #2f4f4f;
+    }
+
+    label {
+        font-size: 1.2rem;
+        color: #556b2f;
+    }
+
+    .form-control {
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .btn-primary {
+        background-color: #20b2aa;
+        border: none;
+        border-radius: 20px;
+        font-size: 1.2rem;
+        padding: 10px 20px;
+        transition: background-color 0.3s ease;
+    }
+
+    .btn-primary:hover {
+        background-color: #3cb371;
+    }
+
+    #results h2 {
+        color: #ff6347;
+    }
+
+    .emoji-label {
+        font-size: 1.5rem;
+    }
+
+    .img-top {
+        width: 100%;
+        max-width: 300px;
+        margin-bottom: 20px;
+    }
+
+    .step-indicators {
+        margin-bottom: 20px;
+    }
+
+    .step-indicators .step-indicator {
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        margin-right: 5px;
+        background-color: #ddd;
+        border-radius: 50%;
+    }
+
+    .step-indicators .step-indicator.active {
+        background-color: #20b2aa;
+    }
+
+    .step-indicators .step-indicator.completed {
+        background-color: #3cb371;
+    }
+</style>
+{% block content %}
+    <div class="row text-center">
+        <!-- Background image -->
+        <div
+                class="p-5 text-center bg-image mb-5"
+                style="
+      background-image: url('https://mdbcdn.b-cdn.net/img/new/slides/041.webp');
+      height: 400px;
+    "
+        >
+            <div class="mask" style="background-color: rgba(0, 0, 0, 0.6);">
+                <div class="d-flex justify-content-center align-items-center h-100">
+                    <div class="text-white">
+                        <h1 class="mb-3">FOODPRINT CALCULATOR</h1>
+                        <hr>
+                        <h4 class="mb-3">Want to know the environmental impact of your diet? <br>
+                            Take this quick five minute survey to find your carbon, nitrogen, and water footprints!</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Background image -->
+
+        <div class="card mx-auto shadow-lg p-3 mb-5 bg-body-tertiary rounded" style="max-width: 1000px;">
+            <div class="card-body">
+                <div class="step-indicators">
+                    <span class="step-indicator active" id="step-indicator-0"></span>
+                    <span class="step-indicator" id="step-indicator-1"></span>
+                    <span class="step-indicator" id="step-indicator-2"></span>
+                    <span class="step-indicator" id="step-indicator-3"></span>
+                </div>
+                <form id="carbonForm">
+                    <!-- Step 1: Animal Products -->
+                    <div class="step active" id="step-0">
+                        <h2>Step 1 of 3: Animal Products</h2>
+                        <p>How many servings of each food do you consume on an average week?</p>
+                        <div class="form-group row">
+                            <label for="beef" class="col-sm-4 col-form-label emoji-label">🥩 Beef (3 oz/serving):</label>
+                            <div class="col-sm-8">
+                                <input type="number" class="form-control" id="beef" name="beef">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="chicken" class="col-sm-4 col-form-label emoji-label">🍗 Chicken (3
+                                oz/serving):</label>
+                            <div class="col-sm-8">
+                                <input type="number" class="form-control" id="chicken" name="chicken">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="pork" class="col-sm-4 col-form-label emoji-label">🐖 Pork (3 oz/serving):</label>
+                            <div class="col-sm-8">
+                                <input type="number" class="form-control" id="pork" name="pork">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="fish" class="col-sm-4 col-form-label emoji-label">🐟 Fish & Seafood (3.5
+                                oz/serving):</label>
+                            <div class="col-sm-8">
+                                <input type="number" class="form-control" id="fish" name="fish">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="eggs" class="col-sm-4 col-form-label emoji-label">🥚 Eggs (1 egg or 2
+                                oz/serving):</label>
+                            <div class="col-sm-8">
+                                <input type="number" class="form-control" id="eggs" name="eggs">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="milk" class="col-sm-4 col-form-label emoji-label">🥛 Milk & Yogurt (1
+                                cup/serving):</label>
+                            <div class="col-sm-8">
+                                <input type="number" class="form-control" id="milk" name="milk">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="cheese" class="col-sm-4 col-form-label emoji-label">🧀 Cheese (2
+                                oz/serving):</label>
+                            <div class="col-sm-8">
+                                <input type="number" class="form-control" id="cheese" name="cheese">
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-primary" onclick="nextStep()">Next</button>
+                    </div>
+                    <!-- Step 2: Plant-Based Foods -->
+                    <div class="step d-none" id="step-1">
+                        <h2>Step 2 of 3: Plant-Based Foods</h2>
+                        <p>How many servings of each food do you consume on an average week?</p>
+                        <div class="form-group row">
+                            <label for="beans" class="col-sm-4 col-form-label emoji-label">🌱 Beans & Legumes (0.5
+                                cup/serving):</label>
+                            <div class="col-sm-8">
+                                <input type="number" class="form-control" id="beans" name="beans">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="fruits" class="col-sm-4 col-form-label emoji-label">🍎 Fruits (1 apple or 5
+                                oz/serving):</label>
+                            <div class="col-sm-8">
+                                <input type="number" class="form-control" id="fruits" name="fruits">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="vegetables" class="col-sm-4 col-form-label emoji-label">🥦 Vegetables (1
+                                cup/serving):</label>
+                            <div class="col-sm-8">
+                                <input type="number" class="form-control" id="vegetables" name="vegetables">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="grains" class="col-sm-4 col-form-label emoji-label">🌾 Wheat & Grains (1 slice
+                                bread, 0.5 cup oats):</label>
+                            <div class="col-sm-8">
+                                <input type="number" class="form-control" id="grains" name="grains">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="rice" class="col-sm-4 col-form-label emoji-label">🍚 Rice (0.5
+                                cup/serving):</label>
+                            <div class="col-sm-8">
+                                <input type="number" class="form-control" id="rice" name="rice">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="fats" class="col-sm-4 col-form-label emoji-label">🍟 Fats & Oils (1 tbsp oil, 1
+                                bag of chips):</label>
+                            <div class="col-sm-8">
+                                <input type="number" class="form-control" id="fats" name="fats">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="nuts" class="col-sm-4 col-form-label emoji-label">🥜 Nuts & Seeds (0.25
+                                cup/serving):</label>
+                            <div class="col-sm-8">
+                                <input type="number" class="form-control" id="nuts" name="nuts">
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-secondary" onclick="prevStep()">Previous</button>
+                        <button type="button" class="btn btn-primary" onclick="nextStep()">Next</button>
+                    </div>
+                    <!-- Step 3: More About You -->
+                    <div class="step d-none" id="step-2">
+                        <h2>Step 3 of 3: More About You (Optional)</h2>
+                        <p>Help researchers at Harvard help the planet by sharing anonymously.</p>
+                        <div class="form-group row">
+                            <label for="dietary" class="col-sm-4 col-form-label emoji-label">🍽️ Dietary
+                                Preference:</label>
+                            <div class="col-sm-8">
+                                <select class="form-control" id="dietary" name="dietary">
+                                    <option>Prefer Not to Say</option>
+                                    <option>Vegan</option>
+                                    <option>Vegetarian</option>
+                                    <option>Pescatarian</option>
+                                    <option>Omnivore</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="gender" class="col-sm-4 col-form-label emoji-label">👤 Gender:</label>
+                            <div class="col-sm-8">
+                                <select class="form-control" id="gender" name="gender">
+                                    <option>Prefer Not to Say</option>
+                                    <option>Male</option>
+                                    <option>Female</option>
+                                    <option>Non-binary</option>
+                                    <option>Other</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="age" class="col-sm-4 col-form-label emoji-label">📅 Age Range:</label>
+                            <div class="col-sm-8">
+                                <select class="form-control" id="age" name="age">
+                                    <option>Prefer Not to Say</option>
+                                    <option>Under 18</option>
+                                    <option>18-24</option>
+                                    <option>25-34</option>
+                                    <option>35-44</option>
+                                    <option>45-54</option>
+                                    <option>55-64</option>
+                                    <option>65 or older</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="ethnicity" class="col-sm-4 col-form-label emoji-label">🌍 Ethnicity:</label>
+                            <div class="col-sm-8">
+                                <select class="form-control" id="ethnicity" name="ethnicity">
+                                    <option>Prefer Not to Say</option>
+                                    <option>Asian</option>
+                                    <option>Black or African American</option>
+                                    <option>Hispanic or Latino</option>
+                                    <option>Native American or Alaska Native</option>
+                                    <option>White</option>
+                                    <option>Other</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="income" class="col-sm-4 col-form-label emoji-label">💰 Annual Household
+                                Income:</label>
+                            <div class="col-sm-8">
+                                <select class="form-control" id="income" name="income">
+                                    <option>Prefer Not to Say</option>
+                                    <option>Less than $25,000</option>
+                                    <option>$25,000 - $49,999</option>
+                                    <option>$50,000 - $74,999</option>
+                                    <option>$75,000 - $99,999</option>
+                                    <option>$100,000 - $149,999</option>
+                                    <option>$150,000 or more</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="country" class="col-sm-4 col-form-label emoji-label">🌎 Country:</label>
+                            <div class="col-sm-8">
+                                <select class="form-control" id="country" name="country">
+                                    <option>Prefer Not to Say</option>
+                                    <option>USA</option>
+                                    <option>Canada</option>
+                                    <option>UK</option>
+                                    <option>Australia</option>
+                                    <option>Other</option>
+                                </select>
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-secondary" onclick="prevStep()">Previous</button>
+                        <button type="submit" class="btn btn-primary">Calculate</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div id="results" class="mt-4"></div>
+    </div>
+    <script>
+        let currentStep = 0;
+        const steps = document.querySelectorAll('.step');
+        const stepIndicators = document.querySelectorAll('.step-indicator');
+
+        function showStep(step) {
+            steps.forEach((stepElement, index) => {
+                stepElement.classList.toggle('active', index === step);
+                stepElement.classList.toggle('d-none', index !== step);
+                stepIndicators[index].classList.toggle('active', index === step);
+                stepIndicators[index].classList.toggle('completed', index < step);
+            });
+        }
+
+        function nextStep() {
+            if (currentStep < steps.length - 1) {
+                currentStep++;
+                showStep(currentStep);
+            }
+        }
+
+        function prevStep() {
+            if (currentStep > 0) {
+                currentStep--;
+                showStep(currentStep);
+            }
+        }
+
+        document.getElementById('carbonForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            // Raccolta dati dal form
+            const carKm = parseFloat(document.getElementById('carKm').value) || 0;
+            const busKm = parseFloat(document.getElementById('busKm').value) || 0;
+            const flightHours = parseFloat(document.getElementById('flightHours').value) || 0;
+            const electricity = parseFloat(document.getElementById('electricity').value) || 0;
+            const gas = parseFloat(document.getElementById('gas').value) || 0;
+            const meat = parseFloat(document.getElementById('meat').value) || 0;
+            const dairy = parseFloat(document.getElementById('dairy').value) || 0;
+            const veg = parseFloat(document.getElementById('veg').value) || 0;
+
+            // Calcoli (coefficenti esemplificati)
+            const carEmission = carKm * 0.21; // kg CO2 per km
+            const busEmission = busKm * 0.1; // kg CO2 per km
+            const flightEmission = flightHours * 90; // kg CO2 per ora di volo
+            const electricityEmission = electricity * 0.233; // kg CO2 per kWh
+            const gasEmission = gas * 2; // kg CO2 per m³
+            const meatEmission = meat * 27; // kg CO2 per kg
+            const dairyEmission = dairy * 13.6; // kg CO2 per kg
+            const vegEmission = veg * 2; // kg CO2 per kg
+
+            // Totale
+            const totalEmission = carEmission + busEmission + flightEmission + electricityEmission + gasEmission + meatEmission + dairyEmission + vegEmission;
+
+            // Mostra i risultati in una card
+            document.getElementById('results').innerHTML = `
+    <div class="card mx-auto" style="max-width: 400px;">
+        <div class="card-body">
+            <h5 class="card-title">Total Carbon Footprint</h5>
+            <p class="card-text">${totalEmission.toFixed(2)} kg CO2 per year</p>
+        </div>
+    </div>`;
+        });
+
+        showStep(currentStep);
+    </script>
+{% endblock %}

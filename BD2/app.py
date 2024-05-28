@@ -32,5 +32,10 @@ def project():
     return render_template('project_earth.html')
 
 
+@app.route('/calculator')
+def calculator():
+    return render_template('carbon.html')
+
+
 if __name__ == '__main__':
     app.run(debug=True)
