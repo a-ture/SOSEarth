@@ -1,15 +1,25 @@
+from flask import Flask, render_template, request
+from flask_pymongo import PyMongo
 from flask_bootstrap import Bootstrap
-from flask import Flask, render_template
+from dotenv import load_dotenv
+import os
+
+# Carica variabili d'ambiente dal file .env
+load_dotenv()
 
 app = Flask("SOS Earth")
 bootstrap = Bootstrap(app)
+
+# Configurazione di MongoDB
+app.config["MONGO_URI"] = os.getenv('MONGO_URI')
+mongo = PyMongo(app)
 
 
 @app.route('/')
 @app.route('/index')
 @app.route('/home')
 def index():
-    return render_template('index.html', bootstrap=bootstrap)
+    return render_template('index.html')
 
 
 @app.route('/about')
@@ -32,7 +42,7 @@ def project():
     return render_template('project_earth.html')
 
 
-@app.route('/calculator')
+@app.route('/calculator', methods=['GET', 'POST'])
 def calculator():
     return render_template('carbon.html')
 
