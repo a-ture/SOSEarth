@@ -8,20 +8,18 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="@popperjs/core" level="application" />
-    <orderEntry type="library" name="bootstrap" level="application" />
-    <orderEntry type="library" name="fefa7ea803" level="application" />
-    <orderEntry type="library" name="bootstrap" level="application" />
-    <orderEntry type="library" name="fefa7ea803" level="application" />
-    <orderEntry type="library" name="mdb-ui-kit" level="application" />
-    <orderEntry type="library" name="mdb-ui-kit" level="application" />
-    <orderEntry type="library" name="@popperjs/core" level="application" />
-    <orderEntry type="library" name="bootstrap" level="application" />
-    <orderEntry type="library" name="three.js" level="application" />
-    <orderEntry type="library" name="index" level="application" />
-    <orderEntry type="library" name="map" level="application" />
-    <orderEntry type="library" name="Animated" level="application" />
-    <orderEntry type="library" name="worldLow" level="application" />
     <orderEntry type="library" name="xy" level="application" />
+    <orderEntry type="library" name="chart.js" level="application" />
+    <orderEntry type="library" name="index" level="application" />
+    <orderEntry type="library" name="worldLow" level="application" />
+    <orderEntry type="library" name="bootstrap" level="application" />
+    <orderEntry type="library" name="fefa7ea803" level="application" />
+    <orderEntry type="library" name="mdb-ui-kit" level="application" />
+    <orderEntry type="library" name="three.js" level="application" />
+    <orderEntry type="library" name="Animated" level="application" />
+    <orderEntry type="library" name="map" level="application" />
+    <orderEntry type="library" name="Chart.js" level="application" />
+    <orderEntry type="library" name="chartjs-plugin-zoom" level="application" />
   </component>
   <component name="TemplatesService">
     <option name="TEMPLATE_CONFIGURATION" value="Jinja2" />

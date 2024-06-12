@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="JavaScriptLibraryMappings">
-    <file url="file://$PROJECT_DIR$" libraries="{@popperjs/core, Animated, bootstrap, fefa7ea803, index, map, mdb-ui-kit, three.js, worldLow, xy}" />
+    <file url="file://$PROJECT_DIR$" libraries="{Chart.js, chart.js, chartjs-plugin-zoom}" />
     <includedPredefinedLibrary name="Node.js Core" />
   </component>
 </project>
