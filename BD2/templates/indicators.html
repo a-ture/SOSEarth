@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %}Historical Data Charts - SOS Earth{% endblock %}
+{% block title %}Indicators - SOS Earth{% endblock %}
 {% block content %}
     <style>
         .main-content {
@@ -82,7 +82,7 @@
     </style>
 
     <div class="container main-content">
-        <h1 class="text-center">SOS Earth - Historical Data</h1>
+        <h1 class="text-center">SOS Earth - Indicators</h1>
         <div class="indicator-list-wrapper">
             <button class="scroll-button left">&lt;</button>
             <div class="indicator-list">
@@ -105,9 +105,6 @@
             <div class="col-12 col-md-6">
                 <div class="metadata-section">
                     <h3>Nome Indicatore</h3>
-                    <p>LATEST MEASUREMENT: January 2024</p>
-                    <a href="#" class="btn-download">Download Data</a>
-                    <h3>Metadata</h3>
                     <p><strong>Description:</strong> <span id="metadata-description"></span></p>
                     <p><strong>Source:</strong> <span id="metadata-source"></span></p>
                 </div>
@@ -130,7 +127,8 @@
         let myChart; // Define a global variable to hold the chart instance
         let xAxisLabel = 'Year';
         let yAxisLabel = 'Value';
-        let currentIndicatorName = '';
+        let currentIndicatorName = 'CO2 emissions (kt)'; // Default indicator
+        let currentCountryName = 'Africa Eastern and Southern'; // Default country
 
         document.addEventListener('DOMContentLoaded', function () {
             fetch('/get_indicators')
@@ -147,6 +145,15 @@
                         });
                         indicatorList.appendChild(button);
                     });
+
+                    // Set the first button as active and trigger its click event for default display
+                    if (indicators.length > 0) {
+                        const firstButton = indicatorList.querySelector('button');
+                        if (firstButton) {
+                            firstButton.classList.add('active');
+                            firstButton.click();
+                        }
+                    }
                 });
 
             fetch('/get_countries')
@@ -159,20 +166,25 @@
                         option.textContent = country["Country Name"];
                         countrySelect.appendChild(option);
                     });
+
+                    // Set the default country and fetch data
+                    countrySelect.value = currentCountryName;
+                    fetchDataForIndicator(currentIndicatorName);
                 });
 
             document.getElementById('data-form').addEventListener('submit', function (event) {
                 event.preventDefault();
-                const countryName = document.getElementById('country-name').value;
+                currentCountryName = document.getElementById('country-name').value;
                 const indicatorName = document.querySelector('.indicator-list .btn.active').textContent;
 
-                fetch(`/get_data?country_name=${encodeURIComponent(countryName)}&indicator_name=${encodeURIComponent(indicatorName)}`)
+                fetch(`/get_data?country_name=${encodeURIComponent(currentCountryName)}&indicator_name=${encodeURIComponent(indicatorName)}`)
                     .then(response => response.json())
                     .then(data => {
                         if (data.error) {
                             alert(data.error);
                         } else {
                             createChart(data);
+                            updateLatestMeasurement(currentCountryName, indicatorName);
                         }
                     });
 
@@ -200,6 +212,7 @@
                             alert(data.error);
                         } else {
                             createChart(data);
+                            updateLatestMeasurement(currentCountryName, indicatorName);
                         }
                     });
 
@@ -287,6 +300,19 @@
                 document.getElementById('metadata-source').textContent = metadata.SOURCE_ORGANIZATION || 'No source available';
             }
 
+            function updateLatestMeasurement(countryName, indicatorName) {
+                fetch(`/get_latest_measurement?country_name=${encodeURIComponent(countryName)}&indicator_name=${encodeURIComponent(indicatorName)}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.error) {
+                            alert(data.error);
+                        } else {
+                            latestMeasurementDate = `January ${data.Year}`;
+                            document.getElementById('latest-measurement').textContent = latestMeasurementDate;
+                        }
+                    });
+            }
+
             // Scrolling buttons functionality
             document.querySelector('.scroll-button.left').addEventListener('click', function () {
                 document.querySelector('.indicator-list').scrollBy({
@@ -303,5 +329,4 @@
             });
         });
     </script>
-
 {% endblock %}

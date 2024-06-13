@@ -97,7 +97,22 @@ def get_indicators():
 
 @app.route('/help')
 def help_earth():
-    return render_template('help_earth.html')
+    try:
+        # Recupera i dati dal database
+        solutions_list = list(mongo.db.indicator_solutions.find({}, {'_id': 0}))
+        logging.debug(f"Soluzioni trovate: {solutions_list}")  # Log per verificare i dati
+
+        # Verifica se i dati sono effettivamente presenti
+        if solutions_list:
+            logging.info(f"{len(solutions_list)} soluzioni trovate.")
+        else:
+            logging.warning("Nessuna soluzione trovata nella collezione.")
+
+        # Passa i dati al template
+        return render_template('help_earth.html', solutions=solutions_list)
+    except Exception as e:
+        logging.error(f"Errore nel recupero delle soluzioni: {e}")
+        return render_template('help_earth.html', solutions=[])
 
 
 @app.route('/project')
@@ -105,9 +120,9 @@ def project():
     return render_template('project_earth.html')
 
 
-@app.route('/chart')
-def chart():
-    return render_template('charts.html')
+@app.route('/indicators')
+def indicators():
+    return render_template('indicators.html')
 
 
 @app.route('/get_countries', methods=['GET'])
@@ -146,33 +161,6 @@ def get_data():
     result = df[['Year', 'Value']].to_dict(orient='records')
 
     return jsonify(result)
-
-
-@app.route('/get_latest_measurement', methods=['GET'])
-@app.route('/get_latest_measurement', methods=['GET'])
-def get_latest_measurement():
-    country_name = request.args.get('country_name')
-    indicator_name = request.args.get('indicator_name')
-    if not country_name or not indicator_name:
-        return jsonify({"error": "Country name and indicator name are required"}), 400
-
-    # Trova il country_key per il paese specificato
-    country = mongo.db.dim_country.find_one({"Country Name": country_name})
-    if not country:
-        return jsonify({"error": f"Country {country_name} not found"}), 404
-
-    country_key = country['country_key']
-
-    # Estrai l'ultima misurazione dalla tabella dei fatti
-    data = list(mongo.db.fact_table.find(
-        {"country_key": country_key, "Indicator Name": indicator_name},
-        {"Year": 1, "_id": 0}
-    ).sort("Year", -1).limit(1))
-
-    if not data:
-        return jsonify({"error": f"No data found for country {country_name} and indicator {indicator_name}"}), 404
-
-    return jsonify(data[0])
 
 
 if __name__ == "__main__":

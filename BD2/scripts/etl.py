@@ -157,6 +157,34 @@ def save_metadata_to_db(metadata, collection_name):
         logging.error(f"Error loading metadata into {collection_name}: {e}")
 
 
+def load_solutions(file_path):
+    if not os.path.exists(file_path):
+        logging.error(f"File not found: {file_path}")
+        return None
+    try:
+        logging.info(f"Loading solutions from {file_path}")
+        df = pd.read_csv(file_path)
+        return df
+    except Exception as e:
+        logging.error(f"Error loading solutions from {file_path}: {e}")
+        return None
+
+
+def save_solutions_to_db(df, collection_name):
+    if df is None or df.empty:
+        logging.warning(f"No data to load for {collection_name}")
+        return
+
+    try:
+        logging.info(f"Loading solutions into collection {collection_name}")
+        data = df.to_dict(orient="records")
+        collection = db[collection_name]
+        collection.insert_many(data)
+        logging.info(f"Inserted {len(data)} records into collection {collection_name}.")
+    except Exception as e:
+        logging.error(f"Error loading data into {collection_name}: {e}")
+
+
 def main():
     try:
         clean_all_collections()
@@ -280,6 +308,10 @@ def main():
             create_dim_year_table()
             create_fact_table(combined_df)
 
+            # Carica e salva le soluzioni
+        solutions_file = "../data/solutions.csv"
+        solutions_df = load_solutions(solutions_file)
+        save_solutions_to_db(solutions_df, "indicator_solutions")
         logging.info("ETL process, cube creation, and index creation completed successfully.")
     except Exception as e:
         logging.error(f"ETL process failed: {e}")

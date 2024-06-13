@@ -6,8 +6,9 @@
     <style>
         .flip-card {
             perspective: 1000px;
-            width: 250px; /* Imposta la larghezza della card */
-            height: 250px; /* Imposta l'altezza della card */
+            width: 250px;
+            height: 250px;
+            margin: 20px;
         }
 
         .flip-card-inner {
@@ -17,7 +18,8 @@
             text-align: center;
             transition: transform 0.6s;
             transform-style: preserve-3d;
-            border-radius: 50%; /* Rendi la card rotonda */
+            border-radius: 15px;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
         }
 
         .flip-card:hover .flip-card-inner {
@@ -30,14 +32,7 @@
             width: 100%;
             height: 100%;
             backface-visibility: hidden;
-            border-radius: 50%; /* Rendi anche il fronte e il retro rotondi */
-        }
-
-        .flip-card-front {
-            background-image: url('https://mdbcdn.b-cdn.net/img/new/standard/city/043.webp'); /* Aggiungi l'immagine di sfondo */
-            background-size: cover;
-            background-position: center;
-            color: white; /* Colore del testo */
+            border-radius: 15px;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -46,71 +41,61 @@
 
         .flip-card-back {
             background-color: #343a40;
-            color: #fff; /* Cambia il colore del testo */
+            color: white;
             transform: rotateY(180deg);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 24px; /* Dimensione del testo */
+            font-size: 16px;
+            position: relative;
         }
 
-        /* Posiziona l'icona al centro */
         .icon {
             position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 2em; /* Dimensione dell'icona */
-            color: white; /* Colore dell'icona */
+            font-size: 24px;
         }
 
-        /* Posiziona il testo al centro */
-        .text {
-            position: absolute;
-            bottom: 10%;
-            left: 50%;
-            transform: translateX(-50%);
-            color: white; /* Colore del testo */
-            text-align: center; /* Allinea il testo al centro */
+        .icon.problem {
+            top: 10px;
+            right: 10px;
+            color: red;
         }
 
+        .icon.solution {
+            top: 10px;
+            right: 10px;
+            color: green;
+        }
+
+        .card-title {
+            margin-bottom: 10px;
+        }
+
+        .card-text {
+            text-align: center;
+        }
     </style>
 
-    <!-- Problemi e Soluzioni  -->
-    <div class="row row-cols-1 row-cols-md-4 g-4">
-        <div class="col">
-            <div class="flip-card">
-                <div class="flip-card-inner">
-                    <div class="flip-card-front">
-                        <i class="icon fa-sharp fa-regular fa-arrow-down"></i> <!-- Icona -->
-                        <p class="text card-text">Testo Sovrapposto</p> <!-- Testo Sovrapposto -->
-                    </div>
-                    <div class="flip-card-back">
-                        <div class="card-body">
-                            <h5 class="card-title">Back Side</h5>
-                            <p class="card-text">React JS</p>
+    <!-- Problemi e Soluzioni -->
+    <div class="container mt-5">
+        <div class="row row-cols-1 row-cols-md-4 g-4">
+            {% if solutions %}
+                {% for solution in solutions %}
+                    <div class="col">
+                        <div class="flip-card">
+                            <div class="flip-card-inner">
+                                <div class="flip-card-front">
+                                    <i class="fas fa-exclamation-circle icon problem"></i>
+                                    <p class="text card-text">{{ solution['Indicator Name'] }}</p>
+                                </div>
+                                <div class="flip-card-back">
+                                    <i class="fas fa-check-circle icon solution"></i>
+                                    <p class="card-text">{{ solution['Solution'] }}</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-        <div class="col">
-            <div class="flip-card">
-                <div class="flip-card-inner">
-                    <div class="flip-card-front">
-                        <i class="icon fa-sharp fa-regular fa-arrow-down"></i> <!-- Icona -->
-                        <p class="text card-text">Testo Sovrapposto</p> <!-- Testo Sovrapposto -->
-                    </div>
-                    <div class="flip-card-back">
-                        <div class="card-body">
-                            <h5 class="card-title">Back Side</h5>
-                            <p class="card-text">React JS</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                {% endfor %}
+            {% else %}
+                <p class="text-center">Nessun indicatore trovato.</p>
+            {% endif %}
         </div>
     </div>
-
 {% endblock %}
-
