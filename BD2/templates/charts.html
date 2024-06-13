@@ -112,6 +112,7 @@
                     <p><strong>Source:</strong> <span id="metadata-source"></span></p>
                 </div>
             </div>
+
             <div class="col-12 col-md-6">
                 <div class="chart-container">
                     <canvas id="chartdiv" style="max-width: 100%; max-height: 100%;"></canvas>
@@ -129,6 +130,7 @@
         let myChart; // Define a global variable to hold the chart instance
         let xAxisLabel = 'Year';
         let yAxisLabel = 'Value';
+        let currentIndicatorName = '';
 
         document.addEventListener('DOMContentLoaded', function () {
             fetch('/get_indicators')
@@ -140,6 +142,7 @@
                         button.className = 'btn btn-outline-primary';
                         button.textContent = indicator;
                         button.addEventListener('click', function () {
+                            currentIndicatorName = indicator;
                             fetchDataForIndicator(indicator);
                         });
                         indicatorList.appendChild(button);
@@ -279,6 +282,7 @@
             }
 
             function displayMetadata(metadata) {
+                document.querySelector('.metadata-section h3').textContent = currentIndicatorName;
                 document.getElementById('metadata-description').textContent = metadata.SOURCE_NOTE || 'No description available';
                 document.getElementById('metadata-source').textContent = metadata.SOURCE_ORGANIZATION || 'No source available';
             }
