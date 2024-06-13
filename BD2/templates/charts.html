@@ -1,33 +1,151 @@
 {% extends 'base.html' %}
 
 {% block title %}Historical Data Charts - SOS Earth{% endblock %}
-
 {% block content %}
-    <div class="container mt-5">
-        <h1>SOS Earth - CO2 Emissions</h1>
-        <form id="country-form">
-            <div class="form-group">
-                <label for="country-name">Select Country:</label>
-                <select class="form-control" id="country-name" required>
-                    <!-- Options will be populated here by JavaScript -->
-                </select>
+    <style>
+        .main-content {
+            margin-top: 50px;
+        }
+
+        .indicator-list-wrapper {
+            position: relative;
+        }
+
+        .indicator-list {
+            display: flex;
+            overflow-x: auto;
+            white-space: nowrap;
+            margin: 0 -20px;
+            padding: 0 20px;
+        }
+
+        .indicator-list button {
+            display: inline-block;
+            margin-right: 10px;
+        }
+
+        .scroll-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(255, 255, 255, 0.7);
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            z-index: 1;
+        }
+
+        .scroll-button.left {
+            left: 0;
+        }
+
+        .scroll-button.right {
+            right: 0;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 500px;
+            margin-top: 20px;
+        }
+
+        .metadata-section {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .metadata-section h3 {
+            margin-top: 0;
+        }
+
+        .metadata-section p {
+            margin: 5px 0;
+        }
+
+        .btn-download {
+            background-color: #007bff;
+            color: #fff;
+            border-radius: 4px;
+            padding: 10px 20px;
+            text-align: center;
+            display: inline-block;
+            margin-top: 10px;
+        }
+
+        .btn-download:hover {
+            background-color: #0056b3;
+            color: #fff;
+        }
+    </style>
+
+    <div class="container main-content">
+        <h1 class="text-center">SOS Earth - Historical Data</h1>
+        <div class="indicator-list-wrapper">
+            <button class="scroll-button left">&lt;</button>
+            <div class="indicator-list">
+                <!-- Lista degli indicatori popolata da JavaScript -->
             </div>
-            <button type="submit" class="btn btn-primary">Get CO2 Data</button>
-        </form>
-        <div style="max-width: 100%; height: 500px;">
-            <canvas id="chartdiv" style="max-width: 100%; max-height: 100%;"></canvas>
+            <button class="scroll-button right">&gt;</button>
+        </div>
+        <div id="country-select-container" style="display: none;">
+            <form id="data-form" class="data-section">
+                <div class="form-group">
+                    <label for="country-name">Select Country:</label>
+                    <select class="form-control" id="country-name" required>
+                        <!-- Options will be populated here by JavaScript -->
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Get Data</button>
+            </form>
+        </div>
+        <div class="row">
+            <div class="col-12 col-md-6">
+                <div class="metadata-section">
+                    <h3>Nome Indicatore</h3>
+                    <p>LATEST MEASUREMENT: January 2024</p>
+                    <a href="#" class="btn-download">Download Data</a>
+                    <h3>Metadata</h3>
+                    <p><strong>Description:</strong> <span id="metadata-description"></span></p>
+                    <p><strong>Source:</strong> <span id="metadata-source"></span></p>
+                </div>
+            </div>
+            <div class="col-12 col-md-6">
+                <div class="chart-container">
+                    <canvas id="chartdiv" style="max-width: 100%; max-height: 100%;"></canvas>
+                </div>
+            </div>
         </div>
     </div>
 
     <!-- Resources -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@1.1.1/dist/chartjs-plugin-zoom.min.js"></script>
 
     <!-- Chart code -->
     <script>
         let myChart; // Define a global variable to hold the chart instance
+        let xAxisLabel = 'Year';
+        let yAxisLabel = 'Value';
 
         document.addEventListener('DOMContentLoaded', function () {
+            fetch('/get_indicators')
+                .then(response => response.json())
+                .then(indicators => {
+                    const indicatorList = document.querySelector('.indicator-list');
+                    indicators.forEach(indicator => {
+                        const button = document.createElement('button');
+                        button.className = 'btn btn-outline-primary';
+                        button.textContent = indicator;
+                        button.addEventListener('click', function () {
+                            fetchDataForIndicator(indicator);
+                        });
+                        indicatorList.appendChild(button);
+                    });
+                });
+
             fetch('/get_countries')
                 .then(response => response.json())
                 .then(countries => {
@@ -40,20 +158,54 @@
                     });
                 });
 
-            document.getElementById('country-form').addEventListener('submit', function (event) {
+            document.getElementById('data-form').addEventListener('submit', function (event) {
                 event.preventDefault();
                 const countryName = document.getElementById('country-name').value;
-                fetch(`/get_co2_data?country_name=${countryName}`)
+                const indicatorName = document.querySelector('.indicator-list .btn.active').textContent;
+
+                fetch(`/get_data?country_name=${encodeURIComponent(countryName)}&indicator_name=${encodeURIComponent(indicatorName)}`)
                     .then(response => response.json())
                     .then(data => {
-                        console.log(data);  // Log the data for debugging
                         if (data.error) {
                             alert(data.error);
                         } else {
                             createChart(data);
                         }
                     });
+
+                fetch(`/get_metadata?indicator_name=${encodeURIComponent(indicatorName)}`)
+                    .then(response => response.json())
+                    .then(metadata => {
+                        displayMetadata(metadata);
+                    });
             });
+
+            function fetchDataForIndicator(indicatorName) {
+                document.getElementById('country-select-container').style.display = 'block';
+                fetch(`/get_labels?indicator_name=${encodeURIComponent(indicatorName)}`)
+                    .then(response => response.json())
+                    .then(labels => {
+                        xAxisLabel = labels.x;
+                        yAxisLabel = labels.y;
+                    })
+                    .then(() => {
+                        return fetch(`/get_data?country_name=${encodeURIComponent(document.getElementById('country-name').value)}&indicator_name=${encodeURIComponent(indicatorName)}`);
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.error) {
+                            alert(data.error);
+                        } else {
+                            createChart(data);
+                        }
+                    });
+
+                fetch(`/get_metadata?indicator_name=${encodeURIComponent(indicatorName)}`)
+                    .then(response => response.json())
+                    .then(metadata => {
+                        displayMetadata(metadata);
+                    });
+            }
 
             function createChart(data) {
                 const ctx = document.getElementById('chartdiv').getContext('2d');
@@ -67,7 +219,7 @@
                 const formattedData = {
                     labels: data.map(item => item.Year),
                     datasets: [{
-                        label: 'CO2 Emissions',
+                        label: yAxisLabel,
                         data: data.map(item => item.Value),
                         borderColor: 'rgba(75, 192, 192, 1)',
                         backgroundColor: 'rgba(75, 192, 192, 0.2)',
@@ -85,13 +237,13 @@
                             x: {
                                 title: {
                                     display: true,
-                                    text: 'Year'
+                                    text: xAxisLabel
                                 }
                             },
                             y: {
                                 title: {
                                     display: true,
-                                    text: 'CO2 Emissions (kt)'
+                                    text: yAxisLabel
                                 }
                             }
                         },
@@ -99,7 +251,7 @@
                             tooltip: {
                                 callbacks: {
                                     label: function (context) {
-                                        return `${context.parsed.y} kt`;
+                                        return `${context.parsed.y}`;
                                     }
                                 }
                             },
@@ -125,6 +277,27 @@
                 // Create a new chart instance and assign it to the global variable
                 myChart = new Chart(ctx, config);
             }
+
+            function displayMetadata(metadata) {
+                document.getElementById('metadata-description').textContent = metadata.SOURCE_NOTE || 'No description available';
+                document.getElementById('metadata-source').textContent = metadata.SOURCE_ORGANIZATION || 'No source available';
+            }
+
+            // Scrolling buttons functionality
+            document.querySelector('.scroll-button.left').addEventListener('click', function () {
+                document.querySelector('.indicator-list').scrollBy({
+                    left: -100,
+                    behavior: 'smooth'
+                });
+            });
+
+            document.querySelector('.scroll-button.right').addEventListener('click', function () {
+                document.querySelector('.indicator-list').scrollBy({
+                    left: 100,
+                    behavior: 'smooth'
+                });
+            });
         });
     </script>
+
 {% endblock %}
