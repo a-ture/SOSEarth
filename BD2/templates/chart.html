@@ -1,0 +1,356 @@
+{% extends 'base.html' %}
+
+{% block title %}Advanced Charts - SOS Earth{% endblock %}
+
+
+{% block content %}
+    <div class="container">
+        <div class="row align-items-center mb-4">
+            <div class="col-md-6">
+                <h2>Total GHG Emissions (2000-2020)</h2>
+                <canvas id="totalGHGEmissionsChart" width="400" height="200"></canvas>
+            </div>
+            <div class="col-md-6">
+                <p>
+                    Questo grafico a linee mostra le emissioni totali di gas serra (GHG) per i primi 20 paesi con le
+                    emissioni più elevate dal 2000 al 2020.
+                    Ogni linea rappresenta un paese e mostra come le emissioni sono cambiate nel tempo. Le emissioni di
+                    gas
+                    serra includono anidride carbonica (CO2),
+                    metano (CH4), ossido di azoto (N2O) e altri gas ad effetto serra.
+                </p>
+            </div>
+        </div>
+
+        <div class="row align-items-center mb-4">
+            <div class="col-md-6 order-md-2">
+                <h2>Agricultural Land Use (%) - 2020</h2>
+                <canvas id="agriculturalLandChart" width="400" height="200"></canvas>
+            </div>
+            <div class="col-md-6 order-md-1">
+                <p>
+                    Questo grafico a torta mostra l'uso del suolo agricolo come percentuale della superficie totale per
+                    i
+                    primi 10 paesi nel 2020.
+                    L'uso del suolo agricolo include le terre arabili, i terreni da pascolo permanente e le colture
+                    permanenti. Ogni sezione rappresenta un paese diverso,
+                    indicando l'importanza dell'agricoltura nell'uso complessivo del suolo di ciascun paese.
+                </p>
+            </div>
+        </div>
+
+        <div class="row align-items-center mb-4">
+            <div class="col-md-6">
+                <h2>CO2 Emissions Average (2000-2020)</h2>
+                <canvas id="co2EmissionsAverageChart" width="400" height="200"></canvas>
+            </div>
+            <div class="col-md-6">
+                <p>
+                    Questo grafico a barre mostra le emissioni medie di CO2 (in kilotonnellate) per vari paesi dal 2000
+                    al
+                    2020.
+                    Ogni barra rappresenta un paese diverso. Le emissioni di CO2 derivano principalmente dalla
+                    combustione
+                    di combustibili fossili e dalla produzione di cemento,
+                    e sono un indicatore chiave del cambiamento climatico causato dall'uomo.
+                </p>
+            </div>
+        </div>
+
+        <div class="row align-items-center mb-4">
+            <div class="col-md-6 order-md-2">
+                <h2>CO2 Emissions Change (2000 vs 2020)</h2>
+                <canvas id="co2EmissionsChangeChart" width="400" height="200"></canvas>
+            </div>
+            <div class="col-md-6 order-md-1">
+                <p>
+                    Questo grafico a barre mostra la variazione percentuale delle emissioni di CO2 tra il 2000 e il 2020
+                    per
+                    vari paesi.
+                    Ogni barra rappresenta un paese e la variazione percentuale delle sue emissioni di CO2, fornendo
+                    un'indicazione di come le politiche
+                    e le tecnologie di ciascun paese hanno influenzato le loro emissioni di CO2 nel tempo.
+                </p>
+            </div>
+        </div>
+
+        <div class="row align-items-center mb-4">
+            <div class="col-md-6">
+                <h2>Emissioni di Metano (2000-2020)</h2>
+                <canvas id="methaneEmissionsChart" width="400" height="200"></canvas>
+            </div>
+            <div class="col-md-6">
+                <p>
+                    Questo grafico a barre mostra le emissioni medie di metano per vari paesi dal 2000 al 2020. Ogni
+                    barra
+                    rappresenta un paese diverso.
+                    Il metano è un potente gas serra con un potenziale di riscaldamento globale molto più elevato
+                    rispetto
+                    alla CO2, sebbene sia presente in quantità minori
+                    nell'atmosfera.
+                </p>
+            </div>
+        </div>
+
+        <div class="row align-items-center mb-4">
+            <div class="col-md-6 order-md-2">
+                <h2>Consumo di Energia Rinnovabile (%)</h2>
+                <canvas id="renewableEnergyChart" width="400" height="200"></canvas>
+            </div>
+            <div class="col-md-6 order-md-1">
+                <p>
+                    Questo grafico a barre mostra il consumo medio di energia rinnovabile come percentuale del consumo
+                    totale di energia per vari paesi.
+                    Ogni barra rappresenta un paese diverso. L'energia rinnovabile include fonti di energia sostenibile
+                    come
+                    solare, eolica, idroelettrica e biomassa,
+                    ed è cruciale per ridurre le emissioni di gas serra e combattere il cambiamento climatico.
+                </p>
+            </div>
+        </div>
+
+        <div class="row align-items-center mb-4">
+            <div class="col-md-6">
+                <h2>Emissioni di PM2.5 (2000-2020)</h2>
+                <canvas id="pm25EmissionsChart" width="400" height="200"></canvas>
+            </div>
+            <div class="col-md-6">
+                <p>
+                    Questo grafico a linee mostra le emissioni medie di PM2.5 (particelle fini) per vari paesi dal 2000
+                    al
+                    2020. Ogni linea rappresenta un paese diverso.
+                    Le particelle PM2.5 sono inquinanti atmosferici che possono penetrare profondamente nei polmoni e
+                    causare gravi problemi di salute, tra cui malattie respiratorie e cardiovascolari.
+                </p>
+            </div>
+        </div>
+
+        <div class="row align-items-center mb-4">
+            <div class="col-md-6 order-md-2">
+                <h2>Specie di Uccelli Minacciate (2020)</h2>
+                <canvas id="threatenedBirdSpeciesChart" width="400" height="200"></canvas>
+            </div>
+            <div class="col-md-6 order-md-1">
+                <p>
+                    Questo grafico a barre mostra il numero di specie di uccelli minacciate per vari paesi nel 2020.
+                    Ogni
+                    barra rappresenta un paese e il numero di specie di uccelli minacciate.
+                    La perdita di habitat, il cambiamento climatico e altre attività umane sono le principali cause
+                    della
+                    minaccia per molte specie di uccelli.
+                </p>
+            </div>
+        </div>
+
+        <div class="row align-items-center mb-4">
+            <div class="col-md-6">
+                <h2>Indice di Rischio Climatico</h2>
+                <canvas id="climateRiskIndexChart" width="400" height="200"></canvas>
+            </div>
+            <div class="col-md-6">
+                <p>
+                    Questo grafico a barre mostra l'indice medio di rischio climatico per vari paesi dal 2000 al 2020.
+                    Ogni
+                    barra rappresenta un paese diverso.
+                    L'indice di rischio climatico misura l'impatto degli eventi climatici estremi, come uragani,
+                    alluvioni e
+                    siccità, sulla popolazione e l'economia di un paese.
+                </p>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@1.1.1/dist/chartjs-plugin-zoom.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            function fetchData(url, callback) {
+                fetch(url)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error(`HTTP error! status: ${response.status}`);
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        console.log('Data from API:', url, data); // Debug: log data from API
+                        callback(data);
+                    })
+                    .catch(error => console.error('Error fetching data:', error));
+            }
+
+            function getRandomColor() {
+                const letters = '0123456789ABCDEF';
+                let color = '#';
+                for (let i = 0; i < 6; i++) {
+                    color += letters[Math.floor(Math.random() * 16)];
+                }
+                return color;
+            }
+
+            function renderChart(ctx, type, labels, data, label) {
+                if (labels.length === 0 || data.length === 0) {
+                    console.warn('No data available for rendering the chart:', label);
+                    return;
+                }
+                console.log('Rendering chart:', label, 'with labels:', labels, 'and data:', data); // Debug: log data before rendering
+
+                if (type === 'scatter') {
+                    new Chart(ctx, {
+                        type: type,
+                        data: {
+                            datasets: data
+                        },
+                        options: {
+                            scales: {
+                                x: {
+                                    type: 'linear',
+                                    position: 'bottom'
+                                }
+                            }
+                        }
+                    });
+                } else {
+                    new Chart(ctx, {
+                        type: type,
+                        data: {
+                            labels: labels,
+                            datasets: [{
+                                label: label,
+                                data: data,
+                                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                                borderColor: 'rgba(75, 192, 192, 1)',
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            scales: {
+                                y: {
+                                    beginAtZero: true
+                                }
+                            },
+                            plugins: {
+                                zoom: {
+                                    zoom: {
+                                        wheel: {
+                                            enabled: true
+                                        },
+                                        pinch: {
+                                            enabled: true
+                                        },
+                                        mode: 'xy'
+                                    }
+                                }
+                            }
+                        }
+                    });
+                }
+            }
+
+            // CO2 Emissions Average (2000-2020) - Bar Chart
+            fetchData('/api/co2_emissions_average', data => {
+                const filteredData = data.filter(d => d._id !== null); // Filter out null values
+                const labels = filteredData.map(d => d._id);
+                const values = filteredData.map(d => d.Average_CO2_Emissions);
+                console.log('CO2 Emissions Average Data:', labels, values); // Debug: log data for CO2 Emissions Average
+                renderChart(document.getElementById('co2EmissionsAverageChart').getContext('2d'), 'bar', labels, values, 'Average CO2 Emissions (kt)');
+            });
+
+            // CO2 Emissions Change (2000 vs 2020) - Bar Chart
+            fetchData('/api/co2_emissions_change', data => {
+                const filteredData = data.filter(d => d.Percentage_Change !== null); // Filter out null values
+                const labels = filteredData.map(d => d.Country);
+                const values = filteredData.map(d => d.Percentage_Change);
+                console.log('CO2 Emissions Change Data:', labels, values); // Debug: log data for CO2 Emissions Change
+                renderChart(document.getElementById('co2EmissionsChangeChart').getContext('2d'), 'bar', labels, values, 'CO2 Emissions Change (%)');
+            });
+
+            // Average Methane Emissions (2000-2020) - Bar Chart
+            fetchData('/api/methane_emissions', data => {
+                const labels = data.map(d => d._id);
+                const values = data.map(d => d.Average_Methane_Emissions);
+                console.log('Methane Emissions Data:', labels, values); // Debug: log data for Methane Emissions
+                renderChart(document.getElementById('methaneEmissionsChart').getContext('2d'), 'bar', labels, values, 'Average Methane Emissions');
+            });
+
+            // Renewable Energy Consumption (%) - Bar Chart
+            fetchData('/api/renewable_energy', data => {
+                const labels = data.map(d => d._id);
+                const values = data.map(d => d.Average_Renewable_Energy);
+                console.log('Renewable Energy Data:', labels, values); // Debug: log data for Renewable Energy
+                renderChart(document.getElementById('renewableEnergyChart').getContext('2d'), 'bar', labels, values, 'Average Renewable Energy Consumption (%)');
+            });
+
+            // PM2.5 Emissions (2000-2020) - Line Chart
+            fetchData('/api/pm25_emissions', data => {
+                const labels = data.map(d => d._id);
+                const values = data.map(d => d.Average_PM25_Emissions);
+                console.log('PM2.5 Emissions Data:', labels, values); // Debug: log data for PM2.5 Emissions
+                renderChart(document.getElementById('pm25EmissionsChart').getContext('2d'), 'line', labels, values, 'Average PM2.5 Emissions (µg/m³)');
+            });
+
+            // Threatened Bird Species (2020) - Bar Chart
+            fetchData('/api/threatened_bird_species', data => {
+                const labels = data.map(d => d._id); // Change this line
+                const values = data.map(d => d.Threatened_Bird_Species); // Change this line
+                console.log('Threatened Bird Species Data:', labels, values); // Debug: log data for Threatened Bird Species
+                renderChart(document.getElementById('threatenedBirdSpeciesChart').getContext('2d'), 'bar', labels, values, 'Threatened Bird Species (2020)');
+            });
+
+            // Average Climate Risk Index (2000-2020) - Bar Chart
+            fetchData('/api/climate_risk_index', data => {
+                const labels = data.map(d => d._id);
+                const values = data.map(d => d.Average_Climate_Risk_Index);
+                console.log('Climate Risk Index Data:', labels, values); // Debug: log data for Climate Risk Index
+                renderChart(document.getElementById('climateRiskIndexChart').getContext('2d'), 'bar', labels, values, 'Average Climate Risk Index');
+            });
+
+            // Agricultural Land Use (%) - 2020 - Pie Chart
+            fetchData('/api/agricultural_land_use', data => {
+                const labels = data.map(d => d._id);
+                const values = data.map(d => d.Agricultural_Land_Use);
+                const colors = labels.map(() => getRandomColor());
+
+                renderChart(
+                    document.getElementById('agriculturalLandChart').getContext('2d'),
+                    'pie',
+                    labels,
+                    values,
+                    'Agricultural Land Use (%)'
+                );
+            });
+
+            // Total GHG Emissions (2000-2020) - Line Chart
+            fetchData('/api/total_ghg_emissions', data => {
+                const countries = Array.from(new Set(data.map(d => d._id['Country Name'])));
+                const datasets = countries.map(country => {
+                    return {
+                        label: country,
+                        data: data.filter(d => d._id['Country Name'] === country).map(d => ({
+                            x: d._id.Year,
+                            y: d.Total_GHG_Emissions
+                        })),
+                        borderColor: getRandomColor(),
+                        fill: false
+                    };
+                });
+
+                console.log('Line Data:', datasets); // Debug: log data for line chart
+
+                new Chart(document.getElementById('totalGHGEmissionsChart').getContext('2d'), {
+                    type: 'line',
+                    data: {
+                        datasets: datasets
+                    },
+                    options: {
+                        scales: {
+                            x: {
+                                type: 'linear',
+                                position: 'bottom'
+                            }
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+{% endblock %}

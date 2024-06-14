@@ -300,18 +300,6 @@
                 document.getElementById('metadata-source').textContent = metadata.SOURCE_ORGANIZATION || 'No source available';
             }
 
-            function updateLatestMeasurement(countryName, indicatorName) {
-                fetch(`/get_latest_measurement?country_name=${encodeURIComponent(countryName)}&indicator_name=${encodeURIComponent(indicatorName)}`)
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.error) {
-                            alert(data.error);
-                        } else {
-                            latestMeasurementDate = `January ${data.Year}`;
-                            document.getElementById('latest-measurement').textContent = latestMeasurementDate;
-                        }
-                    });
-            }
 
             // Scrolling buttons functionality
             document.querySelector('.scroll-button.left').addEventListener('click', function () {
