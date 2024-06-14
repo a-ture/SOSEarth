@@ -310,5 +310,137 @@ def total_ghg_emissions():
     return jsonify(data)
 
 
+def get_latest_data():
+    vital_signs = []
+
+    # Fetch latest CO2 concentration
+    co2_data = mongo.db.co2_data.find_one(sort=[("decimal_date", -1)])
+    if co2_data:
+        vital_signs.append({
+            "title": "CO2 Concentration",
+            "value": co2_data.get("co2_concentration", "N/A"),
+            "trend": "up",
+            "description": "parts per million"
+        })
+
+    # Fetch latest Methane emissions
+    methane_data = mongo.db.methane_emissions.find_one(sort=[("year", -1), ("month", -1)])
+    if methane_data:
+        vital_signs.append({
+            "title": "Methane Emissions",
+            "value": methane_data.get("ch4_concentration", "N/A"),
+            "trend": "up",
+            "description": "parts per billion"
+        })
+
+    # Fetch latest Nitrous Oxide emissions
+    nitrous_oxide_data = mongo.db.nitrous_oxide_emissions.find_one(sort=[("year", -1)])
+    if nitrous_oxide_data:
+        vital_signs.append({
+            "title": "Nitrous Oxide Emissions",
+            "value": nitrous_oxide_data.get("Value", "N/A"),
+            "trend": "up",
+            "description": "thousand metric tons of CO2 equivalent"
+        })
+
+    # Fetch latest PM2.5 air pollution
+    pm25_data = mongo.db.pm25_air_pollution.find_one(sort=[("year", -1)])
+    if pm25_data:
+        vital_signs.append({
+            "title": "PM2.5 Air Pollution",
+            "value": pm25_data.get("Value", "N/A"),
+            "trend": "up",
+            "description": "micrograms per cubic meter"
+        })
+
+    # Fetch latest Renewable Energy consumption
+    renewable_energy_data = mongo.db.renewable_energy.find_one(sort=[("year", -1)])
+    if renewable_energy_data:
+        vital_signs.append({
+            "title": "Renewable Energy Consumption",
+            "value": renewable_energy_data.get("Value", "N/A"),
+            "trend": "up",
+            "description": "percentage of total energy consumption"
+        })
+
+    # Fetch latest Total GHG Emissions
+    total_ghg_emissions_data = mongo.db.total_ghg_emissions.find_one(sort=[("year", -1)])
+    if total_ghg_emissions_data:
+        vital_signs.append({
+            "title": "Total GHG Emissions",
+            "value": total_ghg_emissions_data.get("Value", "N/A"),
+            "trend": "up",
+            "description": "kt of CO2 equivalent"
+        })
+
+    # Fetch latest Coal Use
+    coal_use_data = mongo.db.coal_use.find_one(sort=[("year", -1)])
+    if coal_use_data:
+        vital_signs.append({
+            "title": "Coal Use",
+            "value": coal_use_data.get("Value", "N/A"),
+            "trend": "up",
+            "description": "percentage of total energy use"
+        })
+
+    # Fetch latest Hydroelectricity
+    hydroelectricity_data = mongo.db.hydroelectricity.find_one(sort=[("year", -1)])
+    if hydroelectricity_data:
+        vital_signs.append({
+            "title": "Hydroelectricity",
+            "value": hydroelectricity_data.get("Value", "N/A"),
+            "trend": "up",
+            "description": "percentage of total electricity production"
+        })
+
+    # Fetch latest Threatened Bird Species
+    threatened_bird_species_data = mongo.db.threatened_bird_species.find_one(sort=[("year", -1)])
+    if threatened_bird_species_data:
+        vital_signs.append({
+            "title": "Threatened Bird Species",
+            "value": threatened_bird_species_data.get("Value", "N/A"),
+            "trend": "up",
+            "description": "number of species"
+        })
+
+    # Fetch latest Climate Risk Index
+    climate_risk_index_data = mongo.db.climate_risk_index.find_one(sort=[("year", -1)])
+    if climate_risk_index_data:
+        vital_signs.append({
+            "title": "Climate Risk Index",
+            "value": climate_risk_index_data.get("Value", "N/A"),
+            "trend": "up",
+            "description": "index"
+        })
+
+    # Fetch latest Arctic Sea Ice Minimum Extent (example from temperature_data)
+    arctic_ice_data = mongo.db.temperature_data.find_one(sort=[("year", -1)])
+    if arctic_ice_data:
+        vital_signs.append({
+            "title": "Arctic Sea Ice Minimum Extent",
+            "value": arctic_ice_data.get("temperature", "N/A"),
+            "trend": "down",
+            "description": "temperature anomaly"
+        })
+
+    # Fetch latest Global Mean Sea Level
+    gmsl_data = mongo.db.gmsl_data.find_one(sort=[("decimal_year", -1)])
+    if gmsl_data:
+        vital_signs.append({
+            "title": "Global Mean Sea Level",
+            "value": gmsl_data.get("gmsl", "N/A"),
+            "trend": "up",
+            "description": "millimeters"
+        })
+
+    return vital_signs
+
+
+@app.route('/vital-signs')
+def vital_signs():
+    data = get_latest_data()
+    return jsonify(data)
+
+
 if __name__ == "__main__":
     app.run(debug=True)
