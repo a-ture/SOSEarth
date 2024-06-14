@@ -1,0 +1,52 @@
+HDR Global Mean Sea Level Data
+HDR
+HDR Temporal Coverage: September 1992 - January 2024
+HDR
+HDR This file contains Global Mean Sea Level (GMSL) variations computed at the NASA Goddard Space Flight Center under the
+HDR auspices of the NASA Sea Level Change program. The GMSL was generated using the Integrated Multi-Mission Ocean Altimeter Data for
+HDR Climate Research (http://podaac.jpl.nasa.gov/dataset/MERGED_TP_J1_OSTM_OST_ALL_V51). It combines Sea Surface Heights from the
+HDR TOPEX/Poseidon, Jason-1, OSTM/Jason-2, Jason-3, and Sentinel-6 Michael Freilich missions to a common terrestrial reference frame with all inter-mission biases, range and
+HDR geophysical corrections applied and placed onto a georeferenced orbit.  This creates a consistent data record throughout
+HDR time, regardless of the instrument used.  Note, the most recent estimates of GMSL (post March 28, 2022) derived from the Sentinel-6 Michael Freilich mission
+HDR are preliminary as validation and reprocessing procedures for Sentinel-6 are ongoing.
+HDR
+HDR The data can be found below. A separate figure file, Global_Sea_Level_Graph, was generated using the GMSL data (listed in
+HDR column 12 below) with the 60-day Gaussian type filter and having the Global Isostatic Adjustment (GIA) applied, with annual
+HDR and semi-annual signals removed.
+HDR
+HDR If you use these data please cite:
+HDR GSFC. 2021. Global Mean Sea Level Trend from Integrated Multi-Mission Ocean Altimeters TOPEX/Poseidon, Jason-1, OSTM/Jason-2, and Jason-3 Version 5.1. Ver. 5.1 PO.DAAC, CA, USA. Dataset accessed [YYYY-MM-DD] at https://doi.org/10.5067/GMSLM-TJ151.
+HDR
+HDR For information on how the data were generate please refer to:
+HDR Beckley, B. D., Callahan, P. S., Hancock, D. W., Mitchum, G. T., & Ray, R. D. (2017). On the 'cal-mode'
+HDR correction to TOPEX satellite altimetry and its effect on the global mean sea level time series.
+HDR Journal of Geophysical Research: Oceans, 122. https://doi.org/10.1002/2017JC013090
+HDR
+HDR Beckley, B.D.,  N. P. Zelensky, S. A. Holmes, F. G. Lemoine, R. D. Ray, G. T. Mitchum, S. D. Desai & S. T. Brown, Assessment
+HDR of the Jason-2 Extension to the TOPEX/Poseidon, Jason-1 Sea-Surface Height Time Series for Global Mean Sea Level
+HDR Monitoring, Marine Geodesy, Vol 33, Suppl 1, 2010. DOI:10.1080/01490419.2010.491029
+HDR
+HDR ====================
+HDR
+HDR Global Mean Sea Level (GMSL) variations from TPJAOS v5.1
+HDR
+HDR column description
+HDR 1 altimeter type 0=dual-frequency  999=single frequency (ie Poseidon-1)
+HDR 2 merged file cycle #
+HDR 3 year+fraction of year (mid-cycle)
+HDR 4 number of observations
+HDR 5 number of weighted observations
+HDR 6 GMSL (Global Isostatic Adjustment (GIA) not applied) variation (mm) with respect to 20-year TOPEX/Jason collinear mean reference
+HDR 7 standard deviation of GMSL (GIA not applied) variation estimate (mm)
+HDR 8 smoothed (60-day Gaussian type filter) GMSL (GIA not applied) variation (mm)
+HDR 9 GMSL (Global Isostatic Adjustment (GIA) applied) variation (mm) with respect to 20-year TOPEX/Jason collinear mean reference
+HDR 10 standard deviation of GMSL (GIA applied) variation estimate (mm)
+HDR 11 smoothed (60-day Gaussian type filter) GMSL (GIA applied) variation (mm)
+HDR 12 smoothed (60-day Gaussian type filter) GMSL (GIA applied) variation (mm); annual and semi-annual signal removed
+HDR 13 smoothed (60-day Gaussian type filter) GMSL (GIA not applied) variation (mm); annual and semi-annual signal removed
+HDR
+HDR Missing or bad value flag: 99900.000
+HDR
+HDR TOPEX/Jason 1996-2016 collinear mean reference derived from cycles 121 to 858.
+HDR
+HDR Header_End---------------------------------------
