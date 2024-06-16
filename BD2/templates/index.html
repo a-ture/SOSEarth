@@ -30,7 +30,43 @@
             <span class="visually-hidden">Next</span>
         </button>
     </div>
-    <!-- Carousel wrapper -->
+
+    <!-- Introduction and Objectives -->
+    <section class="container mt-5">
+        <h2 class="text-center">Welcome to SOS Earth</h2>
+        <p class="lead text-center">Monitoring and analyzing vital signs of our planet.</p>
+        <p class="text-center">Our goal is to provide clear, accessible, and actionable information about the Earth's
+            environment. Explore the latest data on climate change, pollution, and more.</p>
+    </section>
+
+    <!-- Latest News or Updates Section -->
+    <section class="container mt-5">
+        <h3 class="text-center">Latest News & Updates</h3>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="news-item">
+                    <h5>Global Climate Report</h5>
+                    <p>The latest global climate report indicates a significant rise in global temperatures...</p>
+                    <a href="#">Read more</a>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="news-item">
+                    <h5>Renewable Energy Trends</h5>
+                    <p>Renewable energy adoption is increasing worldwide as countries commit to reducing
+                        emissions...</p>
+                    <a href="#">Read more</a>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="news-item">
+                    <h5>Conservation Efforts</h5>
+                    <p>New conservation efforts aim to protect endangered species and restore habitats...</p>
+                    <a href="#">Read more</a>
+                </div>
+            </div>
+        </div>
+    </section>
     <style>
         .big-number {
             font-size: 2rem;
@@ -39,7 +75,7 @@
         .small-text {
             font-size: 0.8rem;
             position: relative;
-            top: -0.5rem; /* Adjust the value to control the elevation */
+            top: -0.5rem;
         }
 
         .dashed-underline {
@@ -50,19 +86,41 @@
         .carousel-control-prev,
         .carousel-control-next {
             z-index: 10;
-            top: 50%; /* Vertically center the controls */
+            top: 50%;
             transform: translateY(-50%);
-            width: 5%; /* Adjust the width to control the click area */
+            width: 5%;
         }
 
         #worlddiv {
             background-image: radial-gradient(#06016b, black);
             color: #ffffff;
             font-family: Trebuchet MS, serif;
-            flex-direction: row
+        }
+
+        .news-item {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .news-item h5 {
+            margin-bottom: 10px;
+        }
+
+        .news-item p {
+            margin-bottom: 10px;
+        }
+
+        .news-item a {
+            text-decoration: none;
+            color: #007bff;
         }
     </style>
     <script src="{{ url_for('static', filename='js/world.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@1.1.1/dist/chartjs-plugin-zoom.min.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             fetch('/vital-signs')

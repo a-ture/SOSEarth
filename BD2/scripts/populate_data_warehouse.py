@@ -89,6 +89,26 @@ def transform_gmsl_data(df):
         return None
 
 
+def transform_protected_areas_data(df):
+    if df is None:
+        return None
+    try:
+        df.columns = df.columns.str.strip()
+        df = df.rename(columns={
+            "NAME": "name",
+            "DESIG_ENG": "designation",
+            "IUCN_CAT": "iucn_category",
+            "ISO3": "iso3",
+            # Aggiungi altri rinomini se necessario
+        })
+        df = df[["name", "designation", "iucn_category", "iso3"]]
+        logging.info(f"Transformed columns for protected areas data: {df.columns.tolist()}")
+        return df
+    except Exception as e:
+        logging.error(f"Error transforming protected areas data: {e}")
+        return None
+
+
 def load_data(df, collection_name):
     if df is None or df.empty:
         logging.warning(f"No data to load for {collection_name}")
@@ -121,14 +141,16 @@ def main():
         co2_transformed = transform_co2_data(co2_df)
         load_data(co2_transformed, "co2_data")
 
-        # Process GMSL data
-
-
         # Process GMSL data with manually specified column names
         # Process GMSL data
         gmsl_df = extract_data("../data/GMSL_TPJAOS_5.1.txt", delimiter=r'\s+', header=1)  # Adjust header accordingly
         gmsl_transformed = transform_gmsl_data(gmsl_df)
         load_data(gmsl_transformed, "gmsl_data")
+
+        # Process protected areas data
+        protected_areas_df = extract_data("../data/WDPA_Aug2023_Public_csv.csv", delimiter=',', header=0)
+        protected_areas_transformed = transform_protected_areas_data(protected_areas_df)
+        load_data(protected_areas_transformed, "protected_areas_1")
 
         logging.info("ETL process completed successfully.")
     except Exception as e:

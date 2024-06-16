@@ -23,6 +23,202 @@ app.config["MONGO_URI"] = mongo_uri
 mongo = PyMongo(app)
 logging.basicConfig(level=logging.DEBUG)
 
+country_name_to_iso3 = {
+    "Afghanistan": "AFG",
+    "Albania": "ALB",
+    "Algeria": "DZA",
+    "Andorra": "AND",
+    "Angola": "AGO",
+    "Antigua and Barbuda": "ATG",
+    "Argentina": "ARG",
+    "Armenia": "ARM",
+    "Australia": "AUS",
+    "Austria": "AUT",
+    "Azerbaijan": "AZE",
+    "Bahamas": "BHS",
+    "Bahrain": "BHR",
+    "Bangladesh": "BGD",
+    "Barbados": "BRB",
+    "Belarus": "BLR",
+    "Belgium": "BEL",
+    "Belize": "BLZ",
+    "Benin": "BEN",
+    "Bhutan": "BTN",
+    "Bolivia": "BOL",
+    "Bosnia and Herzegovina": "BIH",
+    "Botswana": "BWA",
+    "Brazil": "BRA",
+    "Brunei": "BRN",
+    "Bulgaria": "BGR",
+    "Burkina Faso": "BFA",
+    "Burundi": "BDI",
+    "Cabo Verde": "CPV",
+    "Cambodia": "KHM",
+    "Cameroon": "CMR",
+    "Canada": "CAN",
+    "Central African Republic": "CAF",
+    "Chad": "TCD",
+    "Chile": "CHL",
+    "China": "CHN",
+    "Colombia": "COL",
+    "Comoros": "COM",
+    "Congo, Democratic Republic of the": "COD",
+    "Congo, Republic of the": "COG",
+    "Costa Rica": "CRI",
+    "Croatia": "HRV",
+    "Cuba": "CUB",
+    "Cyprus": "CYP",
+    "Czech Republic": "CZE",
+    "Denmark": "DNK",
+    "Djibouti": "DJI",
+    "Dominica": "DMA",
+    "Dominican Republic": "DOM",
+    "Ecuador": "ECU",
+    "Egypt": "EGY",
+    "El Salvador": "SLV",
+    "Equatorial Guinea": "GNQ",
+    "Eritrea": "ERI",
+    "Estonia": "EST",
+    "Eswatini": "SWZ",
+    "Ethiopia": "ETH",
+    "Fiji": "FJI",
+    "Finland": "FIN",
+    "France": "FRA",
+    "Gabon": "GAB",
+    "Gambia": "GMB",
+    "Georgia": "GEO",
+    "Germany": "DEU",
+    "Ghana": "GHA",
+    "Greece": "GRC",
+    "Grenada": "GRD",
+    "Guatemala": "GTM",
+    "Guinea": "GIN",
+    "Guinea-Bissau": "GNB",
+    "Guyana": "GUY",
+    "Haiti": "HTI",
+    "Honduras": "HND",
+    "Hungary": "HUN",
+    "Iceland": "ISL",
+    "India": "IND",
+    "Indonesia": "IDN",
+    "Iran": "IRN",
+    "Iraq": "IRQ",
+    "Ireland": "IRL",
+    "Israel": "ISR",
+    "Italy": "ITA",
+    "Jamaica": "JAM",
+    "Japan": "JPN",
+    "Jordan": "JOR",
+    "Kazakhstan": "KAZ",
+    "Kenya": "KEN",
+    "Kiribati": "KIR",
+    "Kuwait": "KWT",
+    "Kyrgyzstan": "KGZ",
+    "Laos": "LAO",
+    "Latvia": "LVA",
+    "Lebanon": "LBN",
+    "Lesotho": "LSO",
+    "Liberia": "LBR",
+    "Libya": "LBY",
+    "Liechtenstein": "LIE",
+    "Lithuania": "LTU",
+    "Luxembourg": "LUX",
+    "Madagascar": "MDG",
+    "Malawi": "MWI",
+    "Malaysia": "MYS",
+    "Maldives": "MDV",
+    "Mali": "MLI",
+    "Malta": "MLT",
+    "Marshall Islands": "MHL",
+    "Mauritania": "MRT",
+    "Mauritius": "MUS",
+    "Mexico": "MEX",
+    "Micronesia": "FSM",
+    "Moldova": "MDA",
+    "Monaco": "MCO",
+    "Mongolia": "MNG",
+    "Montenegro": "MNE",
+    "Morocco": "MAR",
+    "Mozambique": "MOZ",
+    "Myanmar": "MMR",
+    "Namibia": "NAM",
+    "Nauru": "NRU",
+    "Nepal": "NPL",
+    "Netherlands": "NLD",
+    "New Zealand": "NZL",
+    "Nicaragua": "NIC",
+    "Niger": "NER",
+    "Nigeria": "NGA",
+    "North Macedonia": "MKD",
+    "Norway": "NOR",
+    "Oman": "OMN",
+    "Pakistan": "PAK",
+    "Palau": "PLW",
+    "Panama": "PAN",
+    "Papua New Guinea": "PNG",
+    "Paraguay": "PRY",
+    "Peru": "PER",
+    "Philippines": "PHL",
+    "Poland": "POL",
+    "Portugal": "PRT",
+    "Qatar": "QAT",
+    "Romania": "ROU",
+    "Russia": "RUS",
+    "Rwanda": "RWA",
+    "Saint Kitts and Nevis": "KNA",
+    "Saint Lucia": "LCA",
+    "Saint Vincent and the Grenadines": "VCT",
+    "Samoa": "WSM",
+    "San Marino": "SMR",
+    "Sao Tome and Principe": "STP",
+    "Saudi Arabia": "SAU",
+    "Senegal": "SEN",
+    "Serbia": "SRB",
+    "Seychelles": "SYC",
+    "Sierra Leone": "SLE",
+    "Singapore": "SGP",
+    "Slovakia": "SVK",
+    "Slovenia": "SVN",
+    "Solomon Islands": "SLB",
+    "Somalia": "SOM",
+    "South Africa": "ZAF",
+    "South Korea": "KOR",
+    "South Sudan": "SSD",
+    "Spain": "ESP",
+    "Sri Lanka": "LKA",
+    "Sudan": "SDN",
+    "Suriname": "SUR",
+    "Sweden": "SWE",
+    "Switzerland": "CHE",
+    "Syria": "SYR",
+    "Taiwan": "TWN",
+    "Tajikistan": "TJK",
+    "Tanzania": "TZA",
+    "Thailand": "THA",
+    "Timor-Leste": "TLS",
+    "Togo": "TGO",
+    "Tonga": "TON",
+    "Trinidad and Tobago": "TTO",
+    "Tunisia": "TUN",
+    "Turkey": "TUR",
+    "Turkmenistan": "TKM",
+    "Tuvalu": "TUV",
+    "Uganda": "UGA",
+    "Ukraine": "UKR",
+    "United Arab Emirates": "ARE",
+    "United Kingdom": "GBR",
+    "United States of America": "USA",
+    "Uruguay": "URY",
+    "Uzbekistan": "UZB",
+    "Vanuatu": "VUT",
+    "Vatican City": "VAT",
+    "Venezuela": "VEN",
+    "Vietnam": "VNM",
+    "Yemen": "YEM",
+    "Zambia": "ZMB",
+    "Zimbabwe": "ZWE"
+}
+
 
 # Function to convert ObjectId to strings and filter out NaN values
 def convert_and_filter(data):
@@ -42,7 +238,6 @@ def convert_and_filter(data):
     return data
 
 
-# Routes definition
 @app.route('/')
 @app.route('/index')
 @app.route('/home')
@@ -65,6 +260,11 @@ def problems():
 @app.route('/chart')
 def chart():
     return render_template('chart.html')
+
+
+@app.route('/calculator')
+def calculator():
+    return render_template('carbon.html')
 
 
 @app.route('/get_metadata', methods=['GET'])
@@ -161,7 +361,11 @@ def get_data():
     if not country_name or not indicator_name:
         return jsonify({"error": "Country name and indicator name are required"}), 400
 
-    country = mongo.db.dim_country.find_one({"Country Name": country_name})
+    country_iso3 = country_name_to_iso3.get(country_name)
+    if not country_iso3:
+        return jsonify({"error": f"ISO3 code not found for country {country_name}"}), 404
+
+    country = mongo.db.dim_country.find_one({"ISO3": country_iso3})
     if not country:
         return jsonify({"error": f"Country {country_name} not found"}), 404
 
@@ -440,6 +644,32 @@ def get_latest_data():
 def vital_signs():
     data = get_latest_data()
     return jsonify(data)
+
+
+@app.route('/country_protected_areas', methods=['GET'])
+def country_protected_areas():
+    country_name = request.args.get('country_name')
+    if not country_name:
+        return jsonify({"error": "Country name is required"}), 400
+
+    country_iso3 = country_name_to_iso3.get(country_name)
+    if not country_iso3:
+        return jsonify({"error": f"ISO3 code not found for country {country_name}"}), 404
+
+    protected_areas = list(mongo.db.protected_areas_1.find({"iso3": country_iso3}))
+    if not protected_areas:
+        app.logger.info(f"No protected areas found for country: {country_name}")
+        return jsonify([])
+
+    results = []
+    for area in protected_areas:
+        app.logger.debug(f"Protected area data: {area}")
+        results.append({
+            "name": area.get("name", "No Name Available"),
+            "designation": area.get("designation", "Not Available"),
+            "iucn_category": area.get("iucn_category", "Not Available")
+        })
+    return jsonify(results)
 
 
 if __name__ == "__main__":

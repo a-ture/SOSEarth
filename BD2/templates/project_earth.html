@@ -4,7 +4,10 @@
 
 {% block content %}
     <div id="chartdiv" style="width: 100%; height: 500px;"></div>
-    <div id="infoDiv"></div>
+    <div id="infoDiv">
+        <canvas id="designationChart" width="400" height="200"></canvas>
+        <canvas id="iucnCategoryChart" width="400" height="200"></canvas>
+    </div>
     <style>
         #infoDiv {
             display: none; /* Initially hidden */
@@ -14,6 +17,215 @@
             border: 1px solid #ccc;
             margin-top: 20px;
         }
+
+        .protected-area {
+            margin-bottom: 15px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f0f8ff;
+        }
+
+        .protected-area h4 {
+            margin: 0;
+            font-size: 18px;
+        }
+
+        .protected-area p {
+            margin: 5px 0;
+            font-size: 14px;
+        }
     </style>
-    <script src="{{ url_for('static', filename='js/planisphere.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        am5.ready(function () {
+            // Create root element
+            var root = am5.Root.new("chartdiv");
+
+            // Set themes
+            root.setThemes([
+                am5themes_Animated.new(root)
+            ]);
+
+            // Create the map chart
+            var chart = root.container.children.push(am5map.MapChart.new(root, {
+                panX: "translateX",
+                panY: "translateY",
+                projection: am5map.geoMercator()
+            }));
+
+            // Create main polygon series for countries
+            var polygonSeries = chart.series.push(am5map.MapPolygonSeries.new(root, {
+                geoJSON: am5geodata_worldLow,
+                exclude: ["AQ"]
+            }));
+
+            polygonSeries.mapPolygons.template.setAll({
+                tooltipText: "{name}",
+                toggleKey: "active",
+                interactive: true,
+                fill: am5.color(0x007bff) // Set the default fill color (blue in this example)
+            });
+
+            // Customize the hover state
+            polygonSeries.mapPolygons.template.states.create("hover", {
+                fill: am5.color(0xff6f61) // Set the hover color (red in this example)
+            });
+
+            // Customize the active state
+            polygonSeries.mapPolygons.template.states.create("active", {
+                fill: am5.color(0x28a745) // Set the active color (green in this example)
+            });
+
+            var previousPolygon;
+
+            polygonSeries.mapPolygons.template.on("active", function (active, target) {
+                if (previousPolygon && previousPolygon != target) {
+                    previousPolygon.set("active", false);
+                }
+                if (target.get("active")) {
+                    polygonSeries.zoomToDataItem(target.dataItem);
+
+                    // Display country information
+                    var countryName = target.dataItem.dataContext.name;
+                    fetchProtectedAreas(countryName);
+
+                    var infoDiv = document.getElementById('infoDiv');
+                    infoDiv.innerHTML = "<h2>" + countryName + "</h2>";
+                    infoDiv.style.display = "block";
+                } else {
+                    chart.goHome();
+                    var infoDiv = document.getElementById('infoDiv');
+                    infoDiv.style.display = "none"; // Hide the infoDiv when no country is active
+                }
+                previousPolygon = target;
+            });
+
+            // Add zoom control
+            var zoomControl = chart.set("zoomControl", am5map.ZoomControl.new(root, {}));
+            zoomControl.homeButton.set("visible", true);
+
+            // Set clicking on "water" to zoom out
+            chart.chartContainer.get("background").events.on("click", function () {
+                chart.goHome();
+                var infoDiv = document.getElementById('infoDiv');
+                infoDiv.style.display = "none"; // Hide the infoDiv when clicking on water
+            });
+
+            // Make stuff animate on load
+            chart.appear(1000, 100);
+        }); // end am5.ready()
+
+    </script>
+    <script>
+        function fetchProtectedAreas(country_name) {
+            fetch(`/country_protected_areas?country_name=${country_name}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log("Protected areas data:", data); // Debug: log the data received
+                    displayProtectedAreas(data);
+                    renderCharts(data);
+                })
+                .catch(error => {
+                    console.error("Error fetching protected areas:", error); // Debug: log errors
+                });
+        }
+
+        function displayProtectedAreas(data) {
+            var infoDiv = document.getElementById('infoDiv');
+            var html = '<h3>Protected Areas</h3>';
+            if (data.length === 0) {
+                html += '<p>No protected areas found for this country.</p>';
+            } else {
+                data.forEach(area => {
+                    html += `
+                        <div class="protected-area">
+                            <h4>${area.name}</h4>
+                            <p><strong>Designation:</strong> ${area.designation}</p>
+                            <p><strong>IUCN Category:</strong> ${area.iucn_category}</p>
+                        </div>
+                    `;
+                });
+            }
+            infoDiv.innerHTML = html;
+            infoDiv.style.display = 'block';
+        }
+
+        function renderCharts(data) {
+            var designations = {};
+            var iucnCategories = {};
+
+            data.forEach(area => {
+                designations[area.designation] = (designations[area.designation] || 0) + 1;
+                iucnCategories[area.iucn_category] = (iucnCategories[area.iucn_category] || 0) + 1;
+            });
+
+            var designationChartCtx = document.getElementById('designationChart')?.getContext('2d');
+            var iucnCategoryChartCtx = document.getElementById('iucnCategoryChart')?.getContext('2d');
+
+            if (designationChartCtx && iucnCategoryChartCtx) {
+                console.log('Rendering charts with data:', designations, iucnCategories);
+
+                new Chart(designationChartCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: Object.keys(designations),
+                        datasets: [{
+                            label: 'Designation',
+                            data: Object.values(designations),
+                            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                            borderColor: 'rgba(75, 192, 192, 1)',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+
+                new Chart(iucnCategoryChartCtx, {
+                    type: 'pie',
+                    data: {
+                        labels: Object.keys(iucnCategories),
+                        datasets: [{
+                            label: 'IUCN Category',
+                            data: Object.values(iucnCategories),
+                            backgroundColor: [
+                                'rgba(255, 99, 132, 0.2)',
+                                'rgba(54, 162, 235, 0.2)',
+                                'rgba(255, 206, 86, 0.2)',
+                                'rgba(75, 192, 192, 0.2)',
+                                'rgba(153, 102, 255, 0.2)',
+                                'rgba(255, 159, 64, 0.2)'
+                            ],
+                            borderColor: [
+                                'rgba(255, 99, 132, 1)',
+                                'rgba(54, 162, 235, 1)',
+                                'rgba(255, 206, 86, 1)',
+                                'rgba(75, 192, 192, 1)',
+                                'rgba(153, 102, 255, 1)',
+                                'rgba(255, 159, 64, 1)'
+                            ],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true
+                    }
+                });
+            } else {
+                console.error('One or both of the chart contexts are null.');
+            }
+        }
+    </script>
 {% endblock %}
