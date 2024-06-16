@@ -262,6 +262,85 @@ def create_fact_table(df):
         logging.error(f"Error creating fact table: {e}")
 
 
+def extract_data_food_production(file_path, delimiter=',', header=0, skiprows=None):
+    return extract_data(file_path, delimiter, header, skiprows)
+
+
+def extract_data_food_product_emissions(file_path, delimiter=',', header=0, skiprows=None):
+    return extract_data(file_path, delimiter, header, skiprows)
+
+
+def transform_food_production_data(df):
+    if df is None:
+        return None
+    try:
+        df.columns = df.columns.str.strip()
+        # Adjust column names based on the actual columns in the CSV
+        df = df.rename(columns={
+            "Food product": "food_product",
+            "Land use change": "land_use_change",
+            "Animal Feed": "animal_feed",
+            "Farm": "farm",
+            "Processing": "processing",
+            "Transport": "transport",
+            "Packging": "packaging",
+            "Retail": "retail",
+            "Total_emissions": "total_emissions",
+            "Eutrophying emissions per 1000kcal (gPO₄eq per 1000kcal)": "eutrophying_emissions_1000kcal",
+            "Eutrophying emissions per kilogram (gPO₄eq per kilogram)": "eutrophying_emissions_kg",
+            "Eutrophying emissions per 100g protein (gPO₄eq per 100 grams protein)": "eutrophying_emissions_100g_protein",
+            "Freshwater withdrawals per 1000kcal (liters per 1000kcal)": "freshwater_withdrawals_1000kcal",
+            "Freshwater withdrawals per 100g protein (liters per 100g protein)": "freshwater_withdrawals_100g_protein",
+            "Freshwater withdrawals per kilogram (liters per kilogram)": "freshwater_withdrawals_kg",
+            "Greenhouse gas emissions per 1000kcal (kgCO₂eq per 1000kcal)": "ghg_emissions_1000kcal",
+            "Greenhouse gas emissions per 100g protein (kgCO₂eq per 100g protein)": "ghg_emissions_100g_protein",
+            "Land use per 1000kcal (m² per 1000kcal)": "land_use_1000kcal",
+            "Land use per kilogram (m² per kilogram)": "land_use_kg",
+            "Land use per 100g protein (m² per 100g protein)": "land_use_100g_protein",
+            "Scarcity-weighted water use per kilogram (liters per kilogram)": "scarcity_weighted_water_use_kg",
+            "Scarcity-weighted water use per 100g protein (liters per 100g protein)": "scarcity_weighted_water_use_100g_protein",
+            "Scarcity-weighted water use per 1000kcal (liters per 1000 kilocalories)": "scarcity_weighted_water_use_1000kcal"
+        })
+        logging.info(f"Transformed columns for food production data: {df.columns.tolist()}")
+        return df
+    except Exception as e:
+        logging.error(f"Error transforming food production data: {e}")
+        return None
+
+
+def transform_food_product_emissions_data(df):
+    if df is None:
+        return None
+    try:
+        df.columns = df.columns.str.strip()
+        df = df.rename(columns={
+            "Food product": "food_product",
+            "Land Use Change": "land_use_change",
+            "Feed": "feed",
+            "Farm": "farm",
+            "Processing": "processing",
+            "Transport": "transport",
+            "Packaging": "packaging",
+            "Retail": "retail",
+            "Total from Land to Retail": "total_from_land_to_retail",
+            "Total Global Average GHG Emissions per kg": "total_ghg_emissions_per_kg",
+            "Unit of GHG Emissions": "unit_of_ghg_emissions"
+        })
+        logging.info(f"Transformed columns for food product emissions data: {df.columns.tolist()}")
+        return df
+    except Exception as e:
+        logging.error(f"Error transforming food product emissions data: {e}")
+        return None
+
+
+def load_food_production_data(df):
+    load_data(df, "food_production")
+
+
+def load_food_product_emissions_data(df):
+    load_data(df, "food_product_emissions")
+
+
 # Funzione principale
 def main():
     try:
@@ -420,6 +499,19 @@ def main():
         solutions_file = "../data/solutions.csv"
         solutions_df = load_solutions(solutions_file)
         save_solutions_to_db(solutions_df, "indicator_solutions")
+
+        # Process food production data
+        food_production_df = extract_data_food_production("../data/Food_Production.csv", delimiter=',', header=0)
+        if food_production_df is not None:
+            print(food_production_df.columns)  # Inspect columns for debugging
+        food_production_transformed = transform_food_production_data(food_production_df)
+        load_food_production_data(food_production_transformed)
+
+        # Process food product emissions data
+        food_product_emissions_df = extract_data_food_product_emissions("../data/Food_Product_Emissions.csv",
+                                                                        delimiter=',', header=0)
+        food_product_emissions_transformed = transform_food_product_emissions_data(food_product_emissions_df)
+        load_food_product_emissions_data(food_product_emissions_transformed)
 
         logging.info("ETL process, cube creation, and index creation completed successfully.")
     except Exception as e:
