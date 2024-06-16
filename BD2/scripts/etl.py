@@ -16,19 +16,22 @@ client = MongoClient(mongo_uri)
 db = client["data_warehouse"]
 
 
-def extract_data(file_path):
+# Funzioni di estrazione dati
+def extract_data(file_path, delimiter=',', header=0, skiprows=None):
     if not os.path.exists(file_path):
         logging.error(f"File not found: {file_path}")
         return None
     try:
         logging.info(f"Extracting data from {file_path}")
-        df = pd.read_csv(file_path, skiprows=4)
+        df = pd.read_csv(file_path, delimiter=delimiter, comment='#', header=header, skiprows=skiprows)
+        logging.info(f"Extracted columns: {df.columns.tolist()}")
         return df
     except Exception as e:
         logging.error(f"Error extracting data from {file_path}: {e}")
         return None
 
 
+# Funzioni di trasformazione dati
 def transform_data(df, indicator_name, metadata):
     if df is None:
         return None
@@ -62,6 +65,85 @@ def transform_data(df, indicator_name, metadata):
         return None
 
 
+def transform_temperature_data(df):
+    if df is None:
+        return None
+    try:
+        df.columns = df.columns.str.strip()
+        df = df.rename(columns={"Year": "year", "No_Smoothing": "temperature"})
+        df = df[df['year'].apply(lambda x: x.isnumeric())]
+        df['year'] = df['year'].astype(int)
+        logging.info(f"Transformed columns for temperature data: {df.columns.tolist()}")
+        df = df[["year", "temperature"]]
+        return df
+    except Exception as e:
+        logging.error(f"Error transforming temperature data: {e}")
+        return None
+
+
+def transform_ch4_data(df):
+    if df is None:
+        return None
+    try:
+        df.columns = df.columns.str.strip()
+        df = df.rename(columns={df.columns[0]: "year", df.columns[1]: "month", df.columns[3]: "ch4_concentration"})
+        logging.info(f"Transformed columns for CH4 data: {df.columns.tolist()}")
+        df = df[["year", "month", "ch4_concentration"]]
+        return df
+    except Exception as e:
+        logging.error(f"Error transforming CH4 data: {e}")
+        return None
+
+
+def transform_co2_data(df):
+    if df is None:
+        return None
+    try:
+        df.columns = df.columns.str.strip()
+        logging.info(f"Available columns for CO2 data: {df.columns.tolist()}")
+        df = df.rename(columns={df.columns[2]: "decimal_date", df.columns[3]: "co2_concentration"})
+        logging.info(f"Transformed columns for CO2 data: {df.columns.tolist()}")
+        df = df[["decimal_date", "co2_concentration"]]
+        return df
+    except Exception as e:
+        logging.error(f"Error transforming CO2 data: {e}")
+        return None
+
+
+def transform_gmsl_data(df):
+    if df is None:
+        return None
+    try:
+        df.columns = df.columns.str.strip()
+        df = df.rename(columns={df.columns[2]: "decimal_year", df.columns[5]: "gmsl"})
+        logging.info(f"Transformed columns for GMSL data: {df.columns.tolist()}")
+        df = df[["decimal_year", "gmsl"]]
+        return df
+    except Exception as e:
+        logging.error(f"Error transforming GMSL data: {e}")
+        return None
+
+
+def transform_protected_areas_data(df):
+    if df is None:
+        return None
+    try:
+        df.columns = df.columns.str.strip()
+        df = df.rename(columns={
+            "NAME": "name",
+            "DESIG_ENG": "designation",
+            "IUCN_CAT": "iucn_category",
+            "ISO3": "iso3"
+        })
+        df = df[["name", "designation", "iucn_category", "iso3"]]
+        logging.info(f"Transformed columns for protected areas data: {df.columns.tolist()}")
+        return df
+    except Exception as e:
+        logging.error(f"Error transforming protected areas data: {e}")
+        return None
+
+
+# Funzione per caricare i dati nel database
 def load_data(df, collection_name):
     if df is None or df.empty:
         logging.warning(f"No data to load for {collection_name}")
@@ -77,47 +159,7 @@ def load_data(df, collection_name):
         logging.error(f"Error loading data into {collection_name}: {e}")
 
 
-def clean_all_collections():
-    collections = db.list_collection_names()
-    for collection_name in collections:
-        db[collection_name].drop()
-        logging.info(f"Collection {collection_name} dropped.")
-
-
-def create_dim_country_table(df):
-    logging.info("Creating dimension table for countries.")
-    try:
-        countries = df[['Country Name', 'Country Code']].drop_duplicates().reset_index(drop=True)
-        countries['country_key'] = countries.index + 1
-        db.dim_country.insert_many(countries.to_dict('records'))
-    except Exception as e:
-        logging.error(f"Error creating dimension table for countries: {e}")
-
-
-def create_dim_year_table():
-    logging.info("Creating dimension table for years.")
-    try:
-        years = pd.DataFrame({'Year': list(range(1960, 2024))})
-        years['year_key'] = years.index + 1
-        db.dim_year.insert_many(years.to_dict('records'))
-    except Exception as e:
-        logging.error(f"Error creating dimension table for years: {e}")
-
-
-def create_fact_table(df):
-    logging.info("Creating fact table.")
-    try:
-        countries = pd.DataFrame(list(db.dim_country.find({}, {'_id': 0})))
-        years = pd.DataFrame(list(db.dim_year.find({}, {'_id': 0})))
-
-        fact_data = df.merge(countries, on=['Country Name', 'Country Code'])
-        fact_data = fact_data.merge(years, left_on='Year', right_on='Year')
-        fact_data = fact_data[['country_key', 'year_key', 'Indicator Name', 'Value', 'Metadata']]
-        db.fact_table.insert_many(fact_data.to_dict('records'))
-    except Exception as e:
-        logging.error(f"Error creating fact table: {e}")
-
-
+# Funzioni per caricare i metadati
 def load_metadata(file_paths, metadata_type='country'):
     metadata = {}
     for file_path in file_paths:
@@ -185,9 +227,49 @@ def save_solutions_to_db(df, collection_name):
         logging.error(f"Error loading data into {collection_name}: {e}")
 
 
+# Funzioni per la creazione delle tabelle di dimensione e fatto
+def create_dim_country_table(df):
+    logging.info("Creating dimension table for countries.")
+    try:
+        countries = df[['Country Name', 'Country Code']].drop_duplicates().reset_index(drop=True)
+        countries['country_key'] = countries.index + 1
+        db.dim_country.insert_many(countries.to_dict('records'))
+    except Exception as e:
+        logging.error(f"Error creating dimension table for countries: {e}")
+
+
+def create_dim_year_table():
+    logging.info("Creating dimension table for years.")
+    try:
+        years = pd.DataFrame({'Year': list(range(1960, 2024))})
+        years['year_key'] = years.index + 1
+        db.dim_year.insert_many(years.to_dict('records'))
+    except Exception as e:
+        logging.error(f"Error creating dimension table for years: {e}")
+
+
+def create_fact_table(df):
+    logging.info("Creating fact table.")
+    try:
+        countries = pd.DataFrame(list(db.dim_country.find({}, {'_id': 0})))
+        years = pd.DataFrame(list(db.dim_year.find({}, {'_id': 0})))
+
+        fact_data = df.merge(countries, on=['Country Name', 'Country Code'])
+        fact_data = fact_data.merge(years, left_on='Year', right_on='Year')
+        fact_data = fact_data[['country_key', 'year_key', 'Indicator Name', 'Value', 'Metadata']]
+        db.fact_table.insert_many(fact_data.to_dict('records'))
+    except Exception as e:
+        logging.error(f"Error creating fact table: {e}")
+
+
+# Funzione principale
 def main():
     try:
-        clean_all_collections()
+        # Pulizia delle collezioni
+        collections = db.list_collection_names()
+        for collection_name in collections:
+            db[collection_name].drop()
+            logging.info(f"Collection {collection_name} dropped.")
 
         # Carica e salva i metadati dei paesi
         country_metadata_files = [
@@ -215,6 +297,7 @@ def main():
         country_metadata = load_metadata(country_metadata_files, metadata_type='country')
         save_metadata_to_db(country_metadata, "country_metadata")
 
+        # Carica e salva i metadati degli indicatori
         indicator_metadata_files = [
             "../data/Metadata_Indicator_API_AG.LND.AGRI.ZS_DS2_en_csv_v2_44906.csv",
             "../data/Metadata_Indicator_API_AG.LND.ARBL.ZS_DS2_en_csv_v2_43395.csv",
@@ -296,7 +379,7 @@ def main():
 
         for file_path, collection_name in file_collection_map.items():
             indicator_name = indicator_name_map.get(collection_name, collection_name.replace('_', ' ').title())
-            df = extract_data(file_path)
+            df = extract_data(file_path, delimiter=',', skiprows=4)
             df_transformed = transform_data(df, indicator_name, country_metadata)
             if df_transformed is not None:
                 combined_dfs.append(df_transformed)
@@ -308,10 +391,36 @@ def main():
             create_dim_year_table()
             create_fact_table(combined_df)
 
-            # Carica e salva le soluzioni
+        # Process temperature data
+        temp_df = extract_data("../data/temperature.txt", delimiter=r'\s+', header=2)
+        temp_transformed = transform_temperature_data(temp_df)
+        load_data(temp_transformed, "temperature_data")
+
+        # Process CH4 data
+        ch4_df = extract_data("../data/ch4_mm_gl.txt", delimiter=r'\s+', header=1)
+        ch4_transformed = transform_ch4_data(ch4_df)
+        load_data(ch4_transformed, "ch4_data")
+
+        # Process CO2 data
+        co2_df = extract_data("../data/co2_mm_mlo.txt", delimiter=r'\s+', header=58)  # Adjust header accordingly
+        co2_transformed = transform_co2_data(co2_df)
+        load_data(co2_transformed, "co2_data")
+
+        # Process GMSL data
+        gmsl_df = extract_data("../data/GMSL_TPJAOS_5.1.txt", delimiter=r'\s+', header=1)  # Adjust header accordingly
+        gmsl_transformed = transform_gmsl_data(gmsl_df)
+        load_data(gmsl_transformed, "gmsl_data")
+
+        # Process protected areas data
+        protected_areas_df = extract_data("../data/WDPA_Aug2023_Public_csv.csv", delimiter=',', header=0)
+        protected_areas_transformed = transform_protected_areas_data(protected_areas_df)
+        load_data(protected_areas_transformed, "protected_areas_1")
+
+        # Carica e salva le soluzioni
         solutions_file = "../data/solutions.csv"
         solutions_df = load_solutions(solutions_file)
         save_solutions_to_db(solutions_df, "indicator_solutions")
+
         logging.info("ETL process, cube creation, and index creation completed successfully.")
     except Exception as e:
         logging.error(f"ETL process failed: {e}")

@@ -238,35 +238,6 @@ def convert_and_filter(data):
     return data
 
 
-@app.route('/')
-@app.route('/index')
-@app.route('/home')
-def index():
-    return render_template('index.html')
-
-
-@app.route('/about')
-def about():
-    return render_template('about.html')
-
-
-@app.route('/problems')
-def problems():
-    problems_list = list(mongo.db.problems.find())
-    problems_list = convert_and_filter(problems_list)
-    return render_template('problems_earth.html', problems=problems_list)
-
-
-@app.route('/chart')
-def chart():
-    return render_template('chart.html')
-
-
-@app.route('/calculator')
-def calculator():
-    return render_template('carbon.html')
-
-
 @app.route('/get_metadata', methods=['GET'])
 def get_metadata():
     indicator_name = request.args.get('indicator_name')
@@ -366,6 +337,33 @@ def get_data():
         return jsonify({"error": f"ISO3 code not found for country {country_name}"}), 404
 
     country = mongo.db.dim_country.find_one({"ISO3": country_iso3})
+    if not country:
+        return jsonify({"error": f"Country {country_name} not found"}), 404
+
+    country_key = country['country_key']
+
+    data = list(mongo.db.fact_table.find({"country_key": country_key, "Indicator Name": indicator_name}))
+    if not data:
+        return jsonify({"error": f"No data found for country {country_name} and indicator {indicator_name}"}), 404
+
+    df = pd.DataFrame(data)
+
+    years = pd.DataFrame(list(mongo.db.dim_year.find({}, {'_id': 0, 'year_key': 1, 'Year': 1})))
+    df = df.merge(years, on="year_key")
+
+    result = df[['Year', 'Value']].to_dict(orient='records')
+
+    return jsonify(result)
+
+
+@app.route('/get_data_indicator', methods=['GET'])
+def get_data_indicator():
+    country_name = request.args.get('country_name')
+    indicator_name = request.args.get('indicator_name')
+    if not country_name or not indicator_name:
+        return jsonify({"error": "Country name and indicator name are required"}), 400
+
+    country = mongo.db.dim_country.find_one({"Country Name": country_name})
     if not country:
         return jsonify({"error": f"Country {country_name} not found"}), 404
 

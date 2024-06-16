@@ -177,7 +177,7 @@
                 currentCountryName = document.getElementById('country-name').value;
                 const indicatorName = document.querySelector('.indicator-list .btn.active').textContent;
 
-                fetch(`/get_data?country_name=${encodeURIComponent(currentCountryName)}&indicator_name=${encodeURIComponent(indicatorName)}`)
+                fetch(`/get_data_indicator?country_name=${encodeURIComponent(currentCountryName)}&indicator_name=${encodeURIComponent(indicatorName)}`)
                     .then(response => response.json())
                     .then(data => {
                         if (data.error) {
@@ -204,7 +204,7 @@
                         yAxisLabel = labels.y;
                     })
                     .then(() => {
-                        return fetch(`/get_data?country_name=${encodeURIComponent(document.getElementById('country-name').value)}&indicator_name=${encodeURIComponent(indicatorName)}`);
+                        return fetch(`/get_data_indicator?country_name=${encodeURIComponent(document.getElementById('country-name').value)}&indicator_name=${encodeURIComponent(indicatorName)}`);
                     })
                     .then(response => response.json())
                     .then(data => {
