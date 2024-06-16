@@ -428,6 +428,44 @@ def country_protected_areas():
     return jsonify(results)
 
 
+@app.route('/get_emissions_data', methods=['GET'])
+def get_emissions_data():
+    food_product = request.args.get('food_product')
+    if not food_product:
+        return jsonify({'error': 'No food product specified'}), 400
+
+    emissions_data = mongo.db.food_product_emissions.find_one({'food_product': food_product}, {'_id': 0})
+    if not emissions_data:
+        return jsonify({'error': 'Food product not found'}), 404
+
+    return jsonify(emissions_data)
+
+
+@app.route('/calculate', methods=['POST'])
+def calculate():
+    data = request.json
+    results = {}
+    total_impact = 0.0
+
+    # Food products to check
+    food_products = ['beef', 'chicken', 'pork', 'fish', 'eggs', 'milk', 'cheese', 'beans', 'fruits', 'vegetables',
+                     'grains', 'rice', 'fats', 'nuts']
+
+    for product in food_products:
+        if product in data:
+            # Find the product in MongoDB
+            product_data = mongo.db.food_product_emissions.find_one({'food_product': product.capitalize()}, {'_id': 0})
+            if product_data:
+                quantity = data[product]
+                product_data['quantity'] = quantity
+                product_data['total_impact'] = product_data['total_ghg_emissions_per_kg'] * quantity
+                total_impact += product_data['total_impact']
+                print(total_impact)
+                results[product] = product_data
+                print(results)
+    return jsonify({'results': results, 'total_impact': total_impact})
+
+
 # Routes definition
 @app.route('/')
 @app.route('/index')

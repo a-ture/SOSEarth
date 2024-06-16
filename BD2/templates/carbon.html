@@ -335,42 +335,65 @@
             }
         }
 
-        document.getElementById('carbonForm').addEventListener('submit', function (event) {
+        document.getElementById('carbonForm').addEventListener('submit', async function (event) {
             event.preventDefault();
 
-            // Raccolta dati dal form
-            const carKm = parseFloat(document.getElementById('carKm').value) || 0;
-            const busKm = parseFloat(document.getElementById('busKm').value) || 0;
-            const flightHours = parseFloat(document.getElementById('flightHours').value) || 0;
-            const electricity = parseFloat(document.getElementById('electricity').value) || 0;
-            const gas = parseFloat(document.getElementById('gas').value) || 0;
-            const meat = parseFloat(document.getElementById('meat').value) || 0;
-            const dairy = parseFloat(document.getElementById('dairy').value) || 0;
-            const veg = parseFloat(document.getElementById('veg').value) || 0;
+            const formData = new FormData(event.target);
+            const data = {};
+            formData.forEach((value, key) => {
+                data[key] = parseFloat(value) || 0;
+            });
 
-            // Calcoli (coefficenti esemplificati)
-            const carEmission = carKm * 0.21; // kg CO2 per km
-            const busEmission = busKm * 0.1; // kg CO2 per km
-            const flightEmission = flightHours * 90; // kg CO2 per ora di volo
-            const electricityEmission = electricity * 0.233; // kg CO2 per kWh
-            const gasEmission = gas * 2; // kg CO2 per m³
-            const meatEmission = meat * 27; // kg CO2 per kg
-            const dairyEmission = dairy * 13.6; // kg CO2 per kg
-            const vegEmission = veg * 2; // kg CO2 per kg
+            const response = await fetch('/calculate', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            });
 
-            // Totale
-            const totalEmission = carEmission + busEmission + flightEmission + electricityEmission + gasEmission + meatEmission + dairyEmission + vegEmission;
+            const result = await response.json();
 
-            // Mostra i risultati in una card
-            document.getElementById('results').innerHTML = `
-    <div class="card mx-auto" style="max-width: 400px;">
-        <div class="card-body">
-            <h5 class="card-title">Total Carbon Footprint</h5>
-            <p class="card-text">${totalEmission.toFixed(2)} kg CO2 per year</p>
-        </div>
-    </div>`;
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.innerHTML = '<h2>Results:</h2>';
+
+            for (const [product, values] of Object.entries(result.results)) {
+                const productDiv = document.createElement('div');
+                productDiv.classList.add('card', 'mx-auto', 'mb-3');
+                productDiv.style.maxWidth = '400px';
+                productDiv.innerHTML = `
+                    <div class="card-body">
+                        <h5 class="card-title">${values.food_product}</h5>
+                        <p class="card-text">Land Use Change: ${values.land_use_change}</p>
+                        <p class="card-text">Feed: ${values.feed}</p>
+                        <p class="card-text">Farm: ${values.farm}</p>
+                        <p class="card-text">Processing: ${values.processing}</p>
+                        <p class="card-text">Transport: ${values.transport}</p>
+                        <p class="card-text">Packaging: ${values.packaging}</p>
+                        <p class="card-text">Retail: ${values.retail}</p>
+                        <p class="card-text">Total from Land to Retail: ${values.total_from_land_to_retail}</p>
+                        <p class="card-text">Total GHG Emissions per kg: ${values.total_ghg_emissions_per_kg}</p>
+                        <p class="card-text">Unit of GHG Emissions: ${values.unit_of_ghg_emissions}</p>
+                        <p class="card-text">Quantity Consumed: ${values.quantity}</p>
+                        <p class="card-text">Total Impact: ${values.total_impact}</p>
+                    </div>
+                `;
+                resultsDiv.appendChild(productDiv);
+            }
+
+            const totalImpactDiv = document.createElement('div');
+            totalImpactDiv.classList.add('card', 'mx-auto', 'mb-3');
+            totalImpactDiv.style.maxWidth = '400px';
+            totalImpactDiv.innerHTML = `
+                <div class="card-body">
+                    <h5 class="card-title">Total Environmental Impact</h5>
+                    <p class="card-text">Total GHG Emissions: ${result.total_impact.toFixed(2)} kg CO2e</p>
+                </div>
+            `;
+            resultsDiv.appendChild(totalImpactDiv);
         });
 
         showStep(currentStep);
+
     </script>
 {% endblock %}
