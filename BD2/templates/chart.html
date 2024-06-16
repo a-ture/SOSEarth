@@ -5,160 +5,333 @@
 
 {% block content %}
     <div class="container">
+
+        <!-- Correlation: Methane Emissions vs Agricultural Land Use -->
         <div class="row align-items-center mb-4">
             <div class="col-md-6">
-                <h2>Total GHG Emissions (2000-2020)</h2>
-                <canvas id="totalGHGEmissionsChart" width="400" height="200"></canvas>
+                <h2>Correlation: Methane Emissions vs Agricultural Land Use</h2>
+                <canvas id="methaneAgriculturalLandCorrelationChart" width="400" height="200"></canvas>
             </div>
             <div class="col-md-6">
                 <p>
-                    Questo grafico a linee mostra le emissioni totali di gas serra (GHG) per i primi 20 paesi con le
-                    emissioni più elevate dal 2000 al 2020.
-                    Ogni linea rappresenta un paese e mostra come le emissioni sono cambiate nel tempo. Le emissioni di
-                    gas
-                    serra includono anidride carbonica (CO2),
-                    metano (CH4), ossido di azoto (N2O) e altri gas ad effetto serra.
+                    Questo grafico a dispersione mostra la correlazione tra le emissioni di metano e l'uso del suolo
+                    agricolo per vari paesi dal 2000 al 2018.
+                    Ogni punto rappresenta un paese in un anno specifico.
+                </p>
+            </div>
+        </div>
+
+        <!-- Correlation: Renewable Energy Use vs Total GHG Emissions -->
+        <div class="row align-items-center mb-4">
+            <div class="col-md-6">
+                <h2>Correlation: Renewable Energy Use vs Total GHG Emissions</h2>
+                <canvas id="renewableEnergyGHGCorrelationChart" width="400" height="200"></canvas>
+            </div>
+            <div class="col-md-6">
+                <p>
+                    Questo grafico a dispersione mostra la correlazione tra l'uso di energia rinnovabile e le emissioni
+                    totali di gas serra per vari paesi dal 2000 al 2020.
+                    Ogni punto rappresenta un paese in un anno specifico.
                 </p>
             </div>
         </div>
 
         <div class="row align-items-center mb-4">
-            <div class="col-md-6 order-md-2">
-                <h2>Agricultural Land Use (%) - 2020</h2>
-                <canvas id="agriculturalLandChart" width="400" height="200"></canvas>
+            <div class="col-md-6">
+                <h2>Correlation: CO2 Emissions vs Coal Use</h2>
+                <canvas id="co2CoalCorrelationChart" width="400" height="200"></canvas>
             </div>
-            <div class="col-md-6 order-md-1">
+            <div class="col-md-6">
                 <p>
-                    Questo grafico a torta mostra l'uso del suolo agricolo come percentuale della superficie totale per
-                    i
-                    primi 10 paesi nel 2020.
-                    L'uso del suolo agricolo include le terre arabili, i terreni da pascolo permanente e le colture
-                    permanenti. Ogni sezione rappresenta un paese diverso,
-                    indicando l'importanza dell'agricoltura nell'uso complessivo del suolo di ciascun paese.
+                    Questo grafico a dispersione mostra la correlazione tra le emissioni di CO2 e l'uso di carbone per
+                    vari paesi dal 2000 al 2020.
+                    Ogni punto rappresenta un paese in un anno specifico.
                 </p>
             </div>
         </div>
 
         <div class="row align-items-center mb-4">
             <div class="col-md-6">
-                <h2>CO2 Emissions Average (2000-2020)</h2>
-                <canvas id="co2EmissionsAverageChart" width="400" height="200"></canvas>
+                <h2>Correlation: CO2 Emissions vs Population Growth</h2>
+                <canvas id="co2PopulationCorrelationChart" width="400" height="200"></canvas>
             </div>
             <div class="col-md-6">
                 <p>
-                    Questo grafico a barre mostra le emissioni medie di CO2 (in kilotonnellate) per vari paesi dal 2000
-                    al
+                    Questo grafico a dispersione mostra la correlazione tra le emissioni di CO2 e la crescita della
+                    popolazione per vari paesi dal 2000 al 2020.
+                    Ogni punto rappresenta un paese in un anno specifico.
+                </p>
+            </div>
+        </div>
+
+
+        <div class="row align-items-center mb-4">
+            <div class="col-md-6">
+                <h2>Top 10 Food Products with Highest GHG Emissions</h2>
+                <canvas id="top10FoodGHGChart" width="400" height="200"></canvas>
+            </div>
+            <div class="col-md-6">
+                <p>
+                    Questo grafico a barre mostra i primi 10 prodotti alimentari con le emissioni di gas serra più alte.
+                    Ogni barra rappresenta un prodotto alimentare e le sue emissioni di gas serra per kg.
+                </p>
+            </div>
+        </div>
+
+        <div class="row align-items-center mb-4">
+            <div class="col-md-6">
+                <h2>Top 10 Countries with Highest CO2 Emissions</h2>
+                <canvas id="top10CO2EmissionsChart" width="400" height="200"></canvas>
+            </div>
+            <div class="col-md-6">
+                <p>
+                    Questo grafico a barre mostra i 10 paesi con le emissioni medie di CO2 più alte dal 2000 al 2020.
+                </p>
+            </div>
+        </div>
+
+        <div class="row align-items-center mb-4">
+            <div class="col-md-6">
+                <h2>Top 10 Countries with Highest Agricultural Land Use</h2>
+                <canvas id="top10AgriculturalLandUseChart" width="400" height="200"></canvas>
+            </div>
+            <div class="col-md-6">
+                <p>
+                    Questo grafico a barre mostra i 10 paesi con il più alto uso del suolo agricolo nel 2020.
+                </p>
+            </div>
+        </div>
+
+        <div class="row align-items-center mb-4">
+            <div class="col-md-6">
+                <h2>Top 10 Countries with Highest PM2.5 Emissions</h2>
+                <canvas id="top10PM25EmissionsChart" width="400" height="200"></canvas>
+            </div>
+            <div class="col-md-6">
+                <p>
+                    Questo grafico a barre mostra i 10 paesi con le emissioni medie di PM2.5 più alte dal 2000 al 2020.
+                </p>
+            </div>
+        </div>
+
+        <div class="row align-items-center mb-4">
+            <div class="col-md-6">
+                <h2>Top 10 Countries with Highest Methane Emissions</h2>
+                <canvas id="top10MethaneEmissionsChart" width="400" height="200"></canvas>
+            </div>
+            <div class="col-md-6">
+                <p>
+                    Questo grafico a barre mostra i 10 paesi con le emissioni medie di metano più alte dal 2000 al 2020.
+                </p>
+            </div>
+        </div>
+
+        <div class="row align-items-center mb-4">
+            <div class="col-md-6">
+                <h2>Top 10 Countries with Highest Climate Risk Index</h2>
+                <canvas id="top10ClimateRiskIndexChart" width="400" height="200"></canvas>
+            </div>
+            <div class="col-md-6">
+                <p>
+                    Questo grafico a barre mostra i 10 paesi con l'indice di rischio climatico più alto dal 2000 al
                     2020.
-                    Ogni barra rappresenta un paese diverso. Le emissioni di CO2 derivano principalmente dalla
-                    combustione
-                    di combustibili fossili e dalla produzione di cemento,
-                    e sono un indicatore chiave del cambiamento climatico causato dall'uomo.
-                </p>
-            </div>
-        </div>
-
-        <div class="row align-items-center mb-4">
-            <div class="col-md-6 order-md-2">
-                <h2>CO2 Emissions Change (2000 vs 2020)</h2>
-                <canvas id="co2EmissionsChangeChart" width="400" height="200"></canvas>
-            </div>
-            <div class="col-md-6 order-md-1">
-                <p>
-                    Questo grafico a barre mostra la variazione percentuale delle emissioni di CO2 tra il 2000 e il 2020
-                    per
-                    vari paesi.
-                    Ogni barra rappresenta un paese e la variazione percentuale delle sue emissioni di CO2, fornendo
-                    un'indicazione di come le politiche
-                    e le tecnologie di ciascun paese hanno influenzato le loro emissioni di CO2 nel tempo.
                 </p>
             </div>
         </div>
 
         <div class="row align-items-center mb-4">
             <div class="col-md-6">
-                <h2>Emissioni di Metano (2000-2020)</h2>
-                <canvas id="methaneEmissionsChart" width="400" height="200"></canvas>
+                <h2>Top 10 Countries with Most Threatened Bird Species</h2>
+                <canvas id="top10ThreatenedBirdSpeciesChart" width="400" height="200"></canvas>
             </div>
             <div class="col-md-6">
                 <p>
-                    Questo grafico a barre mostra le emissioni medie di metano per vari paesi dal 2000 al 2020. Ogni
-                    barra
-                    rappresenta un paese diverso.
-                    Il metano è un potente gas serra con un potenziale di riscaldamento globale molto più elevato
-                    rispetto
-                    alla CO2, sebbene sia presente in quantità minori
-                    nell'atmosfera.
-                </p>
-            </div>
-        </div>
-
-        <div class="row align-items-center mb-4">
-            <div class="col-md-6 order-md-2">
-                <h2>Consumo di Energia Rinnovabile (%)</h2>
-                <canvas id="renewableEnergyChart" width="400" height="200"></canvas>
-            </div>
-            <div class="col-md-6 order-md-1">
-                <p>
-                    Questo grafico a barre mostra il consumo medio di energia rinnovabile come percentuale del consumo
-                    totale di energia per vari paesi.
-                    Ogni barra rappresenta un paese diverso. L'energia rinnovabile include fonti di energia sostenibile
-                    come
-                    solare, eolica, idroelettrica e biomassa,
-                    ed è cruciale per ridurre le emissioni di gas serra e combattere il cambiamento climatico.
+                    Questo grafico a barre mostra i 10 paesi con il maggior numero di specie di uccelli minacciate nel
+                    2020.
                 </p>
             </div>
         </div>
 
         <div class="row align-items-center mb-4">
             <div class="col-md-6">
-                <h2>Emissioni di PM2.5 (2000-2020)</h2>
-                <canvas id="pm25EmissionsChart" width="400" height="200"></canvas>
+                <h2>Top 10 Countries with Largest Protected Land Area</h2>
+                <canvas id="top10ProtectedLandChart" width="400" height="200"></canvas>
             </div>
             <div class="col-md-6">
                 <p>
-                    Questo grafico a linee mostra le emissioni medie di PM2.5 (particelle fini) per vari paesi dal 2000
-                    al
-                    2020. Ogni linea rappresenta un paese diverso.
-                    Le particelle PM2.5 sono inquinanti atmosferici che possono penetrare profondamente nei polmoni e
-                    causare gravi problemi di salute, tra cui malattie respiratorie e cardiovascolari.
-                </p>
-            </div>
-        </div>
-
-        <div class="row align-items-center mb-4">
-            <div class="col-md-6 order-md-2">
-                <h2>Specie di Uccelli Minacciate (2020)</h2>
-                <canvas id="threatenedBirdSpeciesChart" width="400" height="200"></canvas>
-            </div>
-            <div class="col-md-6 order-md-1">
-                <p>
-                    Questo grafico a barre mostra il numero di specie di uccelli minacciate per vari paesi nel 2020.
-                    Ogni
-                    barra rappresenta un paese e il numero di specie di uccelli minacciate.
-                    La perdita di habitat, il cambiamento climatico e altre attività umane sono le principali cause
-                    della
-                    minaccia per molte specie di uccelli.
+                    Questo grafico a barre mostra i 10 paesi con la maggiore area di terra protetta nel 2020.
                 </p>
             </div>
         </div>
 
         <div class="row align-items-center mb-4">
             <div class="col-md-6">
-                <h2>Indice di Rischio Climatico</h2>
-                <canvas id="climateRiskIndexChart" width="400" height="200"></canvas>
+                <h2>Countries with Largest Percentage Increase in CO2 Emissions (2000 vs 2020)</h2>
+                <canvas id="largestIncreaseCO2EmissionsChart" width="400" height="200"></canvas>
             </div>
             <div class="col-md-6">
                 <p>
-                    Questo grafico a barre mostra l'indice medio di rischio climatico per vari paesi dal 2000 al 2020.
-                    Ogni
-                    barra rappresenta un paese diverso.
-                    L'indice di rischio climatico misura l'impatto degli eventi climatici estremi, come uragani,
-                    alluvioni e
-                    siccità, sulla popolazione e l'economia di un paese.
+                    Questo grafico a barre mostra i paesi con il maggiore aumento percentuale delle emissioni di CO2 tra
+                    il 2000 e il 2020.
                 </p>
             </div>
         </div>
     </div>
+
+    <div class="row align-items-center mb-4">
+        <div class="col-md-6">
+            <h2>Total GHG Emissions (2000-2020)</h2>
+            <canvas id="totalGHGEmissionsChart" width="400" height="200"></canvas>
+        </div>
+        <div class="col-md-6">
+            <p>
+                Questo grafico a linee mostra le emissioni totali di gas serra (GHG) per i primi 20 paesi con le
+                emissioni più elevate dal 2000 al 2020.
+                Ogni linea rappresenta un paese e mostra come le emissioni sono cambiate nel tempo. Le emissioni di
+                gas
+                serra includono anidride carbonica (CO2),
+                metano (CH4), ossido di azoto (N2O) e altri gas ad effetto serra.
+            </p>
+        </div>
+    </div>
+
+    <div class="row align-items-center mb-4">
+        <div class="col-md-6 order-md-2">
+            <h2>Agricultural Land Use (%) - 2020</h2>
+            <canvas id="agriculturalLandChart" width="400" height="200"></canvas>
+        </div>
+        <div class="col-md-6 order-md-1">
+            <p>
+                Questo grafico a torta mostra l'uso del suolo agricolo come percentuale della superficie totale per
+                i
+                primi 10 paesi nel 2020.
+                L'uso del suolo agricolo include le terre arabili, i terreni da pascolo permanente e le colture
+                permanenti. Ogni sezione rappresenta un paese diverso,
+                indicando l'importanza dell'agricoltura nell'uso complessivo del suolo di ciascun paese.
+            </p>
+        </div>
+    </div>
+
+    <div class="row align-items-center mb-4">
+        <div class="col-md-6">
+            <h2>CO2 Emissions Average (2000-2020)</h2>
+            <canvas id="co2EmissionsAverageChart" width="400" height="200"></canvas>
+        </div>
+        <div class="col-md-6">
+            <p>
+                Questo grafico a barre mostra le emissioni medie di CO2 (in kilotonnellate) per vari paesi dal 2000
+                al
+                2020.
+                Ogni barra rappresenta un paese diverso. Le emissioni di CO2 derivano principalmente dalla
+                combustione
+                di combustibili fossili e dalla produzione di cemento,
+                e sono un indicatore chiave del cambiamento climatico causato dall'uomo.
+            </p>
+        </div>
+    </div>
+
+    <div class="row align-items-center mb-4">
+        <div class="col-md-6 order-md-2">
+            <h2>CO2 Emissions Change (2000 vs 2020)</h2>
+            <canvas id="co2EmissionsChangeChart" width="400" height="200"></canvas>
+        </div>
+        <div class="col-md-6 order-md-1">
+            <p>
+                Questo grafico a barre mostra la variazione percentuale delle emissioni di CO2 tra il 2000 e il 2020
+                per
+                vari paesi.
+                Ogni barra rappresenta un paese e la variazione percentuale delle sue emissioni di CO2, fornendo
+                un'indicazione di come le politiche
+                e le tecnologie di ciascun paese hanno influenzato le loro emissioni di CO2 nel tempo.
+            </p>
+        </div>
+    </div>
+
+    <div class="row align-items-center mb-4">
+        <div class="col-md-6">
+            <h2>Emissioni di Metano (2000-2020)</h2>
+            <canvas id="methaneEmissionsChart" width="400" height="200"></canvas>
+        </div>
+        <div class="col-md-6">
+            <p>
+                Questo grafico a barre mostra le emissioni medie di metano per vari paesi dal 2000 al 2020. Ogni
+                barra
+                rappresenta un paese diverso.
+                Il metano è un potente gas serra con un potenziale di riscaldamento globale molto più elevato
+                rispetto
+                alla CO2, sebbene sia presente in quantità minori
+                nell'atmosfera.
+            </p>
+        </div>
+    </div>
+
+    <div class="row align-items-center mb-4">
+        <div class="col-md-6 order-md-2">
+            <h2>Consumo di Energia Rinnovabile (%)</h2>
+            <canvas id="renewableEnergyChart" width="400" height="200"></canvas>
+        </div>
+        <div class="col-md-6 order-md-1">
+            <p>
+                Questo grafico a barre mostra il consumo medio di energia rinnovabile come percentuale del consumo
+                totale di energia per vari paesi.
+                Ogni barra rappresenta un paese diverso. L'energia rinnovabile include fonti di energia sostenibile
+                come
+                solare, eolica, idroelettrica e biomassa,
+                ed è cruciale per ridurre le emissioni di gas serra e combattere il cambiamento climatico.
+            </p>
+        </div>
+    </div>
+
+    <div class="row align-items-center mb-4">
+        <div class="col-md-6">
+            <h2>Emissioni di PM2.5 (2000-2020)</h2>
+            <canvas id="pm25EmissionsChart" width="400" height="200"></canvas>
+        </div>
+        <div class="col-md-6">
+            <p>
+                Questo grafico a linee mostra le emissioni medie di PM2.5 (particelle fini) per vari paesi dal 2000
+                al
+                2020. Ogni linea rappresenta un paese diverso.
+                Le particelle PM2.5 sono inquinanti atmosferici che possono penetrare profondamente nei polmoni e
+                causare gravi problemi di salute, tra cui malattie respiratorie e cardiovascolari.
+            </p>
+        </div>
+    </div>
+
+    <div class="row align-items-center mb-4">
+        <div class="col-md-6 order-md-2">
+            <h2>Specie di Uccelli Minacciate (2020)</h2>
+            <canvas id="threatenedBirdSpeciesChart" width="400" height="200"></canvas>
+        </div>
+        <div class="col-md-6 order-md-1">
+            <p>
+                Questo grafico a barre mostra il numero di specie di uccelli minacciate per vari paesi nel 2020.
+                Ogni
+                barra rappresenta un paese e il numero di specie di uccelli minacciate.
+                La perdita di habitat, il cambiamento climatico e altre attività umane sono le principali cause
+                della
+                minaccia per molte specie di uccelli.
+            </p>
+        </div>
+    </div>
+
+    <div class="row align-items-center mb-4">
+        <div class="col-md-6">
+            <h2>Indice di Rischio Climatico</h2>
+            <canvas id="climateRiskIndexChart" width="400" height="200"></canvas>
+        </div>
+        <div class="col-md-6">
+            <p>
+                Questo grafico a barre mostra l'indice medio di rischio climatico per vari paesi dal 2000 al 2020.
+                Ogni
+                barra rappresenta un paese diverso.
+                L'indice di rischio climatico misura l'impatto degli eventi climatici estremi, come uragani,
+                alluvioni e
+                siccità, sulla popolazione e l'economia di un paese.
+            </p>
+        </div>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@1.1.1/dist/chartjs-plugin-zoom.min.js"></script>
     <script>
@@ -317,6 +490,149 @@
                     values,
                     'Agricultural Land Use (%)'
                 );
+            });
+            // Top 10 Food Products with Highest GHG Emissions - Bar Chart
+            fetchData('/api/top_10_food_ghg_emissions', data => {
+                const labels = data.map(d => d.food_product);
+                const values = data.map(d => d.total_ghg_emissions_per_kg);
+                console.log('Top 10 Food GHG Emissions Data:', labels, values); // Debug: log data for Food GHG Emissions
+                renderChart(document.getElementById('top10FoodGHGChart').getContext('2d'), 'bar', labels, values, 'Total GHG Emissions (kg CO2 eq per kg)');
+            });
+
+            // Top 10 Countries with Highest CO2 Emissions - Bar Chart
+            fetchData('/api/top_10_co2_emissions', data => {
+                const labels = data.map(d => d._id);
+                const values = data.map(d => d.avg_co2_emissions);
+                console.log('Top 10 CO2 Emissions Data:', labels, values); // Debug: log data for CO2 Emissions
+                renderChart(document.getElementById('top10CO2EmissionsChart').getContext('2d'), 'bar', labels, values, 'Average CO2 Emissions (kt)');
+            });
+
+            // Top 10 Countries with Highest Agricultural Land Use - Bar Chart
+            fetchData('/api/top_10_agricultural_land_use', data => {
+                const labels = data.map(d => d.Country);
+                const values = data.map(d => d.Agricultural_Land_Use);
+                console.log('Top 10 Agricultural Land Use Data:', labels, values); // Debug: log data for Agricultural Land Use
+                renderChart(document.getElementById('top10AgriculturalLandUseChart').getContext('2d'), 'bar', labels, values, 'Agricultural Land Use (%)');
+            });
+
+            // Top 10 Countries with Highest PM2.5 Emissions - Bar Chart
+            fetchData('/api/top_10_pm25_emissions', data => {
+                const labels = data.map(d => d._id);
+                const values = data.map(d => d.avg_pm25_emissions);
+                console.log('Top 10 PM2.5 Emissions Data:', labels, values); // Debug: log data for PM2.5 Emissions
+                renderChart(document.getElementById('top10PM25EmissionsChart').getContext('2d'), 'bar', labels, values, 'Average PM2.5 Emissions (µg/m³)');
+            });
+
+            // Top 10 Countries with Highest Methane Emissions - Bar Chart
+            fetchData('/api/top_10_methane_emissions', data => {
+                const labels = data.map(d => d._id);
+                const values = data.map(d => d.avg_methane_emissions);
+                console.log('Top 10 Methane Emissions Data:', labels, values); // Debug: log data for Methane Emissions
+                renderChart(document.getElementById('top10MethaneEmissionsChart').getContext('2d'), 'bar', labels, values, 'Average Methane Emissions (kt)');
+            });
+
+            // Top 10 Countries with Highest Climate Risk Index - Bar Chart
+            fetchData('/api/top_10_climate_risk_index', data => {
+                const labels = data.map(d => d._id);
+                const values = data.map(d => d.avg_climate_risk_index);
+                console.log('Top 10 Climate Risk Index Data:', labels, values); // Debug: log data for Climate Risk Index
+                renderChart(document.getElementById('top10ClimateRiskIndexChart').getContext('2d'), 'bar', labels, values, 'Average Climate Risk Index');
+            });
+
+            // Top 10 Countries with Most Threatened Bird Species - Bar Chart
+            fetchData('/api/top_10_threatened_bird_species', data => {
+                const labels = data.map(d => d.Country);
+                const values = data.map(d => d.Threatened_Bird_Species);
+                console.log('Top 10 Threatened Bird Species Data:', labels, values); // Debug: log data for Threatened Bird Species
+                renderChart(document.getElementById('top10ThreatenedBirdSpeciesChart').getContext('2d'), 'bar', labels, values, 'Number of Threatened Bird Species (2020)');
+            });
+
+            // Top 10 Countries with Largest Protected Land Area - Bar Chart
+            fetchData('/api/top_10_protected_land', data => {
+                const labels = data.map(d => d.Country);
+                const values = data.map(d => d.Protected_Area);
+                console.log('Top 10 Protected Land Data:', labels, values); // Debug: log data for Protected Land
+                renderChart(document.getElementById('top10ProtectedLandChart').getContext('2d'), 'bar', labels, values, 'Protected Land Area (sq km)');
+            });
+
+            // Countries with Largest Percentage Increase in CO2 Emissions (2000 vs 2020) - Bar Chart
+            fetchData('/api/countries_largest_percentage_increase_co2_emissions', data => {
+                const labels = data.map(d => d.Country);
+                const values = data.map(d => d.Percentage_Change);
+                console.log('Largest Percentage Increase in CO2 Emissions Data:', labels, values); // Debug: log data for CO2 Emissions Percentage Increase
+                renderChart(document.getElementById('largestIncreaseCO2EmissionsChart').getContext('2d'), 'bar', labels, values, 'Percentage Change in CO2 Emissions (2000 vs 2020)');
+            });
+
+            function renderScatterChart(ctx, data, label, xLabel, yLabel) {
+                const scatterData = {
+                    datasets: [{
+                        label: label,
+                        data: data.map(d => ({x: d[xLabel], y: d[yLabel]})),
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1
+                    }]
+                };
+
+                new Chart(ctx, {
+                    type: 'scatter',
+                    data: scatterData,
+                    options: {
+                        scales: {
+                            x: {
+                                type: 'linear',
+                                position: 'bottom',
+                                title: {
+                                    display: true,
+                                    text: xLabel
+                                }
+                            },
+                            y: {
+                                title: {
+                                    display: true,
+                                    text: yLabel
+                                }
+                            }
+                        },
+                        plugins: {
+                            zoom: {
+                                zoom: {
+                                    wheel: {
+                                        enabled: true
+                                    },
+                                    pinch: {
+                                        enabled: true
+                                    },
+                                    mode: 'xy'
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+
+            // Correlation: CO2 Emissions vs Population Growth - Scatter Chart
+            fetchData('/api/correlation_co2_population', data => {
+                const ctx = document.getElementById('co2PopulationCorrelationChart').getContext('2d');
+                renderScatterChart(ctx, data, 'CO2 Emissions vs Population Growth', 'Population_Growth', 'CO2_Emissions');
+            });
+
+            // Correlation: CO2 Emissions vs Coal Use - Scatter Chart
+            fetchData('/api/correlation_co2_coal_use', data => {
+                const ctx = document.getElementById('co2CoalCorrelationChart').getContext('2d');
+                renderScatterChart(ctx, data, 'CO2 Emissions vs Coal Use', 'Coal_Use', 'CO2_Emissions');
+            });
+
+            // Correlation: Methane Emissions vs Agricultural Land Use - Scatter Chart
+            fetchData('/api/correlation_methane_agricultural_land', data => {
+                const ctx = document.getElementById('methaneAgriculturalLandCorrelationChart').getContext('2d');
+                renderScatterChart(ctx, data, 'Methane Emissions vs Agricultural Land Use', 'Agricultural_Land_Use', 'Methane_Emissions');
+            });
+
+            // Correlation: Renewable Energy Use vs Total GHG Emissions - Scatter Chart
+            fetchData('/api/correlation_renewable_energy_ghg', data => {
+                const ctx = document.getElementById('renewableEnergyGHGCorrelationChart').getContext('2d');
+                renderScatterChart(ctx, data, 'Renewable Energy Use vs Total GHG Emissions', 'Renewable_Energy_Use', 'Total_GHG_Emissions');
             });
 
             // Total GHG Emissions (2000-2020) - Line Chart

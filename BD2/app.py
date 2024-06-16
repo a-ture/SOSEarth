@@ -150,6 +150,328 @@ def get_latest_data():
     return vital_signs
 
 
+@app.route('/api/correlation_methane_agricultural_land', methods=['GET'])
+def get_correlation_methane_agricultural_land():
+    try:
+        pipeline = [
+            {"$match": {"Year": {"$gte": 2000, "$lte": 2018}}},
+            {"$addFields": {"CountryYear": {"$concat": ["$Country Name", "-", {"$toString": "$Year"}]}}},
+            {"$lookup": {
+                "from": "agricultural_land",
+                "let": {"country_year": "$CountryYear"},
+                "pipeline": [
+                    {"$addFields": {"CountryYear": {"$concat": ["$Country Name", "-", {"$toString": "$Year"}]}}},
+                    {"$match": {"$expr": {"$eq": ["$CountryYear", "$$country_year"]}}}
+                ],
+                "as": "agricultural_land_data"
+            }},
+            {"$unwind": "$agricultural_land_data"},
+            {"$project": {
+                "Country": "$Country Name",
+                "Year": "$Year",
+                "Methane_Emissions": "$Value",
+                "Agricultural_Land_Use": "$agricultural_land_data.Value"
+            }},
+            {"$match": {"Methane_Emissions": {"$ne": None}, "Agricultural_Land_Use": {"$ne": None}}}
+        ]
+        data = list(mongo.db.methane_emissions.aggregate(pipeline))
+
+        # Convert ObjectId to string or remove it from the result
+        for document in data:
+            document.pop('_id', None)
+            document.pop('agricultural_land_data', None)
+
+        if not data:
+            return jsonify(
+                {"error": "No data found for the correlation between methane emissions and agricultural land use"}), 404
+        return jsonify(data)
+    except Exception as e:
+        logging.error(f"Error fetching methane emissions and agricultural land use correlation data: {e}")
+        return jsonify({"error": "Internal server error"}), 500
+
+
+@app.route('/api/correlation_renewable_energy_ghg', methods=['GET'])
+def get_correlation_renewable_energy_ghg():
+    try:
+        pipeline = [
+            {"$match": {"Year": {"$gte": 2000, "$lte": 2020}}},
+            {"$addFields": {"CountryYear": {"$concat": ["$Country Name", "-", {"$toString": "$Year"}]}}},
+            {"$lookup": {
+                "from": "total_ghg_emissions",
+                "let": {"country_year": "$CountryYear"},
+                "pipeline": [
+                    {"$addFields": {"CountryYear": {"$concat": ["$Country Name", "-", {"$toString": "$Year"}]}}},
+                    {"$match": {"$expr": {"$eq": ["$CountryYear", "$$country_year"]}}}
+                ],
+                "as": "total_ghg_emissions_data"
+            }},
+            {"$unwind": "$total_ghg_emissions_data"},
+            {"$project": {
+                "Country": "$Country Name",
+                "Year": "$Year",
+                "Renewable_Energy_Use": "$Value",
+                "Total_GHG_Emissions": "$total_ghg_emissions_data.Value"
+            }},
+            {"$match": {"Renewable_Energy_Use": {"$ne": None}, "Total_GHG_Emissions": {"$ne": None}}}
+        ]
+        data = list(mongo.db.renewable_energy.aggregate(pipeline))
+
+        # Convert ObjectId to string or remove it from the result
+        for document in data:
+            document.pop('_id', None)
+            document.pop('total_ghg_emissions_data', None)
+
+        if not data:
+            return jsonify({
+                "error": "No data found for the correlation between renewable energy use and total GHG emissions"}), 404
+        return jsonify(data)
+    except Exception as e:
+        logging.error(f"Error fetching renewable energy use and total GHG emissions correlation data: {e}")
+        return jsonify({"error": "Internal server error"}), 500
+
+
+@app.route('/api/correlation_co2_coal_use', methods=['GET'])
+def get_correlation_co2_coal_use():
+    try:
+        pipeline = [
+            {"$match": {"Year": {"$gte": 2000, "$lte": 2020}}},
+            {"$addFields": {"CountryYear": {"$concat": ["$Country Name", "-", {"$toString": "$Year"}]}}},
+            {"$lookup": {
+                "from": "coal_use",
+                "let": {"country_year": "$CountryYear"},
+                "pipeline": [
+                    {"$addFields": {"CountryYear": {"$concat": ["$Country Name", "-", {"$toString": "$Year"}]}}},
+                    {"$match": {"$expr": {"$eq": ["$CountryYear", "$$country_year"]}}}
+                ],
+                "as": "coal_use_data"
+            }},
+            {"$unwind": "$coal_use_data"},
+            {"$project": {
+                "Country": "$Country Name",
+                "Year": "$Year",
+                "CO2_Emissions": "$Value",
+                "Coal_Use": "$coal_use_data.Value"
+            }},
+            {"$match": {"CO2_Emissions": {"$ne": None}, "Coal_Use": {"$ne": None}}}
+        ]
+        data = list(mongo.db.co2_emissions.aggregate(pipeline))
+
+        # Convert ObjectId to string or remove it from the result
+        for document in data:
+            document.pop('_id', None)
+            document.pop('coal_use_data', None)
+
+        if not data:
+            return jsonify({"error": "No data found for the correlation between CO2 emissions and coal use"}), 404
+        return jsonify(data)
+    except Exception as e:
+        logging.error(f"Error fetching CO2 emissions and coal use correlation data: {e}")
+        return jsonify({"error": "Internal server error"}), 500
+
+
+@app.route('/api/correlation_co2_population', methods=['GET'])
+def get_correlation_co2_population():
+    try:
+        pipeline = [
+            {"$match": {"Year": {"$gte": 2000, "$lte": 2020}}},
+            {"$addFields": {"CountryYear": {"$concat": ["$Country Name", "-", {"$toString": "$Year"}]}}},
+            {"$lookup": {
+                "from": "population_growth",
+                "let": {"country_year": "$CountryYear"},
+                "pipeline": [
+                    {"$addFields": {"CountryYear": {"$concat": ["$Country Name", "-", {"$toString": "$Year"}]}}},
+                    {"$match": {"$expr": {"$eq": ["$CountryYear", "$$country_year"]}}}
+                ],
+                "as": "population_growth_data"
+            }},
+            {"$unwind": "$population_growth_data"},
+            {"$project": {
+                "Country": "$Country Name",
+                "Year": "$Year",
+                "CO2_Emissions": "$Value",
+                "Population_Growth": "$population_growth_data.Value"
+            }},
+            {"$match": {"CO2_Emissions": {"$ne": None}, "Population_Growth": {"$ne": None}}}
+        ]
+        data = list(mongo.db.co2_emissions.aggregate(pipeline))
+
+        # Convert ObjectId to string or remove it from the result
+        for document in data:
+            document.pop('_id', None)
+            document.pop('population_growth_data', None)
+
+        if not data:
+            return jsonify(
+                {"error": "No data found for the correlation between CO2 emissions and population growth"}), 404
+        return jsonify(data)
+    except Exception as e:
+        logging.error(f"Error fetching CO2 emissions and population growth correlation data: {e}")
+        return jsonify({"error": "Internal server error"}), 500
+
+
+@app.route('/api/top_10_food_ghg_emissions', methods=['GET'])
+def get_top_10_food_ghg_emissions():
+    try:
+        data = list(mongo.db.food_product_emissions.find({}, {'_id': 0, 'food_product': 1,
+                                                              'total_ghg_emissions_per_kg': 1}).sort(
+            'total_ghg_emissions_per_kg', -1).limit(10))
+        return jsonify(data)
+    except Exception as e:
+        logging.error(f"Error fetching top 10 food GHG emissions: {e}")
+        return jsonify({"error": "Internal server error"}), 500
+
+
+@app.route('/api/top_10_co2_emissions', methods=['GET'])
+def get_top_10_co2_emissions():
+    try:
+        pipeline = [
+            {"$group": {"_id": "$Country Name", "avg_co2_emissions": {"$avg": "$Value"}}},
+            {"$sort": {"avg_co2_emissions": -1}},
+            {"$limit": 10}
+        ]
+        data = list(mongo.db.co2_emissions.aggregate(pipeline))
+        data = convert_and_filter(data)
+        return jsonify(data)
+    except Exception as e:
+        logging.error(f"Error fetching top 10 CO2 emissions: {e}")
+        return jsonify({"error": "Internal server error"}), 500
+
+
+@app.route('/api/top_10_agricultural_land_use', methods=['GET'])
+def get_top_10_agricultural_land_use():
+    try:
+        pipeline = [
+            {"$match": {"Year": 2020}},
+            {"$sort": {"Value": -1}},
+            {"$limit": 10},
+            {"$project": {"Country": "$Country Name", "Agricultural_Land_Use": "$Value"}}
+        ]
+        data = list(mongo.db.agricultural_land.aggregate(pipeline))
+        data = convert_and_filter(data)
+        return jsonify(data)
+    except Exception as e:
+        logging.error(f"Error fetching top 10 agricultural land use: {e}")
+        return jsonify({"error": "Internal server error"}), 500
+
+
+@app.route('/api/top_10_pm25_emissions', methods=['GET'])
+def get_top_10_pm25_emissions():
+    try:
+        pipeline = [
+            {"$group": {"_id": "$Country Name", "avg_pm25_emissions": {"$avg": "$Value"}}},
+            {"$sort": {"avg_pm25_emissions": -1}},
+            {"$limit": 10}
+        ]
+        data = list(mongo.db.pm25_air_pollution.aggregate(pipeline))
+        data = convert_and_filter(data)
+        return jsonify(data)
+    except Exception as e:
+        logging.error(f"Error fetching top 10 PM2.5 emissions: {e}")
+        return jsonify({"error": "Internal server error"}), 500
+
+
+@app.route('/api/top_10_methane_emissions', methods=['GET'])
+def get_top_10_methane_emissions():
+    try:
+        pipeline = [
+            {"$group": {"_id": "$Country Name", "avg_methane_emissions": {"$avg": "$Value"}}},
+            {"$sort": {"avg_methane_emissions": -1}},
+            {"$limit": 10}
+        ]
+        data = list(mongo.db.methane_emissions.aggregate(pipeline))
+        data = convert_and_filter(data)
+        return jsonify(data)
+    except Exception as e:
+        logging.error(f"Error fetching top 10 methane emissions: {e}")
+        return jsonify({"error": "Internal server error"}), 500
+
+
+@app.route('/api/top_10_climate_risk_index', methods=['GET'])
+def get_top_10_climate_risk_index():
+    try:
+        pipeline = [
+            {"$group": {"_id": "$Country Name", "avg_climate_risk_index": {"$avg": "$Value"}}},
+            {"$sort": {"avg_climate_risk_index": -1}},
+            {"$limit": 10}
+        ]
+        data = list(mongo.db.climate_risk_index.aggregate(pipeline))
+        data = convert_and_filter(data)
+        return jsonify(data)
+    except Exception as e:
+        logging.error(f"Error fetching top 10 climate risk index: {e}")
+        return jsonify({"error": "Internal server error"}), 500
+
+
+@app.route('/api/top_10_threatened_bird_species', methods=['GET'])
+def get_top_10_threatened_bird_species():
+    try:
+        pipeline = [
+            {"$match": {"Year": 2018}},
+            {"$sort": {"Value": -1}},
+            {"$limit": 10},
+            {"$project": {"Country": "$Country Name", "Threatened_Bird_Species": "$Value"}}
+        ]
+        data = list(mongo.db.threatened_bird_species.aggregate(pipeline))
+        data = convert_and_filter(data)
+        return jsonify(data)
+    except Exception as e:
+        logging.error(f"Error fetching top 10 threatened bird species: {e}")
+        return jsonify({"error": "Internal server error"}), 500
+
+
+@app.route('/api/top_10_protected_land', methods=['GET'])
+def get_top_10_protected_land():
+    try:
+        pipeline = [
+            {"$match": {"Year": 2020}},
+            {"$sort": {"Value": -1}},
+            {"$limit": 10},
+            {"$project": {"Country": "$Country Name", "Protected_Area": "$Value"}}
+        ]
+        data = list(mongo.db.protected_areas.aggregate(pipeline))
+        data = convert_and_filter(data)
+        return jsonify(data)
+    except Exception as e:
+        logging.error(f"Error fetching top 10 protected land: {e}")
+        return jsonify({"error": "Internal server error"}), 500
+
+
+@app.route('/api/countries_largest_percentage_increase_co2_emissions', methods=['GET'])
+def get_countries_largest_percentage_increase_co2_emissions():
+    try:
+        pipeline = [
+            {"$match": {"Year": {"$in": [2000, 2020]}}},
+            {"$group": {"_id": {"Country": "$Country Name", "Year": "$Year"}, "CO2_Emissions": {"$sum": "$Value"}}},
+            {"$group": {"_id": "$_id.Country",
+                        "Emissions": {"$push": {"year": "$_id.Year", "value": "$CO2_Emissions"}}}},
+            {"$project": {
+                "Country": "$_id",
+                "Percentage_Change": {
+                    "$cond": {
+                        "if": {"$eq": [{"$arrayElemAt": ["$Emissions.value", 0]}, 0]},
+                        "then": None,
+                        "else": {
+                            "$multiply": [
+                                {"$divide": [{"$subtract": [{"$arrayElemAt": ["$Emissions.value", 1]},
+                                                            {"$arrayElemAt": ["$Emissions.value", 0]}]},
+                                             {"$arrayElemAt": ["$Emissions.value", 0]}]},
+                                100
+                            ]
+                        }
+                    }
+                }
+            }},
+            {"$sort": {"Percentage_Change": -1}},
+            {"$limit": 10}
+        ]
+        data = list(mongo.db.co2_emissions.aggregate(pipeline))
+        data = convert_and_filter(data)
+        return jsonify(data)
+    except Exception as e:
+        logging.error(f"Error fetching countries with largest percentage increase in CO2 emissions: {e}")
+        return jsonify({"error": "Internal server error"}), 500
+
+
 @app.route('/get_metadata', methods=['GET'])
 def get_metadata():
     indicator_name = request.args.get('indicator_name')
@@ -512,6 +834,11 @@ def indicators():
 @app.route('/calculator')
 def calculator():
     return render_template('carbon.html')
+
+
+@app.route('/chart')
+def chart():
+    return render_template('chart.html')
 
 
 if __name__ == "__main__":
