@@ -1,3 +1,5 @@
+from email.utils import unquote
+
 from flask import Flask, render_template, request, jsonify
 from flask_pymongo import PyMongo
 from flask_bootstrap import Bootstrap
@@ -6,7 +8,7 @@ import os
 import logging
 import pandas as pd
 
-from utils import convert_and_filter, country_name_to_iso3
+from utils import convert_and_filter, country_name_to_iso3, collection_map, indicator_to_collection_map
 
 # Load environment variables
 load_dotenv()
@@ -148,6 +150,47 @@ def get_latest_data():
         })
 
     return vital_signs
+
+
+@app.route('/api/query', methods=['GET'])
+def execute_query():
+    indicator = request.args.get('indicator')
+    query_type = request.args.get('queryType')
+
+    if not indicator or not query_type:
+        return jsonify({"error": "Indicator and query type are required"}), 400
+
+    try:
+        collection_name = indicator_to_collection_map.get(indicator)
+        if not collection_name:
+            return jsonify({"error": "Unsupported indicator"}), 400
+
+        if query_type == 'top_10':
+            pipeline = [
+                {"$group": {"_id": "$Country Name", "Value": {"$avg": "$Value"}}},
+                {"$sort": {"Value": -1}},
+                {"$limit": 10}
+            ]
+        else:
+            return jsonify({"error": "Unsupported query type"}), 400
+
+        collection = mongo.db[collection_name]
+
+        logging.debug(f"Executing pipeline on collection: {collection_name}")
+        logging.debug(f"Pipeline: {pipeline}")
+
+        data = list(collection.aggregate(pipeline))
+
+        logging.debug(f"Raw data from MongoDB: {data}")
+
+        result = [{"Country": item["_id"], "Value": item["Value"]} for item in data]
+        print(result)
+        logging.debug(f"Formatted result: {result}")
+
+        return jsonify(result)
+    except Exception as e:
+        logging.error(f"Error executing query: {e}")
+        return jsonify({"error": "Internal server error"}), 500
 
 
 @app.route('/api/category_info/<category>', methods=['GET'])

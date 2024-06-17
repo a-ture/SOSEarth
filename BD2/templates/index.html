@@ -68,6 +68,34 @@
             </div>
         </div>
     </section>
+
+    <section class="container mt-5">
+        <h3 class="text-center">Interactive Queries</h3>
+        <form id="query-form">
+            <div class="form-group">
+                <label for="indicator">Select Indicator:</label>
+                <select class="form-control" id="indicator" name="indicator">
+                    <!-- Options will be populated by JavaScript -->
+                </select>
+            </div>
+            <div class="form-group mt-3">
+                <label for="query-type">Select Query Type:</label>
+                <select class="form-control" id="query-type" name="query-type">
+                    <option value="top_10">Top 10 Countries</option>
+                    <!-- Aggiungi altre query tipo se necessario -->
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary mt-3">Execute Query</button>
+        </form>
+    </section>
+
+    <section class="container mt-5">
+        <h3 class="text-center">Query Results</h3>
+        <div id="query-results" class="table-responsive">
+            <!-- I risultati della query verranno visualizzati qui -->
+            <canvas id="queryChart" width="400" height="200"></canvas>
+        </div>
+    </section>
     <style>
         .big-number {
             font-size: 2rem;
@@ -134,26 +162,103 @@
                         const slideItems = data.slice(i, i + 4);
                         const activeClass = i === 0 ? 'active' : '';
                         const carouselItem = `
-                            <div class="carousel-item ${activeClass}">
-                                <div class="row px-3 py-1 pb-5">
-                                    ${slideItems.map(item => `
-                                        <div class="col h-100">
-                                            <hr>
-                                            <h5 class="dashed-underline ">${item.title}</h5>
-                                            <div>
-                                                <h6 class="d-inline big-number align-baseline">
-                                                    <i class="fa-sharp fa-regular fa-arrow-${item.trend === 'down' ? 'down text-danger' : 'up text-success'}"></i> ${item.value}
-                                                </h6>
-                                                <span class="d-inline small-text ms-1">${item.description}</span>
-                                            </div>
+                        <div class="carousel-item ${activeClass}">
+                            <div class="row px-3 py-1 pb-5">
+                                ${slideItems.map(item => `
+                                    <div class="col h-100">
+                                        <hr>
+                                        <h5 class="dashed-underline ">${item.title}</h5>
+                                        <div>
+                                            <h6 class="d-inline big-number align-baseline">
+                                                <i class="fa-sharp fa-regular fa-arrow-${item.trend === 'down' ? 'down text-danger' : 'up text-success'}"></i> ${parseFloat(item.value).toFixed(2)}
+                                            </h6>
+                                            <span class="d-inline small-text ms-1">${item.description}</span>
                                         </div>
-                                    `).join('')}
-                                </div>
-                            </div>`;
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>`;
                         carouselInner.insertAdjacentHTML('beforeend', carouselItem);
                     }
                 })
                 .catch(error => console.error('Error fetching data:', error));
         });
+
+        fetch('/get_indicators')
+            .then(response => response.json())
+            .then(data => {
+                const indicatorSelect = document.getElementById('indicator');
+                indicatorSelect.innerHTML = ''; // Clear any existing options
+
+                data.forEach(indicator => {
+                    const option = document.createElement('option');
+                    option.value = encodeURIComponent(indicator);
+                    option.textContent = indicator;
+                    indicatorSelect.appendChild(option);
+                });
+            })
+            .catch(error => console.error('Error fetching indicators:', error));
+
+        document.getElementById('query-form').addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            const indicator = document.getElementById('indicator').value;
+            const queryType = document.getElementById('query-type').value;
+
+            fetch(`/api/query?indicator=${indicator}&queryType=${queryType}`)
+                .then(response => response.json())
+                .then(data => {
+                    let resultsDiv = document.getElementById('query-results');
+                    resultsDiv.innerHTML = ''; // Clear any existing content
+
+                    if (data.error) {
+                        resultsDiv.innerHTML = `<div class="alert alert-danger">${data.error}</div>`;
+                    } else {
+                        // Remove old canvas if it exists
+                        let oldCanvas = document.getElementById('queryChart');
+                        if (oldCanvas) {
+                            oldCanvas.remove();
+                        }
+
+                        // Create new canvas
+                        let canvas = document.createElement('canvas');
+                        canvas.id = 'queryChart';
+                        canvas.width = 400;
+                        canvas.height = 200;
+                        resultsDiv.appendChild(canvas);
+
+                        // Extract the data for the chart
+                        const labels = data.map(row => row.Country);
+                        const values = data.map(row => parseFloat(row.Value).toFixed(2));
+
+                        // Create a new chart
+                        const ctx = canvas.getContext('2d');
+                        window.queryChartInstance = new Chart(ctx, {
+                            type: 'bar',
+                            data: {
+                                labels: labels,
+                                datasets: [{
+                                    label: 'Value',
+                                    data: values,
+                                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                                    borderColor: 'rgba(75, 192, 192, 1)',
+                                    borderWidth: 1
+                                }]
+                            },
+                            options: {
+                                scales: {
+                                    y: {
+                                        beginAtZero: true
+                                    }
+                                }
+                            }
+                        });
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching data:', error);
+                });
+        });
     </script>
+
 {% endblock %}

@@ -197,7 +197,35 @@ country_name_to_iso3 = {
     "Zimbabwe": "ZWE"
 }
 
+# Dizionario originale
+collection_map = {
+    "co2_emissions": "CO2 emissions (kt)",
+    "agricultural_land": "Agricultural land (% of land area)",
+    "arable_land": "Arable land (% of land area)",
+    "irrigated_land": "Agricultural irrigated land (% of total agricultural land)",
+    "precipitation": "Average precipitation in depth (mm per year)",
+    "hydroelectricity": "Electricity production from hydroelectric sources (% of total)",
+    "nuclear_electricity": "Electricity production from nuclear sources (% of total)",
+    "renewable_energy": "Renewable energy consumption (% of total final energy consumption)",
+    "coal_use": "Coal use (% of total energy use)",
+    "co2_emissions_per_capita": "CO2 emissions (metric tons per capita)",
+    "total_ghg_emissions": "Total GHG emissions (kt of CO2 equivalent)",
+    "methane_emissions": "Methane emissions (kt of CO2 equivalent)",
+    "nitrous_oxide_emissions": "Nitrous oxide emissions (thousand metric tons of CO2 equivalent)",
+    "pm25_air_pollution": "PM2.5 air pollution, mean annual exposure (micrograms per cubic meter)",
+    "threatened_bird_species": "Bird species, threatened",
+    "climate_risk_index": "Climate Risk Index",
+    "ghg_net_emissions_removals": "GHG net emissions/removals by LUCF (Mt of CO2 equivalent)",
+    "co2_emissions_solid_fuel": "CO2 emissions from solid fuel consumption (kt)",
+    "threatened_fish_species": "Fish species, threatened",
+    "population_growth": "Population growth (annual %)",
+    "protected_areas": "Terrestrial and marine protected areas (% of total territorial area)",
+    "internal_renewable_water_resources": "Internal renewable water resources (billion cubic meters)",
+    "urban_population": "Urban population (% of total population)"
+}
 
+# Invertire il dizionario
+indicator_to_collection_map = {v: k for k, v in collection_map.items()}
 # Function to convert ObjectId to strings and filter out NaN values
 def convert_and_filter(data):
     if isinstance(data, list):
@@ -214,6 +242,3 @@ def convert_and_filter(data):
             if isinstance(value, float) and np.isnan(value):
                 data[key] = None
     return data
-
-
-
