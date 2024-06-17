@@ -82,7 +82,8 @@
                 <label for="query-type">Select Query Type:</label>
                 <select class="form-control" id="query-type" name="query-type">
                     <option value="top_10">Top 10 Countries</option>
-                    <!-- Aggiungi altre query tipo se necessario -->
+                    <option value="bottom_10">Bottom 10 Countries</option>
+                    <option value="avg_by_region">Average Value by Region</option>
                 </select>
             </div>
             <button type="submit" class="btn btn-primary mt-3">Execute Query</button>
@@ -205,7 +206,9 @@
             const indicator = document.getElementById('indicator').value;
             const queryType = document.getElementById('query-type').value;
 
-            fetch(`/api/query?indicator=${indicator}&queryType=${queryType}`)
+            let queryUrl = `/api/query?indicator=${indicator}&queryType=${queryType}`;
+
+            fetch(queryUrl)
                 .then(response => response.json())
                 .then(data => {
                     let resultsDiv = document.getElementById('query-results');
@@ -228,7 +231,7 @@
                         resultsDiv.appendChild(canvas);
 
                         // Extract the data for the chart
-                        const labels = data.map(row => row.Country);
+                        const labels = data.map(row => queryType === 'yearly_trend' ? row.Year : row.Country);
                         const values = data.map(row => parseFloat(row.Value).toFixed(2));
 
                         // Create a new chart
@@ -259,6 +262,7 @@
                     console.error('Error fetching data:', error);
                 });
         });
+
     </script>
 
 {% endblock %}

@@ -171,6 +171,21 @@ def execute_query():
                 {"$sort": {"Value": -1}},
                 {"$limit": 10}
             ]
+        elif query_type == 'bottom_10':
+            pipeline = [
+                {"$group": {"_id": "$Country Name", "Value": {"$avg": "$Value"}}},
+                {"$sort": {"Value": 1}},
+                {"$limit": 10}
+            ]
+        elif query_type == 'avg_by_region':
+            pipeline = [
+                {"$group": {
+                    "_id": {"$ifNull": ["$Region", "$Country Name"]},  # Fallback to Country Name if Region is None
+                    "Value": {"$avg": "$Value"}
+                }},
+                {"$sort": {"Value": -1}}
+            ]
+
         else:
             return jsonify({"error": "Unsupported query type"}), 400
 
@@ -183,8 +198,10 @@ def execute_query():
 
         logging.debug(f"Raw data from MongoDB: {data}")
 
-        result = [{"Country": item["_id"], "Value": item["Value"]} for item in data]
-        print(result)
+        result = [
+            {"Country": item["_id"], "Value": item["Value"]} if query_type in ['top_10', 'bottom_10', 'avg_by_region']
+            else {"Year": item["_id"], "Value": item["Value"]} for item in data]
+
         logging.debug(f"Formatted result: {result}")
 
         return jsonify(result)
