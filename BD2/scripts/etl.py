@@ -513,6 +513,11 @@ def main():
         food_product_emissions_transformed = transform_food_product_emissions_data(food_product_emissions_df)
         load_food_product_emissions_data(food_product_emissions_transformed)
 
+        # Carica dati e salva nel database
+        file_path = "../data/Earth_Systems_Correlations.csv"
+        df = extract_data(file_path)
+        load_data(df, "earth_systems_correlations")
+
         logging.info("ETL process, cube creation, and index creation completed successfully.")
     except Exception as e:
         logging.error(f"ETL process failed: {e}")

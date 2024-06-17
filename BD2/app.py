@@ -150,6 +150,23 @@ def get_latest_data():
     return vital_signs
 
 
+@app.route('/api/category_info/<category>', methods=['GET'])
+def get_category_info(category):
+    try:
+        data = list(mongo.db.earth_systems_correlations.find({"Category": category}))
+        if not data:
+            return jsonify({"error": "No data found for the specified category"}), 404
+
+        # Convert ObjectId to string and remove it from the result
+        for document in data:
+            document.pop('_id', None)
+
+        return jsonify(data)
+    except Exception as e:
+        logging.error(f"Error fetching data for category {category}: {e}")
+        return jsonify({"error": "Internal server error"}), 500
+
+
 @app.route('/api/correlation_methane_agricultural_land', methods=['GET'])
 def get_correlation_methane_agricultural_land():
     try:
@@ -796,11 +813,16 @@ def index():
     return render_template('index.html')
 
 
+# Funzione per leggere i dati da MongoDB e convertirli in un dizionario
+def get_data_from_db():
+    data = list(mongo.db.earth_systems_correlations.find({}, {"_id": 0}))
+    return data
+
+
 @app.route('/problems')
 def problems():
-    problems_list = list(mongo.db.problems.find())
-    problems_list = convert_and_filter(problems_list)
-    return render_template('problems_earth.html', problems=problems_list)
+    data = get_data_from_db()
+    return render_template('problems_earth.html', data=data)
 
 
 @app.route('/help')

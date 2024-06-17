@@ -3,39 +3,29 @@
 {% block title %}Problems Earth - SOS Earth{% endblock %}
 
 {% block content %}
-    <!-- Background image -->
-    <div class="p-5 text-center bg-image"
-         style="background-image: url('{{ url_for('static', filename='img/background-earth.png') }}'); height: 350px; position: relative;">
+
+<!-- Background image -->
+    <div class="p-5 text-center bg-image" style="background-image: url('{{ url_for('static', filename='img/background-earth.png') }}'); height: 350px; position: relative;">
         <div class="mask" style="background-color: rgba(9,130,192,0.6); height: 100%;">
             <div class="d-flex justify-content-center align-items-center h-100 mt-5">
                 <div class="text-white">
                     <h6 class="mx-5">The Earth Science Data Systems (ESDS) Program provides full and open access to <br>
-                        NASA'S collection of Earth science data for understanding and protecting our home planet. </h6>
-                    <a data-mdb-ripple-init class="btn btn-outline-light btn-lg mt-5" href="#!" role="button">Call to
-                        action</a>
+                        NASA'S collection of Earth science data for understanding and protecting our home planet.</h6>
+                    <a data-mdb-ripple-init class="btn btn-outline-light btn-lg mt-5" href="#!" role="button">Call to action</a>
                 </div>
             </div>
         </div>
 
         <!-- Image icons positioned in a semicircle -->
-        <img src="{{ url_for('static', filename='img/biosphere-icon.png') }}" alt="Biosphere" class="icon icon-1"
-             data-target="biosphere">
-        <img src="{{ url_for('static', filename='img/oceans-icon.png') }}" alt="Oceans" class="icon icon-2"
-             data-target="oceans">
-        <img src="{{ url_for('static', filename='img/atmosphere-icon.png') }}" alt="Atmosphere" class="icon icon-3"
-             data-target="atmosphere">
-        <img src="{{ url_for('static', filename='img/cryosphere-icon.png') }}" alt="Cryosphere" class="icon icon-4"
-             data-target="cryosphere">
-        <img src="{{ url_for('static', filename='img/human-dimensions-icon.png') }}" alt="Human Dimensions"
-             class="icon icon-5" data-target="human-dimensions">
-        <img src="{{ url_for('static', filename='img/land-surface-icon.png') }}" alt="Land Surface" class="icon icon-6"
-             data-target="land-surface">
-        <img src="{{ url_for('static', filename='img/sun-earth-interactions-icon.png') }}" alt="Sun-Earth Interactions"
-             class="icon icon-7" data-target="sun-earth-interactions">
-        <img src="{{ url_for('static', filename='img/solid-earth-icon.png') }}" alt="Solid Earth" class="icon icon-8"
-             data-target="solid-earth">
-        <img src="{{ url_for('static', filename='img/terrestrial-hydrosphere-icon.png') }}"
-             alt="Terrestrial Hydrosphere" class="icon icon-9" data-target="terrestrial-hydrosphere">
+        <img src="{{ url_for('static', filename='img/biosphere-icon.png') }}" alt="Biosphere" class="icon icon-1" data-target="Biosphere">
+        <img src="{{ url_for('static', filename='img/oceans-icon.png') }}" alt="Oceans" class="icon icon-2" data-target="Oceans">
+        <img src="{{ url_for('static', filename='img/atmosphere-icon.png') }}" alt="Atmosphere" class="icon icon-3" data-target="Atmosphere">
+        <img src="{{ url_for('static', filename='img/cryosphere-icon.png') }}" alt="Cryosphere" class="icon icon-4" data-target="Cryosphere">
+        <img src="{{ url_for('static', filename='img/human-dimensions-icon.png') }}" alt="Human Dimensions" class="icon icon-5" data-target="Human Dimensions">
+        <img src="{{ url_for('static', filename='img/land-surface-icon.png') }}" alt="Land Surface" class="icon icon-6" data-target="Land Surface">
+        <img src="{{ url_for('static', filename='img/sun-earth-interactions-icon.png') }}" alt="Sun-Earth Interactions" class="icon icon-7" data-target="Sun-Earth Interactions">
+        <img src="{{ url_for('static', filename='img/solid-earth-icon.png') }}" alt="Solid Earth" class="icon icon-8" data-target="Solid Earth">
+        <img src="{{ url_for('static', filename='img/terrestrial-hydrosphere-icon.png') }}" alt="Terrestrial Hydrosphere" class="icon icon-9" data-target="Terrestrial Hydrosphere">
     </div>
 
     <!-- Card content -->
@@ -76,53 +66,12 @@
         const infoCard = document.getElementById('infoCard');
         const tabContents = document.querySelectorAll('.tab-content');
 
-        const contentData = {
-            "biosphere": {
-                "evidence": "Biosphere Evidence: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.",
-                "causes": "Biosphere Causes: Sed posuere consectetur est at lobortis. Nullam id dolor id nibh ultricies vehicula ut id elit.",
-                "effects": "Biosphere Effects: Cras mattis consectetur purus sit amet fermentum. Donec ullamcorper nulla non metus auctor fringilla."
-            },
-            "oceans": {
-                "evidence": "Oceans Evidence: Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Maecenas faucibus mollis interdum.",
-                "causes": "Oceans Causes: Curabitur blandit tempus porttitor. Integer posuere erat a ante venenatis dapibus posuere velit aliquet.",
-                "effects": "Oceans Effects: Etiam porta sem malesuada magna mollis euismod. Aenean lacinia bibendum nulla sed consectetur."
-            },
-            "atmosphere": {
-                "evidence": "Atmosphere Evidence: Vestibulum id ligula porta felis euismod semper. Sed posuere consectetur est at lobortis.",
-                "causes": "Atmosphere Causes: Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.",
-                "effects": "Atmosphere Effects: Nulla vitae elit libero, a pharetra augue. Aenean lacinia bibendum nulla sed consectetur."
-            },
-            "cryosphere": {
-                "evidence": "Cryosphere Evidence: Cras mattis consectetur purus sit amet fermentum. Donec sed odio dui.",
-                "causes": "Cryosphere Causes: Maecenas sed diam eget risus varius blandit sit amet non magna. Nulla vitae elit libero, a pharetra augue.",
-                "effects": "Cryosphere Effects: Etiam porta sem malesuada magna mollis euismod. Integer posuere erat a ante venenatis dapibus posuere velit aliquet."
-            },
-            "human-dimensions": {
-                "evidence": "Human Dimensions Evidence: Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum.",
-                "causes": "Human Dimensions Causes: Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit.",
-                "effects": "Human Dimensions Effects: Curabitur blandit tempus porttitor. Donec id elit non mi porta gravida at eget metus."
-            },
-            "land-surface": {
-                "evidence": "Land Surface Evidence: Cras mattis consectetur purus sit amet fermentum. Integer posuere erat a ante venenatis dapibus posuere velit aliquet.",
-                "causes": "Land Surface Causes: Aenean lacinia bibendum nulla sed consectetur. Nulla vitae elit libero, a pharetra augue.",
-                "effects": "Land Surface Effects: Maecenas sed diam eget risus varius blandit sit amet non magna. Sed posuere consectetur est at lobortis."
-            },
-            "sun-earth-interactions": {
-                "evidence": "Sun-Earth Interactions Evidence: Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Maecenas faucibus mollis interdum.",
-                "causes": "Sun-Earth Interactions Causes: Cras mattis consectetur purus sit amet fermentum. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum.",
-                "effects": "Sun-Earth Interactions Effects: Curabitur blandit tempus porttitor. Integer posuere erat a ante venenatis dapibus posuere velit aliquet."
-            },
-            "solid-earth": {
-                "evidence": "Solid Earth Evidence: Aenean lacinia bibendum nulla sed consectetur. Sed posuere consectetur est at lobortis.",
-                "causes": "Solid Earth Causes: Donec ullamcorper nulla non metus auctor fringilla. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh.",
-                "effects": "Solid Earth Effects: Nulla vitae elit libero, a pharetra augue. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit."
-            },
-            "terrestrial-hydrosphere": {
-                "evidence": "Terrestrial Hydrosphere Evidence: Cras mattis consectetur purus sit amet fermentum. Donec id elit non mi porta gravida at eget metus.",
-                "causes": "Terrestrial Hydrosphere Causes: Etiam porta sem malesuada magna mollis euismod. Integer posuere erat a ante venenatis dapibus posuere velit aliquet.",
-                "effects": "Terrestrial Hydrosphere Effects: Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Sed posuere consectetur est at lobortis."
-            }
-        };
+        // Dati passati dal backend
+        const contentData = {{ data | tojson }};
+
+        function findDataByCategory(category) {
+            return contentData.find(item => item.Category.toLowerCase() === category.toLowerCase());
+        }
 
         icons.forEach(icon => {
             icon.addEventListener('click', function () {
@@ -134,12 +83,18 @@
 
                 // Ottieni il target del contenuto
                 const targetContent = this.getAttribute('data-target');
-                const data = contentData[targetContent];
+                const data = findDataByCategory(targetContent);
 
-                // Aggiorna il contenuto delle schede
-                document.getElementById('evidence-content').innerText = data.evidence;
-                document.getElementById('causes-content').innerText = data.causes;
-                document.getElementById('effects-content').innerText = data.effects;
+                if (data) {
+                    // Aggiorna il contenuto delle schede
+                    document.getElementById('evidence-content').innerText = data.Evidence;
+                    document.getElementById('causes-content').innerText = data.Causes;
+                    document.getElementById('effects-content').innerText = data.Effects;
+                } else {
+                    document.getElementById('evidence-content').innerText = 'No data available';
+                    document.getElementById('causes-content').innerText = 'No data available';
+                    document.getElementById('effects-content').innerText = 'No data available';
+                }
 
                 // Mostra la scheda di "Evidence" di default
                 document.getElementById('content1').style.display = 'block';
@@ -172,6 +127,7 @@
             });
         });
     </script>
+
 
     <style>
         .icon {
