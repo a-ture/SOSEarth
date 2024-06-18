@@ -1,10 +1,13 @@
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
+<nav class="navbar navbar-expand-lg" style="background-color: #fdfffc">
     <div class="container-fluid">
         <!-- Logo -->
         <a class="navbar-brand" href="#">
-            <img src="../static/img/no_img.jpg" alt="Logo" width="40" height="40" class="d-inline-block align-top"
+            <img src="../static/img/save.png" alt="Logo" width="60" height="60" class="d-inline-block align-top"
                  loading="lazy">
-            <a class="nav-link" href="/home">SOS Earth</a>
+            <span class="nav-link orbitron" style="font-size: 2rem;">
+                <span class="sos">SOS </span>
+                <span class="earth">Earth</span>
+            </span>
         </a>
 
         <!-- Toggler button for smaller screens -->
@@ -15,18 +18,42 @@
 
         <!-- Navbar links -->
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mx-auto mb-2 mb-lg-0 text-center">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0 text-center fs-5">
                 <li class="nav-item">
-                    <a class="nav-link" href="/problems">Problems</a>
+                    <a class="nav-link" href="/problems" style="color: #e28087;">Problems</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/help">Help</a>
+                <li class=" nav-item">
+                    <a class="nav-link" href="/help" style="color: #e28087;">Help</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/project">Project</a>
+                <li class=" nav-item">
+                    <a class="nav-link" href="/project" style="color: #e28087;">Project</a>
                 </li>
             </ul>
         </div>
     </div>
 </nav>
 
+<style>
+    .orbitron {
+        font-family: " Orbitron", sans-serif;
+                    font-optical-sizing: auto;
+                    font-weight: 500;
+                    font-style: normal;
+                    }
+
+                    .earth {
+                    color: #b4d78a;
+                    }
+
+                    .sos {
+                    color: #e28087;
+                    }
+
+                    .navbar-nav .nav-item .nav-link {
+                    margin-right: 15px;
+                    }
+
+                    .navbar-nav .nav-item .nav-link:last-child {
+                    margin-right: 0;
+                    }
+                    </style>

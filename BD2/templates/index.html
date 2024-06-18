@@ -97,7 +97,40 @@
             <canvas id="queryChart" width="400" height="200"></canvas>
         </div>
     </section>
+    <div class="container">
+        <div class="about-header py-5 text-center">
+            <h1>About Us</h1>
+            <p>Learn more about the people behind SOS Earth and our mission.</p>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 about-section text-center">
+                <img src="{{ url_for('static', filename='img/no_img.jpg') }}" alt="Raffaella Spagnuolo" class="rounded">
+                <div class="about-divider"></div>
+                <h2 class="py-3">Raffaella Spagnuolo</h2>
+                <p class="about-role">Co-founder & Environmental Scientist</p>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ac arcu sit amet justo sodales auctor.
+                    Mauris vitae lorem nec mi aliquam luctus.</p>
+                <p>Suspendisse potenti. Praesent scelerisque velit sit amet dolor sollicitudin, non hendrerit erat
+                    hendrerit.</p>
+            </div>
+            <div class="col-md-6 about-section text-center">
+                <img src="{{ url_for('static', filename='img/no_img.jpg') }}" alt="Alessia Ture" class="rounded">
+                <div class="about-divider"></div>
+                <h2 class="py-3">Alessia Ture</h2>
+                <p class="about-role">Co-founder & Data Analyst</p>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ac arcu sit amet justo sodales auctor.
+                    Mauris vitae lorem nec mi aliquam luctus.</p>
+                <p>Suspendisse potenti. Praesent scelerisque velit sit amet dolor sollicitudin, non hendrerit erat
+                    hendrerit.</p>
+            </div>
+        </div>
+    </div>
     <style>
+        body {
+            background-color: #fdfffc;
+        }
+
         .big-number {
             font-size: 2rem;
         }
@@ -122,7 +155,7 @@
         }
 
         #worlddiv {
-            background-image: radial-gradient(#06016b, black);
+            background-color: #38a3a5;
             color: #ffffff;
             font-family: Trebuchet MS, serif;
         }
@@ -145,7 +178,7 @@
 
         .news-item a {
             text-decoration: none;
-            color: #007bff;
+            color: #E76F51;
         }
     </style>
     <script src="{{ url_for('static', filename='js/world.js') }}"></script>

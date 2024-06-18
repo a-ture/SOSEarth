@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block title %}Project Earth - SOS Earth{% endblock %}
-<!--  Un grafico con tutte le tipologie, numero e il numero per tipologie, con una spiegazione per ogni tipo delle cose da definrie-->
+<!--  Un grafico con tutte le tipologie, numero e il numero per tipologie, con una spiegazione per ogni tipo delle cose da definire-->
 {% block content %}
     <div id="chartdiv" style="width: 100%; height: 500px;"></div>
     <div id="infoDiv">
@@ -128,7 +128,13 @@
                 })
                 .then(data => {
                     console.log("Protected areas data:", data); // Debug: log the data received
-                    displayProtectedAreas(data);
+
+                    var infoDiv = document.getElementById('infoDiv');
+                    infoDiv.innerHTML += `
+                        <canvas id="designationChart" width="400" height="200"></canvas>
+                        <canvas id="iucnCategoryChart" width="400" height="200"></canvas>
+                    `;
+
                     renderCharts(data);
                 })
                 .catch(error => {
@@ -136,25 +142,6 @@
                 });
         }
 
-        function displayProtectedAreas(data) {
-            var infoDiv = document.getElementById('infoDiv');
-            var html = '<h3>Protected Areas</h3>';
-            if (data.length === 0) {
-                html += '<p>No protected areas found for this country.</p>';
-            } else {
-                data.forEach(area => {
-                    html += `
-                        <div class="protected-area">
-                            <h4>${area.name}</h4>
-                            <p><strong>Designation:</strong> ${area.designation}</p>
-                            <p><strong>IUCN Category:</strong> ${area.iucn_category}</p>
-                        </div>
-                    `;
-                });
-            }
-            infoDiv.innerHTML = html;
-            infoDiv.style.display = 'block';
-        }
 
         function renderCharts(data) {
             var designations = {};
@@ -165,8 +152,13 @@
                 iucnCategories[area.iucn_category] = (iucnCategories[area.iucn_category] || 0) + 1;
             });
 
+            console.log(designations)
+            console.log(iucnCategories)
+
             var designationChartCtx = document.getElementById('designationChart')?.getContext('2d');
             var iucnCategoryChartCtx = document.getElementById('iucnCategoryChart')?.getContext('2d');
+            console.log(designationChartCtx)
+            console.log(iucnCategoryChartCtx)
 
             if (designationChartCtx && iucnCategoryChartCtx) {
                 console.log('Rendering charts with data:', designations, iucnCategories);

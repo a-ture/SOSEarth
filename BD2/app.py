@@ -923,5 +923,10 @@ def chart():
     return render_template('chart.html')
 
 
+@app.route('/faq')
+def faq():
+    return render_template('faq.html')
+
+
 if __name__ == "__main__":
     app.run(debug=True)
