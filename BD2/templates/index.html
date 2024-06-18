@@ -9,11 +9,12 @@
     <!-- Background image -->
 
     <!-- Carousel wrapper -->
-    <div id="carouselDarkVariant" class="carousel slide carousel-fade carousel-dark bg-dark text-white px-5"
+    <div id="carouselDarkVariant" class="carousel slide carousel-fade carousel-dark text-white px-5"
+         style="background-color:#22577a"
          data-mdb-ride="carousel"
          data-mdb-carousel-init>
         <!-- Inner -->
-        <h6 class="fs-4 fw-lighter font-monospace text-uppercase px-3 pt-3">Vital Signs</h6>
+        <h6 class="fs-4 fw-lighter text-uppercase px-3 pt-5 orbitron">Vital Signs</h6>
         <div class="carousel-inner" id="carousel-inner">
             <!-- Content will be populated by JavaScript -->
         </div>
@@ -34,51 +35,107 @@
 
     <!-- Introduction and Objectives -->
     <section class="container mt-5">
-        <h2 class="text-center">Welcome to SOS Earth</h2>
-        <p class="lead text-center">Monitoring and analyzing vital signs of our planet.</p>
-        <p class="text-center">Our goal is to provide clear, accessible, and actionable information about the Earth's
-            environment. Explore the latest data on climate change, pollution, and more.</p>
+        <h2 class="text-center orbitron">Welcome to SOS Earth</h2>
+        <p class="lead text-center">Monitoring and Analyzing Vital Signs of Our Planet</p>
+
+        <div class="row">
+            <div class="col d-flex align-self-center mx-auto justify-content-center">
+                <div class="text-center">
+                    <img src="../static/img/earth-planet-ask-sos-vector-29767520.png" alt="Earth Monitoring"
+                         style="width: 300px; height: auto;">
+                </div>
+            </div>
+            <div class="col-9">
+                <p class="text-justify">
+                    Our mission is to provide clear, accessible, and actionable information about the Earth's
+                    environment. In
+                    the face of unprecedented environmental changes, it is more crucial than ever to stay informed and
+                    take
+                    action. At SOS Earth, we are dedicated to monitoring and analyzing key indicators of climate change,
+                    pollution, and other environmental issues that impact our planet.
+                </p>
+                <p class="text-justify">
+                    Our platform offers a comprehensive and interactive experience, allowing users to explore the latest
+                    data on
+                    various aspects of environmental health. From tracking greenhouse gas emissions and global
+                    temperature rises
+                    to monitoring deforestation rates and air quality indices, our goal is to present the data in a way
+                    that is
+                    both informative and engaging.
+                </p>
+                <p class="text-justify">
+                    We believe that knowledge is power. By providing detailed and up-to-date information, we aim to
+                    empower
+                    individuals, communities, and policymakers to make informed decisions that contribute to a
+                    sustainable
+                    future. Our interactive queries enable users to dive deep into specific datasets, customize their
+                    analysis,
+                    and gain insights tailored to their interests and needs.
+                </p>
+                <p class="text-justify">
+                    Explore our site to learn more about the current state of our environment and discover practical
+                    steps you
+                    can take to reduce your ecological footprint. Together, we can make a difference and protect the
+                    Earth for
+                    future generations. Join us in our mission to safeguard the planet and promote environmental
+                    stewardship.
+                </p>
+            </div>
+        </div>
     </section>
+
 
     <!-- Latest News or Updates Section -->
     <section class="container mt-5">
-        <h3 class="text-center">Latest News & Updates</h3>
+        <h3 class="text-center orbitron">Eco-Tools & Data</h3>
         <div class="row">
-            <div class="col-md-4">
-                <div class="news-item">
-                    <h5>Global Climate Report</h5>
-                    <p>The latest global climate report indicates a significant rise in global temperatures...</p>
-                    <a href="#">Read more</a>
+            <div class="col-md-6 d-flex align-self-center">
+                <div class="news-item text-center">
+                    <div class="text-center">
+                        <img src="../static/img/co2.png" alt="Earth Monitoring"
+                             style="width: 10%; height: auto; margin: 20px 0;">
+                    </div>
+                    <h5 class="orbitron">FoodPrint Calculator</h5>
+                    <p>Discover our interactive FoodPrint Calculator, a powerful tool that allows you to estimate the
+                        carbon
+                        emissions produced by various elements in your daily life. From the food you consume to the
+                        energy
+                        you use, our calculator provides a detailed breakdown to help you understand and reduce your
+                        carbon
+                        footprint.</p>
+                    <a href="/calculator">Try it out <i class="fa-solid fa-arrow-right"></i></a>
                 </div>
             </div>
-            <div class="col-md-4">
-                <div class="news-item">
-                    <h5>Renewable Energy Trends</h5>
-                    <p>Renewable energy adoption is increasing worldwide as countries commit to reducing
-                        emissions...</p>
-                    <a href="#">Read more</a>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="news-item">
-                    <h5>Conservation Efforts</h5>
-                    <p>New conservation efforts aim to protect endangered species and restore habitats...</p>
-                    <a href="#">Read more</a>
+            <div class="col-md-6">
+
+                <div class="news-item text-center">
+                    <div class="text-center">
+                        <img src="../static/img/weather.png" alt="Earth Monitoring"
+                             style="width: 10%; height: auto; margin: 20px 0;">
+                    </div>
+                    <h5 class="orbitron">Comprehensive Environmental Indicators</h5>
+                    <p>Explore the diverse range of environmental indicators available on our site. Our platform offers
+                        detailed insights into various metrics such as air quality, greenhouse gas emissions,
+                        deforestation
+                        rates, and more. Stay informed about the key factors influencing our planet's health and learn
+                        how
+                        these indicators can guide impactful actions.</p>
+                    <a href="/indicators">Try it out <i class="fa-solid fa-arrow-right"></i></a>
                 </div>
             </div>
         </div>
     </section>
 
     <section class="container mt-5">
-        <h3 class="text-center">Interactive Queries</h3>
-        <form id="query-form">
-            <div class="form-group">
+        <h3 class="text-center orbitron">Interactive Queries</h3>
+        <form id="query-form" class="row align-items-center">
+            <div class="form-group col-md-6">
                 <label for="indicator">Select Indicator:</label>
                 <select class="form-control" id="indicator" name="indicator">
                     <!-- Options will be populated by JavaScript -->
                 </select>
             </div>
-            <div class="form-group mt-3">
+            <div class="form-group col-4">
                 <label for="query-type">Select Query Type:</label>
                 <select class="form-control" id="query-type" name="query-type">
                     <option value="top_10">Top 10 Countries</option>
@@ -86,46 +143,21 @@
                     <option value="avg_by_region">Average Value by Region</option>
                 </select>
             </div>
-            <button type="submit" class="btn btn-primary mt-3">Execute Query</button>
+            <div class="form-group col d-flex align-items-end align-self-end">
+                <button type="submit" class="btn btn-primary w-100 orbitron">Execute Query</button>
+            </div>
         </form>
     </section>
 
+
     <section class="container mt-5">
-        <h3 class="text-center">Query Results</h3>
-        <div id="query-results" class="table-responsive">
+        <h3 class="text-center orbitron">Query Results</h3>
+        <div id="query-results" style="max-height: 500px;" class="d-flex justify-content-center">
             <!-- I risultati della query verranno visualizzati qui -->
-            <canvas id="queryChart" width="400" height="200"></canvas>
+            <canvas id="queryChart" width="400" height="1"></canvas>
         </div>
     </section>
-    <div class="container">
-        <div class="about-header py-5 text-center">
-            <h1>About Us</h1>
-            <p>Learn more about the people behind SOS Earth and our mission.</p>
-        </div>
 
-        <div class="row">
-            <div class="col-md-6 about-section text-center">
-                <img src="{{ url_for('static', filename='img/no_img.jpg') }}" alt="Raffaella Spagnuolo" class="rounded">
-                <div class="about-divider"></div>
-                <h2 class="py-3">Raffaella Spagnuolo</h2>
-                <p class="about-role">Co-founder & Environmental Scientist</p>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ac arcu sit amet justo sodales auctor.
-                    Mauris vitae lorem nec mi aliquam luctus.</p>
-                <p>Suspendisse potenti. Praesent scelerisque velit sit amet dolor sollicitudin, non hendrerit erat
-                    hendrerit.</p>
-            </div>
-            <div class="col-md-6 about-section text-center">
-                <img src="{{ url_for('static', filename='img/no_img.jpg') }}" alt="Alessia Ture" class="rounded">
-                <div class="about-divider"></div>
-                <h2 class="py-3">Alessia Ture</h2>
-                <p class="about-role">Co-founder & Data Analyst</p>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ac arcu sit amet justo sodales auctor.
-                    Mauris vitae lorem nec mi aliquam luctus.</p>
-                <p>Suspendisse potenti. Praesent scelerisque velit sit amet dolor sollicitudin, non hendrerit erat
-                    hendrerit.</p>
-            </div>
-        </div>
-    </div>
     <style>
         body {
             background-color: #fdfffc;
@@ -155,13 +187,13 @@
         }
 
         #worlddiv {
-            background-color: #38a3a5;
+            background-color: rgba(34, 87, 122, 0.7);
             color: #ffffff;
             font-family: Trebuchet MS, serif;
         }
 
         .news-item {
-            background-color: #f9f9f9;
+            background-color: #c7f9cc;
             padding: 20px;
             border-radius: 5px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -178,7 +210,23 @@
 
         .news-item a {
             text-decoration: none;
-            color: #E76F51;
+            color: #22577a;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+
+        .news-item a:hover {
+            color: #e71d36;
+        }
+
+        .btn-primary {
+            background-color: #f77f00 !important;
+            border-color: #f77f00 !important;
+        }
+
+        .btn-primary:hover {
+            background-color: #d62828 !important;
+            border-color: #d62828 !important;
         }
     </style>
     <script src="{{ url_for('static', filename='js/world.js') }}"></script>
@@ -196,48 +244,65 @@
                         const slideItems = data.slice(i, i + 4);
                         const activeClass = i === 0 ? 'active' : '';
                         const carouselItem = `
-                        <div class="carousel-item ${activeClass}">
-                            <div class="row px-3 py-1 pb-5">
-                                ${slideItems.map(item => `
-                                    <div class="col h-100">
-                                        <hr>
-                                        <h5 class="dashed-underline ">${item.title}</h5>
-                                        <div>
-                                            <h6 class="d-inline big-number align-baseline">
-                                                <i class="fa-sharp fa-regular fa-arrow-${item.trend === 'down' ? 'down text-danger' : 'up text-success'}"></i> ${parseFloat(item.value).toFixed(2)}
-                                            </h6>
-                                            <span class="d-inline small-text ms-1">${item.description}</span>
-                                        </div>
-                                    </div>
-                                `).join('')}
+                <div class="carousel-item ${activeClass}">
+                    <div class="row px-3 py-1 pb-5">
+                        ${slideItems.map(item => `
+                            <div class="col h-100">
+                                <hr>
+                                <h5 class="dashed-underline ">${item.title}</h5>
+                                <div>
+                                    <h6 class="d-inline big-number align-baseline">
+                                        <i class="fa-sharp fa-regular fa-arrow-${item.trend === 'down' ? 'down text-danger' : 'up text-success'}"></i> ${parseFloat(item.value).toFixed(2)}
+                                    </h6>
+                                    <span class="d-inline small-text ms-1">${item.description}</span>
+                                </div>
                             </div>
-                        </div>`;
+                        `).join('')}
+                    </div>
+                </div>`;
                         carouselInner.insertAdjacentHTML('beforeend', carouselItem);
                     }
                 })
                 .catch(error => console.error('Error fetching data:', error));
+
+            fetch('/get_indicators')
+                .then(response => response.json())
+                .then(data => {
+                    const indicatorSelect = document.getElementById('indicator');
+                    indicatorSelect.innerHTML = ''; // Clear any existing options
+
+                    data.forEach((indicator, index) => {
+                        const option = document.createElement('option');
+                        option.value = encodeURIComponent(indicator);
+                        option.textContent = indicator;
+                        if (index === 0) {
+                            option.selected = true; // Select the first indicator by default
+                        }
+                        indicatorSelect.appendChild(option);
+                    });
+
+                    // Load default chart with the first indicator
+                    const defaultIndicator = data[0];
+                    const defaultQueryType = 'top_10';
+                    loadChart(defaultIndicator, defaultQueryType);
+                })
+                .catch(error => console.error('Error fetching indicators:', error));
+
+            document.getElementById('query-form').addEventListener('submit', function (event) {
+                event.preventDefault();
+
+                const indicator = document.getElementById('indicator').value;
+                const queryType = document.getElementById('query-type').value;
+
+                loadChart(indicator, queryType);
+            });
         });
 
-        fetch('/get_indicators')
-            .then(response => response.json())
-            .then(data => {
-                const indicatorSelect = document.getElementById('indicator');
-                indicatorSelect.innerHTML = ''; // Clear any existing options
-
-                data.forEach(indicator => {
-                    const option = document.createElement('option');
-                    option.value = encodeURIComponent(indicator);
-                    option.textContent = indicator;
-                    indicatorSelect.appendChild(option);
-                });
-            })
-            .catch(error => console.error('Error fetching indicators:', error));
-
-        document.getElementById('query-form').addEventListener('submit', function (event) {
-            event.preventDefault();
-
-            const indicator = document.getElementById('indicator').value;
-            const queryType = document.getElementById('query-type').value;
+        function loadChart(indicator, queryType) {
+            if (!indicator || !queryType) {
+                console.error('Indicator or Query Type is missing');
+                return;
+            }
 
             let queryUrl = `/api/query?indicator=${indicator}&queryType=${queryType}`;
 
@@ -276,8 +341,8 @@
                                 datasets: [{
                                     label: 'Value',
                                     data: values,
-                                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                                    borderColor: 'rgba(75, 192, 192, 1)',
+                                    backgroundColor: 'rgba(255,209,102,0.5)',
+                                    borderColor: 'rgba(255, 209, 102,1)',
                                     borderWidth: 1
                                 }]
                             },
@@ -294,7 +359,7 @@
                 .catch(error => {
                     console.error('Error fetching data:', error);
                 });
-        });
+        }
 
     </script>
 

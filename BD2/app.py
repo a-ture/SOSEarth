@@ -40,11 +40,11 @@ def get_latest_data():
         })
 
     # Fetch latest Methane emissions
-    methane_data = mongo.db.methane_emissions.find_one(sort=[("year", -1), ("month", -1)])
+    methane_data = mongo.db.methane_emissions.find_one(sort=[("decimal_date", -1)])
     if methane_data:
         vital_signs.append({
             "title": "Methane Emissions",
-            "value": methane_data.get("ch4_concentration", "N/A"),
+            "value": methane_data.get("Value", "N/A"),  # Access the correct field
             "trend": "up",
             "description": "parts per billion"
         })
