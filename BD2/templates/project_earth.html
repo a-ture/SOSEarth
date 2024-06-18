@@ -1,29 +1,29 @@
 {% extends 'base.html' %}
 
 {% block title %}Project Earth - SOS Earth{% endblock %}
-<!--  Un grafico con tutte le tipologie, numero e il numero per tipologie, con una spiegazione per ogni tipo delle cose da definire-->
 {% block content %}
     <div id="chartdiv" style="width: 100%; height: 500px;"></div>
     <div id="infoDiv">
-        <canvas id="designationChart" width="400" height="200"></canvas>
-        <canvas id="iucnCategoryChart" width="400" height="200"></canvas>
+        <div class="row">
+            <div class="col-md-12">
+                <canvas id="designationChart" width="300" height="600"></canvas>
+            </div>
+            <div class="col-md-12 mt-4">
+                <canvas id="iucnCategoryChart" width="400" height="200"></canvas>
+            </div>
+        </div>
+        <div id="error-message" class="alert alert-danger" role="alert">
+            No protected area data available for this country.
+        </div>
     </div>
     <style>
         #infoDiv {
             display: none; /* Initially hidden */
             width: 100%;
             padding: 20px;
-            background-color: #f9f9f9;
-            border: 1px solid #ccc;
-            margin-top: 20px;
-        }
+            background-color: #fdfffc;
 
-        .protected-area {
-            margin-bottom: 15px;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            background-color: #f0f8ff;
+            margin-top: 20px;
         }
 
         .protected-area h4 {
@@ -34,6 +34,12 @@
         .protected-area p {
             margin: 5px 0;
             font-size: 14px;
+        }
+
+        #chartdiv {
+            background-color: rgba(34, 87, 122, 0.7);
+            color: #ffffff;
+            font-family: Trebuchet MS, serif;
         }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -64,17 +70,18 @@
                 tooltipText: "{name}",
                 toggleKey: "active",
                 interactive: true,
-                fill: am5.color(0x007bff) // Set the default fill color (blue in this example)
+                stroke: am5.color(0x000000), // Border color for all countries
+                fill: am5.color(0xfdfffc) // Set the default fill color
             });
 
             // Customize the hover state
             polygonSeries.mapPolygons.template.states.create("hover", {
-                fill: am5.color(0xff6f61) // Set the hover color (red in this example)
+                fill: am5.color(0xE76F51) // Set the hover color
             });
 
             // Customize the active state
             polygonSeries.mapPolygons.template.states.create("active", {
-                fill: am5.color(0x28a745) // Set the active color (green in this example)
+                fill: am5.color(0xd62828) // Set the active color
             });
 
             var previousPolygon;
@@ -91,7 +98,7 @@
                     fetchProtectedAreas(countryName);
 
                     var infoDiv = document.getElementById('infoDiv');
-                    infoDiv.innerHTML = "<h2>" + countryName + "</h2>";
+                    infoDiv.innerHTML = "<h2 class='orbitron'>" + countryName + "</h2>";
                     infoDiv.style.display = "block";
                 } else {
                     chart.goHome();
@@ -102,8 +109,31 @@
             });
 
             // Add zoom control
-            var zoomControl = chart.set("zoomControl", am5map.ZoomControl.new(root, {}));
-            zoomControl.homeButton.set("visible", true);
+            var zoomControl = chart.set("zoomControl", am5map.ZoomControl.new(root, {
+                layout: root.verticalLayout
+            }));
+
+            // Customize zoom control buttons
+            zoomControl.plusButton.setAll({
+                background: am5.Rectangle.new(root, {
+                    fill: am5.color(0x22577a) // Color for the zoom-in button
+                }),
+                fill: am5.color(0xFFFFFF)
+            });
+
+            zoomControl.minusButton.setAll({
+                background: am5.Rectangle.new(root, {
+                    fill: am5.color(0x22577a) // Color for the zoom-out button
+                }),
+                fill: am5.color(0xFFFFFF)
+            });
+
+            zoomControl.homeButton.setAll({
+                background: am5.Rectangle.new(root, {
+                    fill: am5.color(0xE76F51) // Color for the home button
+                }),
+                fill: am5.color(0xFFFFFF)
+            });
 
             // Set clicking on "water" to zoom out
             chart.chartContainer.get("background").events.on("click", function () {
@@ -115,7 +145,6 @@
             // Make stuff animate on load
             chart.appear(1000, 100);
         }); // end am5.ready()
-
     </script>
     <script>
         function fetchProtectedAreas(country_name) {
@@ -131,17 +160,48 @@
 
                     var infoDiv = document.getElementById('infoDiv');
                     infoDiv.innerHTML += `
-                        <canvas id="designationChart" width="400" height="200"></canvas>
-                        <canvas id="iucnCategoryChart" width="400" height="200"></canvas>
-                    `;
+                        <div class="row">
+                            <h5 class="orbitron">Designation Chart</h5>
+                                    <p>This chart displays the distribution of different designations of protected areas.</p>
+                                <div class="col-md-12">
+                                    <canvas id="designationChart" width="200" height="500"></canvas>
+                                </div>
+                                   <h5 class="orbitron">IUCN Category Chart</h5>
+                                    <p >This chart illustrates the categories of protected areas according to the International Union for Conservation of Nature (IUCN).</p>
+                                <div class="col-md-12 mt-4">
+                                    <canvas id="iucnCategoryChart" width="400" height="400"></canvas>
+                                </div>
 
+                                    <p style='font-size: 14px;' class="mt-3">The IUCN categories classify protected areas based on their management objectives, helping to guide conservation efforts and policies. Here are the main categories:</p>
+                                    <ul style='font-size: 14px;' class="mx-2 px-4 ">
+                                        <li><strong>Category Ia: Strict Nature Reserve</strong> - Protected areas set aside to protect biodiversity and also possibly geological/geomorphical features, where human visitation, use, and impacts are strictly controlled and limited to ensure protection of the conservation values.</li>
+                                        <li><strong>Category Ib: Wilderness Area</strong> - Large unmodified or slightly modified areas, retaining their natural character and influence, without permanent or significant human habitation, which are protected and managed so as to preserve their natural condition.</li>
+                                        <li><strong>Category II: National Park</strong> - Large natural or near natural areas set aside to protect large-scale ecological processes, along with the complement of species and ecosystems characteristic of the area, which also provide a foundation for environmentally and culturally compatible spiritual, scientific, educational, recreational, and visitor opportunities.</li>
+                                        <li><strong>Category III: Natural Monument or Feature</strong> - Protected areas set aside to protect a specific natural monument, which can be a landform, sea mount, submarine cavern, geological feature such as a cave, or even a living feature such as an ancient grove.</li>
+                                        <li><strong>Category IV: Habitat/Species Management Area</strong> - Protected areas aimed at protecting particular species or habitats and where management reflects this priority. Many category IV protected areas will need regular, active interventions to address the requirements of particular species or to maintain habitats.</li>
+                                        <li><strong>Category V: Protected Landscape/Seascape</strong> - A protected area where the interaction of people and nature over time has produced an area of distinct character with significant ecological, biological, cultural, and scenic value, and where safeguarding the integrity of this interaction is vital to protecting and sustaining the area and its associated nature conservation and other values.</li>
+                                        <li><strong>Category VI: Protected Area with Sustainable Use of Natural Resources</strong> - Protected areas which conserve ecosystems and habitats together with associated cultural values and traditional natural resource management systems. They are generally large, with most of the area in a natural condition, where a proportion is under sustainable natural resource management and where low-level non-industrial use of natural resources compatible with nature conservation is seen as one of the main aims of the area.</li>
+                                    </ul>
+                            </div>
+                        </div>
+                            <div id="error-message" class="alert alert-danger" role="alert" >
+                                   No protected area data available for this country.
+                            </div>
+                    `;
                     renderCharts(data);
+                    var errorMessage = document.getElementById('error-message');
+                    errorMessage.classList.add('d-none');
                 })
                 .catch(error => {
                     console.error("Error fetching protected areas:", error); // Debug: log errors
+                    var infoDiv = document.getElementById('infoDiv');
+                    infoDiv.innerHTML += `
+                            <div id="error-message" class="alert alert-danger mt-3" role="alert" >
+                                   No protected area data available for this country.
+                            </div>
+                    `;
                 });
         }
-
 
         function renderCharts(data) {
             var designations = {};
@@ -152,13 +212,10 @@
                 iucnCategories[area.iucn_category] = (iucnCategories[area.iucn_category] || 0) + 1;
             });
 
-            console.log(designations)
-            console.log(iucnCategories)
-
             var designationChartCtx = document.getElementById('designationChart')?.getContext('2d');
             var iucnCategoryChartCtx = document.getElementById('iucnCategoryChart')?.getContext('2d');
-            console.log(designationChartCtx)
-            console.log(iucnCategoryChartCtx)
+            console.log(designationChartCtx);
+            console.log(iucnCategoryChartCtx);
 
             if (designationChartCtx && iucnCategoryChartCtx) {
                 console.log('Rendering charts with data:', designations, iucnCategories);
@@ -170,13 +227,14 @@
                         datasets: [{
                             label: 'Designation',
                             data: Object.values(designations),
-                            backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                            borderColor: 'rgba(75, 192, 192, 1)',
+                            backgroundColor: 'rgba(255,209,102,0.5)',
+                            borderColor: 'rgba(255, 209, 102,1)',
                             borderWidth: 1
                         }]
                     },
                     options: {
                         responsive: true,
+                        maintainAspectRatio: false, // Important to allow custom sizing
                         scales: {
                             y: {
                                 beginAtZero: true
@@ -212,7 +270,14 @@
                         }]
                     },
                     options: {
-                        responsive: true
+                        responsive: true,
+                        maintainAspectRatio: false, // Important to allow custom sizing
+                        plugins: {
+                            legend: {
+                                display: true,
+                                position: 'top'
+                            }
+                        }
                     }
                 });
             } else {

@@ -68,7 +68,7 @@ country_name_to_iso3 = {
     "Germany": "DEU",
     "Ghana": "GHA",
     "Greece": "GRC",
-    "Grenada": "GRD",
+    "Greenland": "GRD",
     "Guatemala": "GTM",
     "Guinea": "GIN",
     "Guinea-Bissau": "GNB",
@@ -226,6 +226,8 @@ collection_map = {
 
 # Invertire il dizionario
 indicator_to_collection_map = {v: k for k, v in collection_map.items()}
+
+
 # Function to convert ObjectId to strings and filter out NaN values
 def convert_and_filter(data):
     if isinstance(data, list):
