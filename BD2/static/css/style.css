@@ -33,6 +33,19 @@ body {
     border-color: #d62828 !important;
 }
 
+
+.btn-secondary {
+    background-color: rgba(247, 127, 0, 0.5) !important;
+    border-color: rgba(247, 127, 0, 0.5) !important;
+    color: white !important;
+}
+
+.btn-secondary:hover {
+    background-color: rgba(214, 40, 40, 0.5) !important;
+    border-color: rgba(214, 40, 40, 0.5) !important;
+    color: white !important;
+}
+
 .orbitron {
     font-family: "Orbitron", sans-serif;
     font-optical-sizing: auto;

@@ -52,7 +52,7 @@
         .metadata-section {
             margin-top: 20px;
             padding: 15px;
-            background-color: #80ed99;
+            background-color: #c7f9cc;
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
@@ -74,7 +74,7 @@
     </style>
 
     <div class="container main-content">
-        <h1 class="text-center orbitron mb-4">SOS Earth - Indicators</h1>
+        <h1 class="text-center orbitron mb-4 sos">SOS Earth - Indicators</h1>
         <div class="indicator-list-wrapper">
             <button class="scroll-button left">&lt;</button>
             <div class="indicator-list mt-1">
@@ -90,11 +90,14 @@
                         <!-- Options will be populated here by JavaScript -->
                     </select>
                 </div>
-                <div class="form-group col-3 align-self-end">
-                    <button type="submit" class="btn btn-primary btn-block">Get Data</button>
+                <div class=" col-1 mx-3"></div>
+                <div class="form-group col-2 align-self-end">
+                    <button type="submit" class="btn btn-primary  btn-block orbitron">Get Data</button>
                 </div>
             </form>
         </div>
+
+        <div id="error-message" class="alert alert-danger mt-5" role="alert" style="display: none;"></div>
 
         <div class="row">
             <div class="col-12 col-md-6 align-self-center">
@@ -121,8 +124,31 @@
         let myChart; // Define a global variable to hold the chart instance
         let xAxisLabel = 'Year';
         let yAxisLabel = 'Value';
-        let currentIndicatorName = 'CO2 emissions (kt)'; // Default indicator
-        let currentCountryName = 'Africa Eastern and Southern'; // Default country
+        let currentCountryName = 'Colombia'; // Default country
+
+        function displayError(errorMessage) {
+            const errorDiv = document.getElementById('error-message');
+            errorDiv.textContent = errorMessage;
+            errorDiv.style.display = 'block';
+
+            const metadataSection = document.querySelector('.metadata-section');
+            const chartContainer = document.querySelector('.chart-container');
+
+            metadataSection.style.display = 'none';
+            chartContainer.style.display = 'none';
+        }
+
+        function clearError() {
+            const errorDiv = document.getElementById('error-message');
+            errorDiv.style.display = 'none';
+            errorDiv.textContent = '';
+
+            const metadataSection = document.querySelector('.metadata-section');
+            const chartContainer = document.querySelector('.chart-container');
+
+            metadataSection.style.display = 'block';
+            chartContainer.style.display = 'block';
+        }
 
         document.addEventListener('DOMContentLoaded', function () {
             fetch('/get_indicators')
@@ -131,7 +157,7 @@
                     const indicatorList = document.querySelector('.indicator-list');
                     indicators.forEach(indicator => {
                         const button = document.createElement('button');
-                        button.className = 'btn btn-primary';
+                        button.className = 'btn btn-secondary orbitron';
                         button.textContent = indicator;
                         button.addEventListener('click', function () {
                             currentIndicatorName = indicator;
@@ -175,10 +201,10 @@
                     .then(response => response.json())
                     .then(data => {
                         if (data.error) {
-                            alert(data.error);
+                            displayError(data.error);
                         } else {
+                            clearError()
                             createChart(data);
-
                         }
                     });
 
@@ -203,9 +229,11 @@
                     .then(response => response.json())
                     .then(data => {
                         if (data.error) {
-                            alert(data.error);
+                            displayError(data.error);
+
                         } else {
                             createChart(data);
+                            clearError();
                         }
                     });
 
