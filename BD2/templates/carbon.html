@@ -37,18 +37,23 @@
         background-color: #3cb371;
     }
 
+    #results {
+        display: flex;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+    }
+
+    #results .card {
+        flex: 0 0 auto;
+        margin-right: 10px;
+    }
+
     #results h2 {
         color: #ff6347;
     }
 
     .emoji-label {
         font-size: 1.5rem;
-    }
-
-    .img-top {
-        width: 100%;
-        max-width: 300px;
-        margin-bottom: 20px;
     }
 
     .step-indicators {
@@ -71,6 +76,15 @@
     .step-indicators .step-indicator.completed {
         background-color: #3cb371;
     }
+
+    .results-container {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+
+    .total-impact-container {
+        width: 100%;
+    }
 </style>
 {% block content %}
     <div class="row text-center">
@@ -78,17 +92,18 @@
         <div
                 class="p-5 text-center bg-image mb-5"
                 style="
-      background-image: url('https://mdbcdn.b-cdn.net/img/new/slides/041.webp');
+      background-image: url('static/img/food.jpg');
       height: 400px;
     "
         >
-            <div class="mask" style="background-color: rgba(0, 0, 0, 0.6);">
+            <div class="mask" style="background-color: rgba(0, 0, 0, 0.2);">
                 <div class="d-flex justify-content-center align-items-center h-100">
-                    <div class="text-white">
+                    <div class="text-black">
                         <h1 class="mb-3">FOODPRINT CALCULATOR</h1>
                         <hr>
                         <h4 class="mb-3">Want to know the environmental impact of your diet? <br>
-                            Take this quick five minute survey to find your carbon, nitrogen, and water footprints!</h4>
+                            Take this quick five minute survey to find your carbon, <br> nitrogen, and water footprints!
+                        </h4>
                     </div>
                 </div>
             </div>
@@ -100,13 +115,11 @@
                 <div class="step-indicators">
                     <span class="step-indicator active" id="step-indicator-0"></span>
                     <span class="step-indicator" id="step-indicator-1"></span>
-                    <span class="step-indicator" id="step-indicator-2"></span>
-                    <span class="step-indicator" id="step-indicator-3"></span>
                 </div>
                 <form id="carbonForm">
                     <!-- Step 1: Animal Products -->
                     <div class="step active" id="step-0">
-                        <h2>Step 1 of 3: Animal Products</h2>
+                        <h2>Step 1 of 2: Animal Products</h2>
                         <p>How many servings of each food do you consume on an average week?</p>
                         <div class="form-group row">
                             <label for="beef" class="col-sm-4 col-form-label emoji-label">🥩 Beef (3 oz/serving):</label>
@@ -155,11 +168,11 @@
                                 <input type="number" class="form-control" id="cheese" name="cheese">
                             </div>
                         </div>
-                        <button type="button" class="btn btn-primary" onclick="nextStep()">Next</button>
+                        <button type="button" class="btn btn-primary mt-3" onclick="nextStep()">Next</button>
                     </div>
                     <!-- Step 2: Plant-Based Foods -->
                     <div class="step d-none" id="step-1">
-                        <h2>Step 2 of 3: Plant-Based Foods</h2>
+                        <h2>Step 2 of 2: Plant-Based Foods</h2>
                         <p>How many servings of each food do you consume on an average week?</p>
                         <div class="form-group row">
                             <label for="beans" class="col-sm-4 col-form-label emoji-label">🌱 Beans & Legumes (0.5
@@ -210,102 +223,19 @@
                                 <input type="number" class="form-control" id="nuts" name="nuts">
                             </div>
                         </div>
-                        <button type="button" class="btn btn-secondary" onclick="prevStep()">Previous</button>
-                        <button type="button" class="btn btn-primary" onclick="nextStep()">Next</button>
-                    </div>
-                    <!-- Step 3: More About You -->
-                    <div class="step d-none" id="step-2">
-                        <h2>Step 3 of 3: More About You (Optional)</h2>
-                        <p>Help researchers at Harvard help the planet by sharing anonymously.</p>
-                        <div class="form-group row">
-                            <label for="dietary" class="col-sm-4 col-form-label emoji-label">🍽️ Dietary
-                                Preference:</label>
-                            <div class="col-sm-8">
-                                <select class="form-control" id="dietary" name="dietary">
-                                    <option>Prefer Not to Say</option>
-                                    <option>Vegan</option>
-                                    <option>Vegetarian</option>
-                                    <option>Pescatarian</option>
-                                    <option>Omnivore</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="gender" class="col-sm-4 col-form-label emoji-label">👤 Gender:</label>
-                            <div class="col-sm-8">
-                                <select class="form-control" id="gender" name="gender">
-                                    <option>Prefer Not to Say</option>
-                                    <option>Male</option>
-                                    <option>Female</option>
-                                    <option>Non-binary</option>
-                                    <option>Other</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="age" class="col-sm-4 col-form-label emoji-label">📅 Age Range:</label>
-                            <div class="col-sm-8">
-                                <select class="form-control" id="age" name="age">
-                                    <option>Prefer Not to Say</option>
-                                    <option>Under 18</option>
-                                    <option>18-24</option>
-                                    <option>25-34</option>
-                                    <option>35-44</option>
-                                    <option>45-54</option>
-                                    <option>55-64</option>
-                                    <option>65 or older</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="ethnicity" class="col-sm-4 col-form-label emoji-label">🌍 Ethnicity:</label>
-                            <div class="col-sm-8">
-                                <select class="form-control" id="ethnicity" name="ethnicity">
-                                    <option>Prefer Not to Say</option>
-                                    <option>Asian</option>
-                                    <option>Black or African American</option>
-                                    <option>Hispanic or Latino</option>
-                                    <option>Native American or Alaska Native</option>
-                                    <option>White</option>
-                                    <option>Other</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="income" class="col-sm-4 col-form-label emoji-label">💰 Annual Household
-                                Income:</label>
-                            <div class="col-sm-8">
-                                <select class="form-control" id="income" name="income">
-                                    <option>Prefer Not to Say</option>
-                                    <option>Less than $25,000</option>
-                                    <option>$25,000 - $49,999</option>
-                                    <option>$50,000 - $74,999</option>
-                                    <option>$75,000 - $99,999</option>
-                                    <option>$100,000 - $149,999</option>
-                                    <option>$150,000 or more</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="country" class="col-sm-4 col-form-label emoji-label">🌎 Country:</label>
-                            <div class="col-sm-8">
-                                <select class="form-control" id="country" name="country">
-                                    <option>Prefer Not to Say</option>
-                                    <option>USA</option>
-                                    <option>Canada</option>
-                                    <option>UK</option>
-                                    <option>Australia</option>
-                                    <option>Other</option>
-                                </select>
-                            </div>
-                        </div>
-                        <button type="button" class="btn btn-secondary" onclick="prevStep()">Previous</button>
-                        <button type="submit" class="btn btn-primary">Calculate</button>
+                        <button type="button" class="btn btn-secondary mt-3" onclick="prevStep()">Previous</button>
+                        <button type="submit" class="btn btn-primary mt-3">Calculate</button>
                     </div>
                 </form>
             </div>
         </div>
-        <div id="results" class="mt-4"></div>
+        <div class="results-container">
+            <h2 class="text-center d-none" id="result">Results:</h2>
+            <div id="results" class="row row-cols-3"></div>
+        </div>
+        <div class="total-impact-container">
+            <div id="total-impact" class="row justify-content-center"></div>
+        </div>
     </div>
     <script>
         let currentStep = 0;
@@ -354,46 +284,60 @@
 
             const result = await response.json();
 
+            const resultsContainer = document.querySelector('.results-container');
             const resultsDiv = document.getElementById('results');
-            resultsDiv.innerHTML = '<h2>Results:</h2>';
+            const totalImpactDiv = document.getElementById('total-impact');
 
-            for (const [product, values] of Object.entries(result.results)) {
-                const productDiv = document.createElement('div');
-                productDiv.classList.add('card', 'mx-auto', 'mb-3');
-                productDiv.style.maxWidth = '400px';
-                productDiv.innerHTML = `
-                    <div class="card-body">
-                        <h5 class="card-title">${values.food_product}</h5>
-                        <p class="card-text">Land Use Change: ${values.land_use_change}</p>
-                        <p class="card-text">Feed: ${values.feed}</p>
-                        <p class="card-text">Farm: ${values.farm}</p>
-                        <p class="card-text">Processing: ${values.processing}</p>
-                        <p class="card-text">Transport: ${values.transport}</p>
-                        <p class="card-text">Packaging: ${values.packaging}</p>
-                        <p class="card-text">Retail: ${values.retail}</p>
-                        <p class="card-text">Total from Land to Retail: ${values.total_from_land_to_retail}</p>
-                        <p class="card-text">Total GHG Emissions per kg: ${values.total_ghg_emissions_per_kg}</p>
-                        <p class="card-text">Unit of GHG Emissions: ${values.unit_of_ghg_emissions}</p>
-                        <p class="card-text">Quantity Consumed: ${values.quantity}</p>
-                        <p class="card-text">Total Impact: ${values.total_impact}</p>
-                    </div>
-                `;
-                resultsDiv.appendChild(productDiv);
-            }
+            // Clear previous results
+            resultsDiv.innerHTML = '';
+            totalImpactDiv.innerHTML = '';
 
-            const totalImpactDiv = document.createElement('div');
-            totalImpactDiv.classList.add('card', 'mx-auto', 'mb-3');
-            totalImpactDiv.style.maxWidth = '400px';
-            totalImpactDiv.innerHTML = `
-                <div class="card-body">
-                    <h5 class="card-title">Total Environmental Impact</h5>
-                    <p class="card-text">Total GHG Emissions: ${result.total_impact.toFixed(2)} kg CO2e</p>
+            // Check if there are results to display
+            if (Object.keys(result.results).length > 0) {
+                resultsContainer.style.display = 'block';  // Show the results container
+                document.getElementById('result').classList.remove('d-none');
+
+                for (const [product, values] of Object.entries(result.results)) {
+                    const productDiv = document.createElement('div');
+                    productDiv.classList.add('card', 'mx-auto', 'mb-3', 'col');
+                    productDiv.style.maxWidth = '400px';
+                    productDiv.innerHTML = `
+                <div class="card-body" >
+                    <h5 class="card-title">${values.food_product}</h5>
+                    <p class="card-text">Land Use Change: ${values.land_use_change}</p>
+                    <p class="card-text">Feed: ${values.feed}</p>
+                    <p class="card-text">Farm: ${values.farm}</p>
+                    <p class="card-text">Processing: ${values.processing}</p>
+                    <p class="card-text">Transport: ${values.transport}</p>
+                    <p class="card-text">Packaging: ${values.packaging}</p>
+                    <p class="card-text">Retail: ${values.retail}</p>
+                    <p class="card-text">Total from Land to Retail: ${values.total_from_land_to_retail}</p>
+                    <p class="card-text">Total GHG Emissions per kg: ${values.total_ghg_emissions_per_kg}</p>
+                    <p class="card-text">Unit of GHG Emissions: ${values.unit_of_ghg_emissions}</p>
+                    <p class="card-text">Quantity Consumed: ${values.quantity}</p>
+                    <p class="card-text">Total Impact: ${values.total_impact}</p>
                 </div>
             `;
-            resultsDiv.appendChild(totalImpactDiv);
+                    resultsDiv.appendChild(productDiv);
+                }
+
+                const totalImpactCard = document.createElement('div');
+                totalImpactCard.classList.add('card', 'mx-auto', 'mb-3', 'col');
+                totalImpactCard.style.maxWidth = '400px';
+                totalImpactCard.innerHTML = `
+            <div class="card-body">
+                <h5 class="card-title">Total Environmental Impact</h5>
+                <p class="card-text">Total GHG Emissions: ${result.total_impact.toFixed(2)} kg CO2e</p>
+            </div>
+        `;
+                totalImpactDiv.appendChild(totalImpactCard);
+            } else {
+                resultsContainer.style.display = 'none';  // Hide the results container if no results
+            }
         });
 
         showStep(currentStep);
+
 
     </script>
 {% endblock %}
