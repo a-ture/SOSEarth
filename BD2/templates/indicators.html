@@ -52,7 +52,7 @@
         .metadata-section {
             margin-top: 20px;
             padding: 15px;
-            background-color: #f8f9fa;
+            background-color: #80ed99;
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
@@ -65,51 +65,45 @@
             margin: 5px 0;
         }
 
-        .btn-download {
-            background-color: #007bff;
-            color: #fff;
-            border-radius: 4px;
-            padding: 10px 20px;
-            text-align: center;
-            display: inline-block;
-            margin-top: 10px;
+        .form-row {
+            display: flex;
+            flex-wrap: nowrap;
+            align-items: flex-end;
         }
 
-        .btn-download:hover {
-            background-color: #0056b3;
-            color: #fff;
-        }
     </style>
 
     <div class="container main-content">
-        <h1 class="text-center">SOS Earth - Indicators</h1>
+        <h1 class="text-center orbitron mb-4">SOS Earth - Indicators</h1>
         <div class="indicator-list-wrapper">
             <button class="scroll-button left">&lt;</button>
-            <div class="indicator-list">
+            <div class="indicator-list mt-1">
                 <!-- Lista degli indicatori popolata da JavaScript -->
             </div>
             <button class="scroll-button right">&gt;</button>
         </div>
         <div id="country-select-container" style="display: none;">
-            <form id="data-form" class="data-section">
-                <div class="form-group">
+            <form id="data-form" class="form-row justify-content-center mt-3">
+                <div class="form-group col-6">
                     <label for="country-name">Select Country:</label>
                     <select class="form-control" id="country-name" required>
                         <!-- Options will be populated here by JavaScript -->
                     </select>
                 </div>
-                <button type="submit" class="btn btn-primary btn-block">Get Data</button>
+                <div class="form-group col-3 align-self-end">
+                    <button type="submit" class="btn btn-primary btn-block">Get Data</button>
+                </div>
             </form>
         </div>
+
         <div class="row">
-            <div class="col-12 col-md-6">
-                <div class="metadata-section">
-                    <h3>Nome Indicatore</h3>
+            <div class="col-12 col-md-6 align-self-center">
+                <div class="metadata-section ">
+                    <h3 class="orbitron">Nome Indicatore</h3>
                     <p><strong>Description:</strong> <span id="metadata-description"></span></p>
                     <p><strong>Source:</strong> <span id="metadata-source"></span></p>
                 </div>
             </div>
-
             <div class="col-12 col-md-6">
                 <div class="chart-container">
                     <canvas id="chartdiv" style="max-width: 100%; max-height: 100%;"></canvas>
@@ -137,7 +131,7 @@
                     const indicatorList = document.querySelector('.indicator-list');
                     indicators.forEach(indicator => {
                         const button = document.createElement('button');
-                        button.className = 'btn btn-outline-primary';
+                        button.className = 'btn btn-primary';
                         button.textContent = indicator;
                         button.addEventListener('click', function () {
                             currentIndicatorName = indicator;
@@ -184,7 +178,7 @@
                             alert(data.error);
                         } else {
                             createChart(data);
-                            updateLatestMeasurement(currentCountryName, indicatorName);
+
                         }
                     });
 
@@ -212,7 +206,6 @@
                             alert(data.error);
                         } else {
                             createChart(data);
-                            updateLatestMeasurement(currentCountryName, indicatorName);
                         }
                     });
 
@@ -237,8 +230,8 @@
                     datasets: [{
                         label: yAxisLabel,
                         data: data.map(item => item.Value),
-                        borderColor: 'rgba(75, 192, 192, 1)',
-                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        backgroundColor: 'rgba(255,209,102,0.5)',
+                        borderColor: 'rgba(255, 209, 102,1)',
                         borderWidth: 1
                     }]
                 };
@@ -271,21 +264,7 @@
                                     }
                                 }
                             },
-                            zoom: {
-                                pan: {
-                                    enabled: true,
-                                    mode: 'xy'
-                                },
-                                zoom: {
-                                    wheel: {
-                                        enabled: true,
-                                    },
-                                    pinch: {
-                                        enabled: true
-                                    },
-                                    mode: 'xy'
-                                }
-                            }
+
                         }
                     }
                 };

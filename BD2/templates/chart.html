@@ -6,20 +6,6 @@
 {% block content %}
     <div class="container">
 
-        <!-- Correlation: Methane Emissions vs Agricultural Land Use -->
-        <div class="row align-items-center mb-4">
-            <div class="col-md-6">
-                <h2>Correlation: Methane Emissions vs Agricultural Land Use</h2>
-                <canvas id="methaneAgriculturalLandCorrelationChart" width="400" height="200"></canvas>
-            </div>
-            <div class="col-md-6">
-                <p>
-                    Questo grafico a dispersione mostra la correlazione tra le emissioni di metano e l'uso del suolo
-                    agricolo per vari paesi dal 2000 al 2018.
-                    Ogni punto rappresenta un paese in un anno specifico.
-                </p>
-            </div>
-        </div>
 
         <!-- Correlation: Renewable Energy Use vs Total GHG Emissions -->
         <div class="row align-items-center mb-4">
@@ -419,140 +405,16 @@
                 }
             }
 
-            // CO2 Emissions Average (2000-2020) - Bar Chart
-            fetchData('/api/co2_emissions_average', data => {
-                const filteredData = data.filter(d => d._id !== null); // Filter out null values
-                const labels = filteredData.map(d => d._id);
-                const values = filteredData.map(d => d.Average_CO2_Emissions);
-                console.log('CO2 Emissions Average Data:', labels, values); // Debug: log data for CO2 Emissions Average
-                renderChart(document.getElementById('co2EmissionsAverageChart').getContext('2d'), 'bar', labels, values, 'Average CO2 Emissions (kt)');
-            });
 
-            // CO2 Emissions Change (2000 vs 2020) - Bar Chart
-            fetchData('/api/co2_emissions_change', data => {
-                const filteredData = data.filter(d => d.Percentage_Change !== null); // Filter out null values
-                const labels = filteredData.map(d => d.Country);
-                const values = filteredData.map(d => d.Percentage_Change);
-                console.log('CO2 Emissions Change Data:', labels, values); // Debug: log data for CO2 Emissions Change
-                renderChart(document.getElementById('co2EmissionsChangeChart').getContext('2d'), 'bar', labels, values, 'CO2 Emissions Change (%)');
-            });
-
-            // Average Methane Emissions (2000-2020) - Bar Chart
-            fetchData('/api/methane_emissions', data => {
-                const labels = data.map(d => d._id);
-                const values = data.map(d => d.Average_Methane_Emissions);
-                console.log('Methane Emissions Data:', labels, values); // Debug: log data for Methane Emissions
-                renderChart(document.getElementById('methaneEmissionsChart').getContext('2d'), 'bar', labels, values, 'Average Methane Emissions');
-            });
-
-            // Renewable Energy Consumption (%) - Bar Chart
-            fetchData('/api/renewable_energy', data => {
-                const labels = data.map(d => d._id);
-                const values = data.map(d => d.Average_Renewable_Energy);
-                console.log('Renewable Energy Data:', labels, values); // Debug: log data for Renewable Energy
-                renderChart(document.getElementById('renewableEnergyChart').getContext('2d'), 'bar', labels, values, 'Average Renewable Energy Consumption (%)');
-            });
-
-            // PM2.5 Emissions (2000-2020) - Line Chart
-            fetchData('/api/pm25_emissions', data => {
-                const labels = data.map(d => d._id);
-                const values = data.map(d => d.Average_PM25_Emissions);
-                console.log('PM2.5 Emissions Data:', labels, values); // Debug: log data for PM2.5 Emissions
-                renderChart(document.getElementById('pm25EmissionsChart').getContext('2d'), 'line', labels, values, 'Average PM2.5 Emissions (µg/m³)');
-            });
-
-            // Threatened Bird Species (2020) - Bar Chart
-            fetchData('/api/threatened_bird_species', data => {
-                const labels = data.map(d => d._id); // Change this line
-                const values = data.map(d => d.Threatened_Bird_Species); // Change this line
-                console.log('Threatened Bird Species Data:', labels, values); // Debug: log data for Threatened Bird Species
-                renderChart(document.getElementById('threatenedBirdSpeciesChart').getContext('2d'), 'bar', labels, values, 'Threatened Bird Species (2020)');
-            });
-
-            // Average Climate Risk Index (2000-2020) - Bar Chart
-            fetchData('/api/climate_risk_index', data => {
-                const labels = data.map(d => d._id);
-                const values = data.map(d => d.Average_Climate_Risk_Index);
-                console.log('Climate Risk Index Data:', labels, values); // Debug: log data for Climate Risk Index
-                renderChart(document.getElementById('climateRiskIndexChart').getContext('2d'), 'bar', labels, values, 'Average Climate Risk Index');
-            });
 
             // Agricultural Land Use (%) - 2020 - Pie Chart
-            fetchData('/api/agricultural_land_use', data => {
-                const labels = data.map(d => d._id);
-                const values = data.map(d => d.Agricultural_Land_Use);
-                const colors = labels.map(() => getRandomColor());
 
-                renderChart(
-                    document.getElementById('agriculturalLandChart').getContext('2d'),
-                    'pie',
-                    labels,
-                    values,
-                    'Agricultural Land Use (%)'
-                );
-            });
             // Top 10 Food Products with Highest GHG Emissions - Bar Chart
             fetchData('/api/top_10_food_ghg_emissions', data => {
                 const labels = data.map(d => d.food_product);
                 const values = data.map(d => d.total_ghg_emissions_per_kg);
                 console.log('Top 10 Food GHG Emissions Data:', labels, values); // Debug: log data for Food GHG Emissions
                 renderChart(document.getElementById('top10FoodGHGChart').getContext('2d'), 'bar', labels, values, 'Total GHG Emissions (kg CO2 eq per kg)');
-            });
-
-            // Top 10 Countries with Highest CO2 Emissions - Bar Chart
-            fetchData('/api/top_10_co2_emissions', data => {
-                const labels = data.map(d => d._id);
-                const values = data.map(d => d.avg_co2_emissions);
-                console.log('Top 10 CO2 Emissions Data:', labels, values); // Debug: log data for CO2 Emissions
-                renderChart(document.getElementById('top10CO2EmissionsChart').getContext('2d'), 'bar', labels, values, 'Average CO2 Emissions (kt)');
-            });
-
-            // Top 10 Countries with Highest Agricultural Land Use - Bar Chart
-            fetchData('/api/top_10_agricultural_land_use', data => {
-                const labels = data.map(d => d.Country);
-                const values = data.map(d => d.Agricultural_Land_Use);
-                console.log('Top 10 Agricultural Land Use Data:', labels, values); // Debug: log data for Agricultural Land Use
-                renderChart(document.getElementById('top10AgriculturalLandUseChart').getContext('2d'), 'bar', labels, values, 'Agricultural Land Use (%)');
-            });
-
-            // Top 10 Countries with Highest PM2.5 Emissions - Bar Chart
-            fetchData('/api/top_10_pm25_emissions', data => {
-                const labels = data.map(d => d._id);
-                const values = data.map(d => d.avg_pm25_emissions);
-                console.log('Top 10 PM2.5 Emissions Data:', labels, values); // Debug: log data for PM2.5 Emissions
-                renderChart(document.getElementById('top10PM25EmissionsChart').getContext('2d'), 'bar', labels, values, 'Average PM2.5 Emissions (µg/m³)');
-            });
-
-            // Top 10 Countries with Highest Methane Emissions - Bar Chart
-            fetchData('/api/top_10_methane_emissions', data => {
-                const labels = data.map(d => d._id);
-                const values = data.map(d => d.avg_methane_emissions);
-                console.log('Top 10 Methane Emissions Data:', labels, values); // Debug: log data for Methane Emissions
-                renderChart(document.getElementById('top10MethaneEmissionsChart').getContext('2d'), 'bar', labels, values, 'Average Methane Emissions (kt)');
-            });
-
-            // Top 10 Countries with Highest Climate Risk Index - Bar Chart
-            fetchData('/api/top_10_climate_risk_index', data => {
-                const labels = data.map(d => d._id);
-                const values = data.map(d => d.avg_climate_risk_index);
-                console.log('Top 10 Climate Risk Index Data:', labels, values); // Debug: log data for Climate Risk Index
-                renderChart(document.getElementById('top10ClimateRiskIndexChart').getContext('2d'), 'bar', labels, values, 'Average Climate Risk Index');
-            });
-
-            // Top 10 Countries with Most Threatened Bird Species - Bar Chart
-            fetchData('/api/top_10_threatened_bird_species', data => {
-                const labels = data.map(d => d.Country);
-                const values = data.map(d => d.Threatened_Bird_Species);
-                console.log('Top 10 Threatened Bird Species Data:', labels, values); // Debug: log data for Threatened Bird Species
-                renderChart(document.getElementById('top10ThreatenedBirdSpeciesChart').getContext('2d'), 'bar', labels, values, 'Number of Threatened Bird Species (2020)');
-            });
-
-            // Top 10 Countries with Largest Protected Land Area - Bar Chart
-            fetchData('/api/top_10_protected_land', data => {
-                const labels = data.map(d => d.Country);
-                const values = data.map(d => d.Protected_Area);
-                console.log('Top 10 Protected Land Data:', labels, values); // Debug: log data for Protected Land
-                renderChart(document.getElementById('top10ProtectedLandChart').getContext('2d'), 'bar', labels, values, 'Protected Land Area (sq km)');
             });
 
             // Countries with Largest Percentage Increase in CO2 Emissions (2000 vs 2020) - Bar Chart
@@ -611,62 +473,10 @@
                 });
             }
 
-            // Correlation: CO2 Emissions vs Population Growth - Scatter Chart
-            fetchData('/api/correlation_co2_population', data => {
-                const ctx = document.getElementById('co2PopulationCorrelationChart').getContext('2d');
-                renderScatterChart(ctx, data, 'CO2 Emissions vs Population Growth', 'Population_Growth', 'CO2_Emissions');
-            });
 
-            // Correlation: CO2 Emissions vs Coal Use - Scatter Chart
-            fetchData('/api/correlation_co2_coal_use', data => {
-                const ctx = document.getElementById('co2CoalCorrelationChart').getContext('2d');
-                renderScatterChart(ctx, data, 'CO2 Emissions vs Coal Use', 'Coal_Use', 'CO2_Emissions');
-            });
 
-            // Correlation: Methane Emissions vs Agricultural Land Use - Scatter Chart
-            fetchData('/api/correlation_methane_agricultural_land', data => {
-                const ctx = document.getElementById('methaneAgriculturalLandCorrelationChart').getContext('2d');
-                renderScatterChart(ctx, data, 'Methane Emissions vs Agricultural Land Use', 'Agricultural_Land_Use', 'Methane_Emissions');
-            });
 
-            // Correlation: Renewable Energy Use vs Total GHG Emissions - Scatter Chart
-            fetchData('/api/correlation_renewable_energy_ghg', data => {
-                const ctx = document.getElementById('renewableEnergyGHGCorrelationChart').getContext('2d');
-                renderScatterChart(ctx, data, 'Renewable Energy Use vs Total GHG Emissions', 'Renewable_Energy_Use', 'Total_GHG_Emissions');
-            });
 
-            // Total GHG Emissions (2000-2020) - Line Chart
-            fetchData('/api/total_ghg_emissions', data => {
-                const countries = Array.from(new Set(data.map(d => d._id['Country Name'])));
-                const datasets = countries.map(country => {
-                    return {
-                        label: country,
-                        data: data.filter(d => d._id['Country Name'] === country).map(d => ({
-                            x: d._id.Year,
-                            y: d.Total_GHG_Emissions
-                        })),
-                        borderColor: getRandomColor(),
-                        fill: false
-                    };
-                });
-
-                console.log('Line Data:', datasets); // Debug: log data for line chart
-
-                new Chart(document.getElementById('totalGHGEmissionsChart').getContext('2d'), {
-                    type: 'line',
-                    data: {
-                        datasets: datasets
-                    },
-                    options: {
-                        scales: {
-                            x: {
-                                type: 'linear',
-                                position: 'bottom'
-                            }
-                        }
-                    }
-                });
-            });
         });
     </script>
 {% endblock %}

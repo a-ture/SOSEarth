@@ -20,6 +20,7 @@
     <orderEntry type="library" name="map" level="application" />
     <orderEntry type="library" name="Chart.js" level="application" />
     <orderEntry type="library" name="chartjs-plugin-zoom" level="application" />
+    <orderEntry type="library" name="pattern.css" level="application" />
   </component>
   <component name="TemplatesService">
     <option name="TEMPLATE_CONFIGURATION" value="Jinja2" />

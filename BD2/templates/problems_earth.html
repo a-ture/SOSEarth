@@ -3,33 +3,35 @@
 {% block title %}Problems Earth - SOS Earth{% endblock %}
 
 {% block content %}
-
-<!-- Background image -->
-    <div class="p-5 text-center bg-image" style="background-image: url('{{ url_for('static', filename='img/background-earth.png') }}'); height: 350px; position: relative;">
-        <div class="mask" style="background-color: rgba(9,130,192,0.6); height: 100%;">
-            <div class="d-flex justify-content-center align-items-center h-100 mt-5">
-                <div class="text-white">
-                    <h6 class="mx-5">The Earth Science Data Systems (ESDS) Program provides full and open access to <br>
-                        NASA'S collection of Earth science data for understanding and protecting our home planet.</h6>
-                    <a data-mdb-ripple-init class="btn btn-outline-light btn-lg mt-5" href="#!" role="button">Call to action</a>
-                </div>
-            </div>
+    <!-- Icons section -->
+    <div class="icon-section h-100" style="padding:100px;">
+        <div class="icon-container d-flex justify-content-center align-items-center">
+            <img src="{{ url_for('static', filename='img/biosphere-icon.png') }}" alt="Biosphere" class="icon"
+                 data-target="Biosphere" data-bs-toggle="tooltip" title="Biosphere">
+            <img src="{{ url_for('static', filename='img/oceans-icon.png') }}" alt="Oceans" class="icon"
+                 data-target="Oceans" data-bs-toggle="tooltip" title="Oceans">
+            <img src="{{ url_for('static', filename='img/atmosphere-icon.png') }}" alt="Atmosphere" class="icon"
+                 data-target="Atmosphere" data-bs-toggle="tooltip" title="Atmosphere">
+            <img src="{{ url_for('static', filename='img/cryosphere-icon.png') }}" alt="Cryosphere" class="icon"
+                 data-target="Cryosphere" data-bs-toggle="tooltip" title="Cryosphere">
+            <img src="{{ url_for('static', filename='img/human-dimensions-icon.png') }}" alt="Human Dimensions"
+                 class="icon" data-target="Human Dimensions" data-bs-toggle="tooltip" title="Human Dimensions">
+            <img src="{{ url_for('static', filename='img/land-surface-icon.png') }}" alt="Land Surface" class="icon"
+                 data-target="Land Surface" data-bs-toggle="tooltip" title="Land Surface">
+            <img src="{{ url_for('static', filename='img/sun-earth-interactions-icon.png') }}"
+                 alt="Sun-Earth Interactions" class="icon" data-target="Sun-Earth Interactions" data-bs-toggle="tooltip"
+                 title="Sun-Earth Interactions">
+            <img src="{{ url_for('static', filename='img/solid-earth-icon.png') }}" alt="Solid Earth" class="icon"
+                 data-target="Solid Earth" data-bs-toggle="tooltip" title="Solid Earth">
+            <img src="{{ url_for('static', filename='img/terrestrial-hydrosphere-icon.png') }}"
+                 alt="Terrestrial Hydrosphere" class="icon" data-target="Terrestrial Hydrosphere"
+                 data-bs-toggle="tooltip" title="Terrestrial Hydrosphere">
         </div>
-
-        <!-- Image icons positioned in a semicircle -->
-        <img src="{{ url_for('static', filename='img/biosphere-icon.png') }}" alt="Biosphere" class="icon icon-1" data-target="Biosphere">
-        <img src="{{ url_for('static', filename='img/oceans-icon.png') }}" alt="Oceans" class="icon icon-2" data-target="Oceans">
-        <img src="{{ url_for('static', filename='img/atmosphere-icon.png') }}" alt="Atmosphere" class="icon icon-3" data-target="Atmosphere">
-        <img src="{{ url_for('static', filename='img/cryosphere-icon.png') }}" alt="Cryosphere" class="icon icon-4" data-target="Cryosphere">
-        <img src="{{ url_for('static', filename='img/human-dimensions-icon.png') }}" alt="Human Dimensions" class="icon icon-5" data-target="Human Dimensions">
-        <img src="{{ url_for('static', filename='img/land-surface-icon.png') }}" alt="Land Surface" class="icon icon-6" data-target="Land Surface">
-        <img src="{{ url_for('static', filename='img/sun-earth-interactions-icon.png') }}" alt="Sun-Earth Interactions" class="icon icon-7" data-target="Sun-Earth Interactions">
-        <img src="{{ url_for('static', filename='img/solid-earth-icon.png') }}" alt="Solid Earth" class="icon icon-8" data-target="Solid Earth">
-        <img src="{{ url_for('static', filename='img/terrestrial-hydrosphere-icon.png') }}" alt="Terrestrial Hydrosphere" class="icon icon-9" data-target="Terrestrial Hydrosphere">
     </div>
 
+
     <!-- Card content -->
-    <div class="card text-center shadow-lg rounded" id="infoCard" style="display: none;">
+    <div class="card text-center no-shadow rounded" id="infoCard" style="display: none;">
         <div class="card-header">
             <ul id="navTabs" class="nav nav-tabs card-header-tabs">
                 <li class="nav-item">
@@ -46,28 +48,389 @@
         <div class="card-body">
             <div id="tabContent">
                 <div id="content1" class="tab-content active">
-                    <h3>Evidence</h3>
                     <p id="evidence-content"></p>
                 </div>
                 <div id="content2" class="tab-content" style="display:none;">
-                    <h3>Causes</h3>
+
                     <p id="causes-content"></p>
                 </div>
                 <div id="content3" class="tab-content" style="display:none;">
-                    <h3>Effects</h3>
                     <p id="effects-content"></p>
+                </div>
+            </div>
+        </div>
+        <hr>
+    </div>
+
+    <!-- Graphs section -->
+    <div id="chartsSection" style="display: none; margin-top: 20px;">
+        <h2 class="orbitron text-center earth">Environmental Indicators and Their Impacts</h2>
+        <p class="text-center mb-5">Explore the data visualizations below to understand various environmental issues and
+            their impacts on different aspects of the Earth's systems.</p>
+        <div class="container">
+            <h3 id="chart1-title" class="orbitron sos"></h3>
+            <p id="chart1-description"></p>
+            <div class="row">
+                <div class="col-md-12">
+
+                    <canvas id="chart1" width="400" height="400"></canvas>
+                </div>
+            </div>
+            <div class="row mt-4">
+                <h3 id="chart2-title" class="orbitron sos"></h3>
+                <p id="chart2-description"></p>
+                <div class="col-md-12">
+                    <canvas id="chart2" width="400" height="400"></canvas>
+                </div>
+            </div>
+            <div class="row mt-4">
+                <h3 id="chart3-title" class="orbitron sos"></h3>
+                <p id="chart3-description"></p>
+                <div class="col-md-12">
+                    <canvas id="chart3" width="400" height="400"></canvas>
                 </div>
             </div>
         </div>
     </div>
 
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@1.1.1/dist/chartjs-plugin-zoom.min.js"></script>
     <script>
         const icons = document.querySelectorAll('.icon');
         const infoCard = document.getElementById('infoCard');
         const tabContents = document.querySelectorAll('.tab-content');
+        const chartsSection = document.getElementById('chartsSection');
+
+        const chartTitles = {
+            Biosphere: {
+                chart1: {
+                    title: 'Threatened Bird Species (2020)',
+                    description: 'This chart shows the number of threatened bird species in various regions for the year 2020. The impact of this is significant as it highlights the regions where biodiversity is most at risk, indicating potential ecosystem imbalances. Birds are crucial indicators of environmental health because they are sensitive to changes in their habitats. The decline in bird species often signals broader ecological issues, including habitat destruction, climate change, and pollution. Conservation efforts focused on bird species can help preserve entire ecosystems, as protecting birds often involves protecting their habitats. Regions with high numbers of threatened bird species may need targeted conservation strategies to restore and protect these vital ecosystems.'
+                },
+                chart2: {
+                    title: 'Top 10 Threatened Bird Species',
+                    description: 'This chart displays the top 10 countries with the highest number of threatened bird species. This information is crucial for conservation efforts, helping to prioritize areas for habitat protection and restoration. Countries with high numbers of threatened bird species often face significant ecological challenges, such as deforestation, urbanization, and pollution. By identifying these countries, conservationists can direct resources and efforts to the areas where they are most needed. Protecting bird species in these regions can have cascading benefits for other wildlife and plant species, helping to maintain biodiversity and ecosystem stability.'
+                },
+                chart3: {
+                    title: 'Methane Emissions vs Agricultural Land Use',
+                    description: 'This scatter plot shows the correlation between methane emissions and agricultural land use. Understanding this relationship is important for developing strategies to reduce greenhouse gas emissions in agriculture. Methane is a potent greenhouse gas with a global warming potential significantly higher than carbon dioxide over a 20-year period. Agriculture is a major source of methane emissions, primarily from livestock and rice paddies. By analyzing the correlation between methane emissions and agricultural land use, policymakers can identify opportunities to implement more sustainable farming practices. Reducing methane emissions from agriculture can significantly contribute to mitigating climate change and achieving international climate goals.'
+                },
+            },
+            Oceans: {
+                chart1: {
+                    title: 'Average Climate Risk Index',
+                    description: 'This chart shows the average climate risk index for various regions. High-risk regions may experience severe impacts from climate change, including extreme weather events and sea-level rise, affecting both human and marine life. The climate risk index is a critical measure that assesses the vulnerability of regions to the adverse effects of climate change. It considers factors such as exposure to climate hazards, sensitivity of affected populations, and adaptive capacity. Regions with high climate risk indices are more likely to face challenges such as increased frequency and intensity of storms, flooding, and coastal erosion. These impacts can disrupt human communities, economies, and natural ecosystems, highlighting the urgent need for climate adaptation and mitigation strategies.'
+                },
+                chart2: {
+                    title: 'Top 10 Climate Risk Index',
+                    description: 'This chart shows the top 10 regions with the highest climate risk index. Identifying these areas helps in focusing climate resilience and adaptation strategies. Regions with the highest climate risk indices are often those that are most vulnerable to climate-related hazards. These regions may lack the infrastructure and resources needed to effectively respond to and recover from climate events. By pinpointing the top 10 regions at greatest risk, governments, NGOs, and international organizations can prioritize interventions to build resilience and reduce vulnerability. This may include investments in infrastructure, disaster preparedness, and community-based adaptation programs.'
+                },
+                chart3: {
+                    title: 'Ocean Acidification Levels',
+                    description: 'This chart illustrates the changes in ocean acidification levels over time. Increased acidification can harm marine life, particularly organisms with calcium carbonate shells or skeletons, impacting marine biodiversity and fisheries. Ocean acidification results from the absorption of carbon dioxide (CO2) by seawater, leading to a chemical reaction that lowers the pH of the ocean. This process can have detrimental effects on marine organisms such as corals, mollusks, and certain plankton species, which rely on calcium carbonate for their skeletal structures. As ocean acidification progresses, it can disrupt marine food webs and ecosystems, affecting the livelihoods of communities that depend on fisheries and aquaculture. Monitoring and mitigating ocean acidification are crucial for protecting marine biodiversity and sustaining marine resources.'
+                },
+            },
+            Atmosphere: {
+                chart1: {
+                    title: 'Average CO2 Emissions (kt)',
+                    description: 'This chart displays the average CO2 emissions in kilotons across different regions. High CO2 emissions are a major driver of climate change, leading to global warming and its associated impacts. Carbon dioxide (CO2) is the primary greenhouse gas emitted through human activities, particularly from the burning of fossil fuels for energy and transportation. High levels of CO2 emissions contribute to the greenhouse effect, trapping heat in the Earth\'s atmosphere and leading to global temperature increases. This warming has far-reaching consequences, including more frequent and severe heatwaves, changes in precipitation patterns, and rising sea levels. Reducing CO2 emissions is essential for mitigating climate change and limiting its impacts on ecosystems, human health, and economies.'
+                },
+                chart2: {
+                    title: 'CO2 Emissions Change (%)',
+                    description: 'This chart shows the percentage change in CO2 emissions over a specified period. Monitoring these changes helps in assessing the effectiveness of emission reduction policies. By tracking how CO2 emissions have increased or decreased over time, policymakers and researchers can identify trends and evaluate the success of initiatives aimed at reducing emissions. Understanding these changes is also critical for international climate agreements, as countries work together to meet targets for reducing greenhouse gas emissions. Effective policies can lead to significant reductions in emissions, contributing to the global effort to combat climate change.'
+                },
+                chart3: {
+                    title: 'Average PM2.5 Emissions (µg/m³)',
+                    description: 'This chart highlights the average PM2.5 emissions in micrograms per cubic meter. High PM2.5 levels are linked to respiratory and cardiovascular diseases, affecting public health. Particulate matter (PM2.5) is a mixture of tiny particles and droplets in the air that can penetrate deep into the lungs and bloodstream. Sources of PM2.5 include vehicle emissions, industrial processes, and residential heating. Long-term exposure to high levels of PM2.5 can lead to chronic respiratory conditions, heart disease, and even premature death. Reducing PM2.5 emissions through cleaner technologies, regulations, and public awareness campaigns can improve air quality and protect public health.'
+                },
+            },
+            Cryosphere: {
+                chart1: {
+                    title: 'Total GHG Emissions',
+                    description: 'This chart shows the total greenhouse gas emissions for various countries over time. Monitoring GHG emissions is crucial for tracking progress towards climate targets and mitigating global warming. Greenhouse gases (GHGs) such as carbon dioxide, methane, and nitrous oxide trap heat in the atmosphere, leading to global warming and climate change. By measuring and reporting total GHG emissions, countries can assess their contributions to global emissions and identify opportunities for reduction. Policies aimed at reducing GHG emissions include transitioning to renewable energy, enhancing energy efficiency, and implementing carbon pricing mechanisms. Successful reduction of GHG emissions is essential for limiting global temperature increases and avoiding the worst impacts of climate change.'
+                },
+                chart2: {
+                    title: 'Climate Risk Index',
+                    description: 'This chart displays the climate risk index for different regions. High-risk regions require targeted interventions to enhance climate resilience and reduce vulnerability. The climate risk index takes into account factors such as exposure to climate hazards, sensitivity of populations, and adaptive capacity. Regions with high climate risk indices are more likely to experience adverse effects from climate change, such as extreme weather events, sea-level rise, and disruptions to water and food supplies. Addressing these risks involves investing in resilient infrastructure, improving disaster preparedness, and supporting community-based adaptation measures. Enhancing climate resilience can reduce the long-term social and economic costs of climate impacts.'
+                },
+                chart3: {
+                    title: 'Glacier Mass Balance',
+                    description: 'This chart illustrates the changes in glacier mass balance over the years. Melting glaciers contribute to sea-level rise and can disrupt freshwater supplies. Glacier mass balance refers to the difference between the accumulation and ablation (melting and sublimation) of ice. As global temperatures rise, many glaciers around the world are losing mass at an accelerated rate. This contributes to rising sea levels, which can lead to coastal erosion, increased flooding, and habitat loss for marine and coastal species. In addition, glaciers are an important source of freshwater for many communities, particularly in mountainous regions. The loss of glacier ice can reduce the availability of freshwater for drinking, agriculture, and hydropower. Monitoring glacier mass balance is essential for understanding the impacts of climate change and developing strategies to adapt to these changes.'
+                },
+            },
+            'Human Dimensions': {
+                chart1: {
+                    title: 'Top 10 Countries with Highest CO2 Emissions',
+                    description: 'This chart shows the top 10 countries with the highest CO2 emissions. These countries have a significant role in global emissions and are key to international climate agreements. The top emitters of CO2 often include countries with large populations, high levels of industrial activity, and significant reliance on fossil fuels for energy. Addressing emissions in these countries is critical for achieving global climate targets and limiting global warming. Efforts to reduce CO2 emissions may involve transitioning to renewable energy sources, improving energy efficiency, and implementing carbon pricing mechanisms. International cooperation and commitments are essential for ensuring that these countries take meaningful action to reduce their emissions and contribute to global climate goals.'
+                },
+                chart2: {
+                    title: 'CO2 Emissions vs Population Growth',
+                    description: 'This scatter plot shows the correlation between CO2 emissions and population growth. It highlights the impact of population dynamics on emissions and the need for sustainable development. As populations grow, the demand for energy, transportation, and other services increases, leading to higher CO2 emissions. Understanding the relationship between population growth and emissions can help policymakers design strategies that promote sustainable development while minimizing environmental impacts. This may include investing in renewable energy, promoting energy efficiency, and encouraging sustainable consumption and production practices. Addressing the challenges of population growth and emissions is essential for achieving a balance between human development and environmental sustainability.'
+                },
+                chart3: {
+                    title: 'Percentage Change in CO2 Emissions (2000 vs 2020)',
+                    description: 'This chart shows the percentage change in CO2 emissions from 2000 to 2020. Understanding these changes is essential for evaluating policy effectiveness and future planning. Tracking the changes in CO2 emissions over time allows policymakers and researchers to assess the impact of various measures and initiatives aimed at reducing emissions. By comparing emissions data from 2000 and 2020, it is possible to identify trends and determine whether countries are on track to meet their climate targets. Analyzing the factors that have contributed to increases or decreases in emissions can provide insights into the most effective strategies for reducing CO2 emissions. This information is crucial for developing future policies and actions to combat climate change and achieve long-term sustainability goals.'
+                },
+            },
+            'Land Surface': {
+                chart1: {
+                    title: 'Top 10 Countries with Highest Agricultural Land Use',
+                    description: 'This chart displays the top 10 countries with the highest agricultural land use. Intensive agriculture can lead to deforestation, biodiversity loss, and soil degradation. Countries with large areas of agricultural land often face challenges related to land use and sustainability. Intensive farming practices, such as monocropping and excessive use of fertilizers and pesticides, can degrade soil health and reduce biodiversity. Deforestation to make way for agricultural land can result in habitat loss for wildlife and contribute to greenhouse gas emissions. Sustainable agricultural practices, such as crop rotation, agroforestry, and organic farming, can help mitigate these impacts and promote environmental health. Identifying the top countries with the highest agricultural land use can guide efforts to implement sustainable farming practices and improve land management.'
+                },
+                chart2: {
+                    title: 'Agricultural Land Use (%)',
+                    description: 'This pie chart shows the percentage of agricultural land use in different countries. Sustainable land management practices are vital for food security and environmental health. The proportion of land dedicated to agriculture varies widely between countries, depending on factors such as climate, soil quality, and economic priorities. Countries with high percentages of agricultural land may face pressures to balance food production with environmental conservation. Sustainable land management practices, such as integrated pest management, conservation tillage, and agroecology, can help maintain soil health, reduce water usage, and enhance biodiversity. Understanding the distribution of agricultural land use can inform policies and initiatives aimed at promoting sustainable agriculture and ensuring long-term food security.'
+                },
+                chart3: {
+                    title: 'Deforestation Rates',
+                    description: 'This chart highlights the deforestation rates in various regions over time. Deforestation contributes to habitat loss, carbon emissions, and climate change. The clearing of forests for agriculture, logging, and urban development has significant environmental consequences. Forests play a critical role in regulating the global climate by absorbing carbon dioxide and providing habitat for countless species. High rates of deforestation can lead to the loss of biodiversity, disruptions in the water cycle, and increased carbon emissions. Efforts to reduce deforestation include implementing sustainable forestry practices, protecting intact forests, and promoting reforestation and afforestation projects. Monitoring deforestation rates is essential for understanding the scale of forest loss and developing strategies to mitigate its impacts.'
+                },
+            },
+            'Sun-Earth Interactions': {
+                chart1: {
+                    title: 'Renewable Energy Consumption (%)',
+                    description: 'This chart shows the percentage of renewable energy consumption in different regions. Increasing renewable energy use is key to reducing dependence on fossil fuels and mitigating climate change. Renewable energy sources, such as solar, wind, hydro, and geothermal, provide clean alternatives to fossil fuels and help reduce greenhouse gas emissions. The transition to renewable energy is essential for achieving global climate goals and ensuring a sustainable energy future. Countries with high percentages of renewable energy consumption are leading the way in this transition, demonstrating the potential for renewable energy to meet growing energy demands. Policies and incentives that support the development and adoption of renewable energy technologies are critical for accelerating this transition and reducing global carbon footprints.'
+                },
+                chart2: {
+                    title: 'Renewable Energy Use vs Total GHG Emissions',
+                    description: 'This scatter plot illustrates the correlation between renewable energy use and total greenhouse gas emissions. Transitioning to renewable energy can significantly lower GHG emissions. As countries increase their use of renewable energy, they reduce their reliance on fossil fuels, which are major sources of greenhouse gas emissions. This transition not only helps mitigate climate change but also enhances energy security and reduces air pollution. The correlation between renewable energy use and GHG emissions provides insights into the effectiveness of renewable energy policies and initiatives. Countries that have successfully reduced their GHG emissions through increased renewable energy use serve as models for others looking to achieve similar outcomes. Continued investment in renewable energy technologies and infrastructure is essential for sustaining progress and achieving long-term climate goals.'
+                },
+                chart3: {
+                    title: 'Solar Radiation Levels',
+                    description: 'This chart shows the changes in solar radiation levels over time. Understanding solar radiation patterns is important for solar energy projects and climate modeling. Solar radiation, or insolation, is the primary driver of the Earth\'s climate system and influences weather patterns, temperatures, and energy balance. Variations in solar radiation can affect the efficiency and output of solar energy systems, making it crucial to monitor these changes for the development and optimization of solar projects. Additionally, understanding solar radiation levels is important for climate models that predict future climate scenarios and inform policy decisions. Accurate measurements and modeling of solar radiation help improve the reliability of solar energy forecasts and support the growth of the solar energy industry.'
+                },
+            },
+            'Solid Earth': {
+                chart1: {
+                    title: 'CO2 Emissions vs Coal Use',
+                    description: 'This scatter plot shows the correlation between CO2 emissions and coal use. Reducing coal use is essential for decreasing CO2 emissions and mitigating climate change. Coal is one of the most carbon-intensive energy sources, and its combustion releases large amounts of carbon dioxide into the atmosphere. The strong correlation between coal use and CO2 emissions highlights the need to transition away from coal and towards cleaner energy sources. Strategies to reduce coal use include phasing out coal-fired power plants, investing in renewable energy, and implementing carbon pricing mechanisms. Reducing dependence on coal is a critical step in achieving global climate targets and reducing the health and environmental impacts of air pollution.'
+                },
+                chart2: {
+                    title: 'Top 10 Countries with Largest Protected Land Area',
+                    description: 'This chart displays the top 10 countries with the largest protected land area. Protected areas are crucial for biodiversity conservation and ecosystem services. Countries with large protected areas demonstrate a commitment to preserving natural habitats and protecting endangered species. These areas provide vital ecosystem services, such as water purification, carbon sequestration, and soil stabilization. Protected areas also support recreational activities, tourism, and cultural heritage, contributing to the well-being of local communities. Expanding and effectively managing protected areas is essential for achieving global biodiversity targets and ensuring the long-term health of ecosystems. Collaboration between governments, NGOs, and local communities is key to the successful conservation and management of these areas.'
+                },
+                chart3: {
+                    title: 'Earthquake Frequency',
+                    description: 'This chart highlights the frequency of earthquakes in various regions over time. Understanding earthquake patterns helps in disaster preparedness and risk reduction. Earthquakes are natural hazards that can cause significant damage to infrastructure, loss of life, and economic disruption. Monitoring earthquake frequency and patterns allows scientists and policymakers to identify areas at high risk and implement measures to reduce vulnerability. This includes enforcing building codes, developing early warning systems, and conducting public education campaigns on earthquake preparedness. Improving our understanding of earthquake dynamics and risks is essential for protecting communities and reducing the impacts of these natural events.'
+                },
+            },
+            'Terrestrial Hydrosphere': {
+                chart1: {
+                    title: 'CO2 Emissions vs Population Growth',
+                    description: 'This scatter plot shows the correlation between CO2 emissions and population growth. Managing population growth sustainably can help mitigate environmental impacts. As populations grow, the demand for energy, transportation, and other services increases, leading to higher CO2 emissions. Understanding the relationship between population growth and emissions can help policymakers design strategies that promote sustainable development while minimizing environmental impacts. This may include investing in renewable energy, promoting energy efficiency, and encouraging sustainable consumption and production practices. Addressing the challenges of population growth and emissions is essential for achieving a balance between human development and environmental sustainability.'
+                },
+                chart2: {
+                    title: 'Methane Emissions (2000-2020)',
+                    description: 'This chart shows the average methane emissions from 2000 to 2020. Methane is a potent greenhouse gas, and reducing its emissions is critical for climate mitigation. Methane has a global warming potential that is many times greater than carbon dioxide over a 20-year period. Major sources of methane emissions include agriculture (particularly livestock), natural gas production, and landfills. By tracking methane emissions over time, researchers can assess the effectiveness of mitigation strategies and identify areas for improvement. Reducing methane emissions through practices such as improved livestock management, better waste management, and the capture of methane from industrial processes is essential for achieving climate targets and reducing overall greenhouse gas emissions.'
+                },
+                chart3: {
+                    title: 'Water Usage by Sector',
+                    description: 'This chart displays water usage by different sectors in various regions. Efficient water management is vital for ensuring water security and sustainability. Water is a critical resource for agriculture, industry, and domestic use. However, over-extraction and inefficient use can lead to water scarcity and environmental degradation. Understanding how water is used across different sectors helps identify opportunities for conservation and more sustainable practices. For example, adopting drip irrigation in agriculture, recycling water in industrial processes, and reducing water wastage in households can significantly improve water use efficiency. Effective water management policies and practices are essential for maintaining water availability and quality, supporting economic activities, and protecting aquatic ecosystems.'
+                },
+            },
+        };
+
 
         // Dati passati dal backend
         const contentData = {{ data | tojson }};
+
+        function clearCharts() {
+            const ctx1 = document.getElementById('chart1').getContext('2d');
+            const ctx2 = document.getElementById('chart2').getContext('2d');
+            const ctx3 = document.getElementById('chart3').getContext('2d');
+            if (Chart.getChart(ctx1)) Chart.getChart(ctx1).destroy();
+            if (Chart.getChart(ctx2)) Chart.getChart(ctx2).destroy();
+            if (Chart.getChart(ctx3)) Chart.getChart(ctx3).destroy();
+        }
+
+        function loadChart(icon) {
+            const targetContent = icon.getAttribute('data-target');
+            clearCharts();
+            chartsSection.style.display = 'block';
+            console.log(targetContent)
+            const currentCharts = chartTitles[targetContent];
+
+            if (currentCharts) {
+                document.getElementById('chart1-title').innerText = currentCharts.chart1.title;
+                document.getElementById('chart1-description').innerText = currentCharts.chart1.description;
+                document.getElementById('chart2-title').innerText = currentCharts.chart2.title;
+                document.getElementById('chart2-description').innerText = currentCharts.chart2.description;
+                document.getElementById('chart3-title').innerText = currentCharts.chart3.title;
+                document.getElementById('chart3-description').innerText = currentCharts.chart3.description;
+
+            }
+            if (targetContent === 'Biosphere') {
+                fetchData('/api/threatened_bird_species', data => {
+                    renderChart(document.getElementById('chart1').getContext('2d'), 'bar', data.map(d => d._id), data.map(d => d.Threatened_Bird_Species), 'Threatened Bird Species (2020)');
+                });
+                fetchData('/api/top_10_threatened_bird_species', data => {
+                    renderChart(document.getElementById('chart2').getContext('2d'), 'bar', data.map(d => d.Country), data.map(d => d.Threatened_Bird_Species), 'Top 10 Threatened Bird Species');
+
+                });
+                fetchData('/api/correlation_methane_agricultural_land', data => {
+                    renderScatterChart(document.getElementById('chart3').getContext('2d'), data, 'Methane Emissions vs Agricultural Land Use', 'Agricultural_Land_Use', 'Methane_Emissions');
+                });
+
+            } else if (targetContent === 'Oceans') {
+                fetchData('/api/climate_risk_index', data => {
+                    renderChart(document.getElementById('chart1').getContext('2d'), 'bar', data.map(d => d._id), data.map(d => d.Average_Climate_Risk_Index), 'Average Climate Risk Index');
+
+                });
+                fetchData('/api/top_10_climate_risk_index', data => {
+                    renderChart(document.getElementById('chart2').getContext('2d'), 'bar', data.map(d => d._id), data.map(d => d.avg_climate_risk_index), 'Top 10 Climate Risk Index');
+
+                });
+            } else if (targetContent === 'Atmosphere') {
+                fetchData('/api/co2_emissions_average', data => {
+                    renderChart(document.getElementById('chart1').getContext('2d'), 'bar', data.filter(d => d._id !== null).map(d => d._id), data.filter(d => d._id !== null).map(d => d.Average_CO2_Emissions), 'Average CO2 Emissions (kt)');
+
+                });
+                fetchData('/api/co2_emissions_change', data => {
+                    renderChart(document.getElementById('chart2').getContext('2d'), 'bar', data.filter(d => d.Percentage_Change !== null).map(d => d.Country), data.filter(d => d.Percentage_Change !== null).map(d => d.Percentage_Change), 'CO2 Emissions Change (%)');
+
+                });
+                fetchData('/api/pm25_emissions', data => {
+                    renderChart(document.getElementById('chart3').getContext('2d'), 'line', data.map(d => d._id), data.map(d => d.Average_PM25_Emissions), 'Average PM2.5 Emissions (µg/m³)');
+
+                });
+            } else if (targetContent === 'Cryosphere') {
+                fetchData('/api/total_ghg_emissions', data => {
+                    const countries = Array.from(new Set(data.map(d => d._id['Country Name'])));
+                    const datasets = countries.map(country => ({
+                        label: country,
+                        data: data.filter(d => d._id['Country Name'] === country).map(d => ({
+                            x: d._id.Year,
+                            y: d.Total_GHG_Emissions
+                        })),
+                        borderColor: getRandomColor(),
+                        fill: false
+                    }));
+                    new Chart(document.getElementById('chart1').getContext('2d'), {
+                        type: 'line',
+                        data: {datasets},
+                        options: {scales: {x: {type: 'linear', position: 'bottom'}}}
+                    });
+                });
+                fetchData('/api/climate_risk_index', data => {
+                    renderChart(document.getElementById('chart2').getContext('2d'), 'bar', data.map(d => d._id), data.map(d => d.Average_Climate_Risk_Index), 'Climate Risk Index');
+
+                });
+            } else if (targetContent === 'Human Dimensions') {
+                fetchData('/api/correlation_co2_population', data => {
+                    renderScatterChart(document.getElementById('chart2').getContext('2d'), data, 'CO2 Emissions vs Population Growth', 'Population_Growth', 'CO2_Emissions');
+
+                });
+                fetchData('/api/top_10_co2_emissions', data => {
+                    renderChart(document.getElementById('chart1').getContext('2d'), 'bar', data.map(d => d._id), data.map(d => d.avg_co2_emissions), 'Top 10 Countries with Highest CO2 Emissions');
+                });
+                fetchData('/api/countries_largest_percentage_increase_co2_emissions', data => {
+                    const labels = data.map(d => d.Country);
+                    const values = data.map(d => d.Percentage_Change);
+                    renderChart(document.getElementById('chart3').getContext('2d'), 'bar', labels, values, 'Percentage Change in CO2 Emissions (2000 vs 2020)');
+                });
+            } else if (targetContent === 'Land Surface') {
+                fetchData('/api/top_10_agricultural_land_use', data => {
+                    renderChart(document.getElementById('chart1').getContext('2d'), 'bar', data.map(d => d.Country), data.map(d => d.Agricultural_Land_Use), 'Top 10 Countries with Highest Agricultural Land Use');
+
+                });
+                fetchData('/api/agricultural_land_use', data => {
+                    renderChart(document.getElementById('chart2').getContext('2d'), 'pie', data.map(d => d._id), data.map(d => d.Agricultural_Land_Use), 'Agricultural Land Use (%)');
+
+                });
+            } else if (targetContent === 'Sun-Earth Interactions') {
+                fetchData('/api/renewable_energy', data => {
+                    renderChart(document.getElementById('chart1').getContext('2d'), 'bar', data.map(d => d._id), data.map(d => d.Average_Renewable_Energy), 'Renewable Energy Consumption (%)');
+
+                });
+                fetchData('/api/correlation_renewable_energy_ghg', data => {
+                    renderScatterChart(document.getElementById('chart2').getContext('2d'), data, 'Renewable Energy Use vs Total GHG Emissions', 'Renewable_Energy_Use', 'Total_GHG_Emissions');
+
+                });
+            } else if (targetContent === 'Solid Earth') {
+                fetchData('/api/correlation_co2_coal_use', data => {
+                    renderScatterChart(document.getElementById('chart1').getContext('2d'), data, 'CO2 Emissions vs Coal Use', 'Coal_Use', 'CO2_Emissions');
+
+                });
+                fetchData('/api/top_10_protected_land', data => {
+                    renderChart(document.getElementById('chart2').getContext('2d'), 'bar', data.map(d => d.Country), data.map(d => d.Protected_Area), 'Top 10 Countries with Largest Protected Land Area');
+
+                });
+            } else if (targetContent === 'Terrestrial Hydrosphere') {
+                fetchData('/api/correlation_co2_population', data => {
+                    renderScatterChart(document.getElementById('chart1').getContext('2d'), data, 'CO2 Emissions vs Population Growth', 'Population_Growth', 'CO2_Emissions');
+
+                });
+                fetchData('/api/methane_emissions', data => {
+                    renderChart(document.getElementById('chart2').getContext('2d'), 'bar', data.map(d => d._id), data.map(d => d.Average_Methane_Emissions), 'Emissioni di Metano (2000-2020)');
+
+                });
+            }
+        }
+
+        function fetchData(url, callback) {
+            fetch(url)
+                .then(response => response.json())
+                .then(data => callback(data))
+                .catch(error => console.error('Error fetching data:', error));
+        }
+
+        function renderChart(ctx, type, labels, data, label) {
+            if (labels.length === 0 || data.length === 0) {
+                console.warn('No data available for rendering the chart:', label);
+                return;
+            }
+            console.log('Rendering chart:', label, 'with labels:', labels, 'and data:', data);
+            new Chart(ctx, {
+                type: type,
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: label,
+                        data: data,
+                        backgroundColor: 'rgba(255,209,102,0.5)',
+                        borderColor: 'rgba(255, 209, 102,1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    maintainAspectRatio: false, // Important to allow custom sizing
+                    scales: {y: {beginAtZero: true}}
+                }
+            });
+        }
+
+        function renderScatterChart(ctx, data, label, xLabel, yLabel) {
+            const scatterData = {
+                datasets: [{
+                    label: label,
+                    data: data.map(d => ({x: d[xLabel], y: d[yLabel]})),
+                    backgroundColor: 'rgba(255,209,102,0.5)',
+                    borderColor: 'rgba(255, 209, 102,1)',
+                    borderWidth: 1
+                }]
+            };
+
+            new Chart(ctx, {
+                type: 'scatter',
+                data: scatterData,
+                options: {
+                    scales: {
+                        x: {type: 'linear', position: 'bottom', title: {display: true, text: xLabel}},
+                        y: {title: {display: true, text: yLabel}}
+                    },
+                    maintainAspectRatio: false, // Important to allow custom sizing
+                }
+            });
+        }
+
+        function getRandomColor() {
+            const letters = '0123456789ABCDEF';
+            let color = '#';
+            for (let i = 0; i < 6; i++) color += letters[Math.floor(Math.random() * 16)];
+            return color;
+        }
+
 
         function findDataByCategory(category) {
             return contentData.find(item => item.Category.toLowerCase() === category.toLowerCase());
@@ -104,6 +467,8 @@
                     link.classList.remove('active');
                 });
                 document.getElementById('tab1').classList.add('active');
+
+                loadChart(this);
             });
         });
 
@@ -126,69 +491,66 @@
                 document.getElementById(tabId).style.display = 'block';
             });
         });
+
+        // Inizializza i tooltip di Bootstrap con una classe personalizzata
+        document.addEventListener('DOMContentLoaded', function () {
+            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+            var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+                return new bootstrap.Tooltip(tooltipTriggerEl, {
+                    customClass: 'custom-tooltip' // Classe personalizzata
+                });
+            });
+        });
     </script>
 
-
     <style>
+        .icon-section {
+            background-color: rgba(233, 196, 106, 0.7); /* Cambia il colore di sfondo come desiderato */
+            padding: 20px 0;
+        }
+
+        .icon-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 70px;
+        }
+
         .icon {
-            position: absolute;
             width: 70px;
             height: 70px;
             cursor: pointer;
+            transition: transform 0.3s ease;
         }
 
-        .icon-1 {
-            top: 60%;
-            left: 13%;
-            transform: translate(-50%, -50%);
+        .icon:hover {
+            transform: scale(2.2);
         }
 
-        .icon-2 {
-            top: 40%;
-            left: 20%;
-            transform: translate(-50%, -50%);
+
+        .custom-tooltip .tooltip-inner {
+            background-color: transparent; /* Colore di sfondo del tooltip */
+            color: #000000; /* Colore del testo */
+            font-size: 14px; /* Dimensione del testo */
+            padding: 8px 12px; /* Padding del tooltip */
+            border-radius: 8px; /* Angoli arrotondati */
         }
 
-        .icon-3 {
-            top: 30%;
-            left: 30%;
-            transform: translate(-50%, -50%);
+        .custom-tooltip .tooltip-arrow {
+            border-top-color: #333; /* Colore della freccia del tooltip */
         }
 
-        .icon-4 {
-            top: 20%;
-            left: 40%;
-            transform: translate(-50%, -50%);
+        .nav-tabs .nav-link.active, .nav-tabs .nav-item.show .nav-link {
+            color: rgb(233, 196, 106);
+        !important;
+            border-color: rgba(233, 196, 106, 0.7);
+        !important;
         }
 
-        .icon-5 {
-            top: 15%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+        .no-shadow {
+            box-shadow: none !important;
         }
 
-        .icon-6 {
-            top: 20%;
-            left: 60%;
-            transform: translate(-50%, -50%);
-        }
-
-        .icon-7 {
-            top: 30%;
-            left: 70%;
-            transform: translate(-50%, -50%);
-        }
-
-        .icon-8 {
-            top: 40%;
-            left: 80%;
-            transform: translate(-50%, -50%);
-        }
-
-        .icon-9 {
-            top: 60%;
-            left: 87%;
-            transform: translate(-50%, -50%);
-        }
     </style>
+
 {% endblock %}

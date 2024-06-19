@@ -98,7 +98,7 @@
                     fetchProtectedAreas(countryName);
 
                     var infoDiv = document.getElementById('infoDiv');
-                    infoDiv.innerHTML = "<h2 class='orbitron'>" + countryName + "</h2>";
+                    infoDiv.innerHTML = "<h2 class='orbitron earth mt-1'>" + countryName + "</h2>";
                     infoDiv.style.display = "block";
                 } else {
                     chart.goHome();
@@ -161,12 +161,12 @@
                     var infoDiv = document.getElementById('infoDiv');
                     infoDiv.innerHTML += `
                         <div class="row">
-                            <h5 class="orbitron">Designation Chart</h5>
+                            <h3 class="orbitron sos mt-5">Designation Chart</h3>
                                     <p>This chart displays the distribution of different designations of protected areas.</p>
                                 <div class="col-md-12">
                                     <canvas id="designationChart" width="200" height="500"></canvas>
                                 </div>
-                                   <h5 class="orbitron">IUCN Category Chart</h5>
+                                   <h3 class="orbitron sos mt-5">IUCN Category Chart</h3>
                                     <p >This chart illustrates the categories of protected areas according to the International Union for Conservation of Nature (IUCN).</p>
                                 <div class="col-md-12 mt-4">
                                     <canvas id="iucnCategoryChart" width="400" height="400"></canvas>

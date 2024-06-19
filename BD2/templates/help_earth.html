@@ -36,14 +36,15 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 24px; /* Dimensione del testo */
+            font-size: 20px; /* Dimensione del testo */
+            background-color: #b4d78a;
+            color: white;
         }
 
         .flip-card-back {
-            background-color: #343a40;
-            color: white;
+
             transform: rotateY(180deg);
-            font-size: 16px;
+            font-size: 20px;
             position: relative;
         }
 
@@ -81,13 +82,13 @@
                     <div class="col">
                         <div class="flip-card">
                             <div class="flip-card-inner">
-                                <div class="flip-card-front">
+                                <div class="flip-card-front pattern-dots-md">
                                     <i class="fas fa-exclamation-circle icon problem"></i>
-                                    <p class="text card-text">{{ solution['Indicator Name'] }}</p>
+                                    <p class="text-black orbitron">{{ solution['Indicator Name'] }}</p>
                                 </div>
-                                <div class="flip-card-back">
+                                <div class="flip-card-back pattern-dots-md">
                                     <i class="fas fa-check-circle icon solution"></i>
-                                    <p class="card-text">{{ solution['Solution'] }}</p>
+                                    <p class="text-black orbitron">{{ solution['Solution'] }}</p>
                                 </div>
                             </div>
                         </div>

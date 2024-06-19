@@ -18,3 +18,32 @@
     font-weight: bold;
 }
 
+
+body {
+    background-color: #fdfffc;
+}
+
+.btn-primary {
+    background-color: #f77f00 !important;
+    border-color: #f77f00 !important;
+}
+
+.btn-primary:hover {
+    background-color: #d62828 !important;
+    border-color: #d62828 !important;
+}
+
+.orbitron {
+    font-family: "Orbitron", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 500;
+    font-style: normal;
+}
+
+.earth {
+    color: #b4d78a;
+}
+
+.sos {
+    color: #e28087;
+}
