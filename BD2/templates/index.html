@@ -171,10 +171,7 @@
             top: -0.5rem;
         }
 
-        .dashed-underline {
-            text-decoration: underline;
-            text-decoration-style: dashed;
-        }
+
 
         .carousel-control-prev,
         .carousel-control-next {
@@ -241,7 +238,7 @@
                                 <h5 class="dashed-underline ">${item.title}</h5>
                                 <div>
                                     <h6 class="d-inline big-number align-baseline">
-                                        <i class="fa-sharp fa-regular fa-arrow-${item.trend === 'down' ? 'down text-danger' : 'up text-success'}"></i> ${parseFloat(item.value).toFixed(2)}
+                                        <i class="fa-sharp fa-regular fa-arrow-${item.trend === 'down' ? 'down' : 'up'} text-danger"></i> ${parseFloat(item.value).toFixed(2)}
                                     </h6>
                                     <span class="d-inline small-text ms-1">${item.description}</span>
                                 </div>

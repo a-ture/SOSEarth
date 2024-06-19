@@ -375,11 +375,43 @@
                 .catch(error => console.error('Error fetching data:', error));
         }
 
+        function getMultipleRandomColors(numColors) {
+            let colors = [];
+            for (let i = 0; i < numColors; i++) {
+                colors.push(getRandomColor());
+            }
+            return colors;
+        }
+
         function renderChart(ctx, type, labels, data, label) {
             if (labels.length === 0 || data.length === 0) {
                 console.warn('No data available for rendering the chart:', label);
                 return;
             }
+
+            let backgroundColors;
+            if (type === 'pie') {
+                backgroundColors = [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)'
+                ]
+                borderColor = [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ]
+            } else {
+                backgroundColors = 'rgba(255,209,102,0.5)'; // Usa un colore predefinito per altri tipi di grafico
+                borderColor = 'rgba(255, 209, 102,1)'
+            }
+
             console.log('Rendering chart:', label, 'with labels:', labels, 'and data:', data);
             new Chart(ctx, {
                 type: type,
@@ -388,8 +420,8 @@
                     datasets: [{
                         label: label,
                         data: data,
-                        backgroundColor: 'rgba(255,209,102,0.5)',
-                        borderColor: 'rgba(255, 209, 102,1)',
+                        backgroundColor: backgroundColors,
+                        borderColor: borderColor,
                         borderWidth: 1
                     }]
                 },
@@ -405,7 +437,7 @@
                 datasets: [{
                     label: label,
                     data: data.map(d => ({x: d[xLabel], y: d[yLabel]})),
-                    backgroundColor: 'rgba(17,138,178,0.5)',
+                    backgroundColor: 'rgba(255, 209, 102,0.5)',
                     borderColor: 'rgba(255, 209, 102,1)',
                     borderWidth: 1
                 }]
